@@ -1,0 +1,6 @@
+pymysql
+cryptography
+python-dotenv
+pillow
+langchain-core
+langchain-google-genai

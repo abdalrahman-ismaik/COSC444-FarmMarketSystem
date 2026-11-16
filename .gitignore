@@ -1,0 +1,34 @@
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+credentials/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local tools, logs, and generated artifacts
+.local/
+.cache/
+*.log
+tmp/
+output/
+build/
+dist/
+*.egg-info/
+.DS_Store
+Thumbs.db
+
+# Deliberately retain source PDFs/PPTX, sample JPGs, and the original ZIP.

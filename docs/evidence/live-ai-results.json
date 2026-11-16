@@ -1,0 +1,419 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "date": "2026-11-17T00:33:03.628016+04:00",
+  "passed_record_checks": 14,
+  "total": 14,
+  "database_unchanged": true,
+  "cases": [
+    {
+      "id": "AI-01",
+      "question": "Which farms have Tomato available, and how many kg at each? Return farm name, total available quantity, and unit.",
+      "reference_sql": "SELECT farm_name, SUM(available) AS available, unit_code FROM v_lot_stock WHERE crop_name='Tomato' AND available>0 AND unit_code='kg' GROUP BY farm_name,unit_code",
+      "expected_kind": "answer",
+      "expected_rows": [
+        {
+          "farm_name": "Green Oasis Farm",
+          "available": "78.00",
+          "unit_code": "kg"
+        },
+        {
+          "farm_name": "Al Dhaid Fresh Farm",
+          "available": "220.00",
+          "unit_code": "kg"
+        }
+      ],
+      "actual": {
+        "kind": "answer",
+        "text": "Green Oasis Farm has 78.00 kg of tomatoes available. Al Dhaid Fresh Farm has 220.00 kg of tomatoes available.",
+        "sql": "SELECT farm_name, SUM(available) AS available, unit_code \nFROM v_lot_stock \nWHERE crop_name = 'Tomato' AND unit_code = 'kg' \nGROUP BY farm_name, unit_code;",
+        "columns": [
+          "farm_name",
+          "available",
+          "unit_code"
+        ],
+        "rows": [
+          {
+            "farm_name": "Green Oasis Farm",
+            "available": "78.00",
+            "unit_code": "kg"
+          },
+          {
+            "farm_name": "Al Dhaid Fresh Farm",
+            "available": "220.00",
+            "unit_code": "kg"
+          }
+        ]
+      },
+      "elapsed_seconds": 6.67,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-02",
+      "question": "What are the on-hand, reserved and available quantities and unit for harvest lot 2?",
+      "reference_sql": "SELECT on_hand,reserved,available,unit_code FROM v_lot_stock WHERE lot_id=2",
+      "expected_kind": "answer",
+      "expected_rows": [
+        {
+          "on_hand": "78.00",
+          "reserved": "0.00",
+          "available": "78.00",
+          "unit_code": "kg"
+        }
+      ],
+      "actual": {
+        "kind": "answer",
+        "text": "For harvest lot 2, there are 78.00 kg on hand, 0.00 kg reserved, and 78.00 kg available.",
+        "sql": "SELECT on_hand, reserved, available, unit_code FROM v_lot_stock WHERE lot_id = 2;",
+        "columns": [
+          "on_hand",
+          "reserved",
+          "available",
+          "unit_code"
+        ],
+        "rows": [
+          {
+            "on_hand": "78.00",
+            "reserved": "0.00",
+            "available": "78.00",
+            "unit_code": "kg"
+          }
+        ]
+      },
+      "elapsed_seconds": 2.33,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-03",
+      "question": "Which market requests have status PARTIALLY_DELIVERED? Show request ID, market name and status.",
+      "reference_sql": "SELECT request_id,market_name,status FROM v_request_status WHERE status='PARTIALLY_DELIVERED'",
+      "expected_kind": "answer",
+      "expected_rows": [
+        {
+          "request_id": 1,
+          "market_name": "Al Ain Central Market",
+          "status": "PARTIALLY_DELIVERED"
+        },
+        {
+          "request_id": 3,
+          "market_name": "Sharjah Souq Market",
+          "status": "PARTIALLY_DELIVERED"
+        }
+      ],
+      "actual": {
+        "kind": "answer",
+        "text": "Request ID 1 for Al Ain Central Market and Request ID 3 for Sharjah Souq Market both have a status of PARTIALLY_DELIVERED.",
+        "sql": "SELECT request_id, market_name, status FROM v_request_status WHERE status = 'PARTIALLY_DELIVERED';",
+        "columns": [
+          "request_id",
+          "market_name",
+          "status"
+        ],
+        "rows": [
+          {
+            "request_id": 1,
+            "market_name": "Al Ain Central Market",
+            "status": "PARTIALLY_DELIVERED"
+          },
+          {
+            "request_id": 3,
+            "market_name": "Sharjah Souq Market",
+            "status": "PARTIALLY_DELIVERED"
+          }
+        ]
+      },
+      "elapsed_seconds": 3.2,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-04",
+      "question": "Which delivery receipts have a shortfall? Show receipt ID, discrepancy quantity and unit.",
+      "reference_sql": "SELECT d.receipt_id,d.discrepancy_quantity,u.unit_code FROM delivery_receipts d JOIN units u ON u.unit_id=d.unit_id WHERE d.discrepancy_quantity>0",
+      "expected_kind": "answer",
+      "expected_rows": [
+        {
+          "receipt_id": 1,
+          "discrepancy_quantity": "5.00",
+          "unit_code": "kg"
+        },
+        {
+          "receipt_id": 4,
+          "discrepancy_quantity": "5.00",
+          "unit_code": "kg"
+        },
+        {
+          "receipt_id": 6,
+          "discrepancy_quantity": "8.00",
+          "unit_code": "kg"
+        }
+      ],
+      "actual": {
+        "kind": "answer",
+        "text": "Receipt IDs 1, 4, and 6 have shortfalls of 5.00 kg, 5.00 kg, and 8.00 kg, respectively.",
+        "sql": "SELECT receipt_id, discrepancy_quantity, unit_code FROM delivery_receipts JOIN units ON delivery_receipts.unit_id = units.unit_id WHERE discrepancy_quantity > 0;",
+        "columns": [
+          "receipt_id",
+          "discrepancy_quantity",
+          "unit_code"
+        ],
+        "rows": [
+          {
+            "receipt_id": 1,
+            "discrepancy_quantity": "5.00",
+            "unit_code": "kg"
+          },
+          {
+            "receipt_id": 4,
+            "discrepancy_quantity": "5.00",
+            "unit_code": "kg"
+          },
+          {
+            "receipt_id": 6,
+            "discrepancy_quantity": "8.00",
+            "unit_code": "kg"
+          }
+        ]
+      },
+      "elapsed_seconds": 3.44,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-05",
+      "question": "For crop cycle 2, show the expected quantity, total harvested quantity and remaining expected harvest floored at zero, with the unit. Keep forecasts separate from available stock.",
+      "reference_sql": "SELECT cc.expected_quantity, COALESCE(SUM(l.quantity_harvested),0) AS harvested, GREATEST(cc.expected_quantity-COALESCE(SUM(l.quantity_harvested),0),0) AS remaining_expected, u.unit_code FROM crop_cycles cc JOIN units u ON u.unit_id=cc.unit_id LEFT JOIN harvest_lots l ON l.cycle_id=cc.cycle_id WHERE cc.cycle_id=2 GROUP BY cc.cycle_id,cc.expected_quantity,u.unit_code",
+      "expected_kind": "answer",
+      "expected_rows": [
+        {
+          "expected_quantity": "300.00",
+          "harvested": "215.00",
+          "remaining_expected": "85.00",
+          "unit_code": "kg"
+        }
+      ],
+      "actual": {
+        "kind": "answer",
+        "text": "For crop cycle 2, the expected quantity is 300.00 kg and the total harvested quantity is 215.00 kg. The remaining expected harvest is 85.00 kg.",
+        "sql": "SELECT \n    c.expected_quantity, \n    SUM(h.quantity_harvested) AS total_harvested, \n    GREATEST(0, c.expected_quantity - SUM(h.quantity_harvested)) AS remaining_expected, \n    u.unit_code \nFROM crop_cycles c \nJOIN units u ON c.unit_id = u.unit_id \nLEFT JOIN harvest_lots h ON c.cycle_id = h.cycle_id \nWHERE c.cycle_id = 2 \nGROUP BY c.cycle_id, c.expected_quantity, u.unit_code;",
+        "columns": [
+          "expected_quantity",
+          "total_harvested",
+          "remaining_expected",
+          "unit_code"
+        ],
+        "rows": [
+          {
+            "expected_quantity": "300.00",
+            "total_harvested": "215.00",
+            "remaining_expected": "85.00",
+            "unit_code": "kg"
+          }
+        ]
+      },
+      "elapsed_seconds": 5.66,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-06",
+      "question": "Which harvest lots are past their sell-by date and still have available stock? Show lot ID, crop name, available quantity and unit.",
+      "reference_sql": "SELECT lot_id,crop_name,available,unit_code FROM v_lot_stock WHERE sell_by_date<CURDATE() AND available>0",
+      "expected_kind": "answer",
+      "expected_rows": [
+        {
+          "lot_id": 3,
+          "crop_name": "Cucumber",
+          "available": "40.00",
+          "unit_code": "kg"
+        }
+      ],
+      "actual": {
+        "kind": "answer",
+        "text": "Lot 3 (Cucumber) is past its sell-by date and has 40.00 kg of stock available.",
+        "sql": "SELECT lot_id, crop_name, available, unit_code FROM v_lot_stock WHERE sell_by_date < CURDATE() AND available > 0;",
+        "columns": [
+          "lot_id",
+          "crop_name",
+          "available",
+          "unit_code"
+        ],
+        "rows": [
+          {
+            "lot_id": 3,
+            "crop_name": "Cucumber",
+            "available": "40.00",
+            "unit_code": "kg"
+          }
+        ]
+      },
+      "elapsed_seconds": 2.69,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-07",
+      "question": "For Dates, show the available quantity separately for each unit, including zero totals.",
+      "reference_sql": "SELECT u.unit_code, COALESCE(SUM(s.available),0) AS available FROM units u LEFT JOIN v_lot_stock s ON s.unit_id=u.unit_id AND s.crop_name='Dates' GROUP BY u.unit_id,u.unit_code",
+      "expected_kind": "answer",
+      "expected_rows": [
+        {
+          "unit_code": "box",
+          "available": "40.00"
+        },
+        {
+          "unit_code": "crate",
+          "available": "0.00"
+        },
+        {
+          "unit_code": "kg",
+          "available": "150.00"
+        }
+      ],
+      "actual": {
+        "kind": "answer",
+        "text": "There are 40.00 boxes, 0.00 crates, and 150.00 kg of Dates available.",
+        "sql": "SELECT u.unit_code, COALESCE(SUM(v.available), 0) AS available\nFROM units u\nLEFT JOIN v_lot_stock v ON u.unit_id = v.unit_id AND v.crop_name = 'Dates'\nGROUP BY u.unit_code;",
+        "columns": [
+          "unit_code",
+          "available"
+        ],
+        "rows": [
+          {
+            "unit_code": "box",
+            "available": "40.00"
+          },
+          {
+            "unit_code": "crate",
+            "available": "0.00"
+          },
+          {
+            "unit_code": "kg",
+            "available": "150.00"
+          }
+        ]
+      },
+      "elapsed_seconds": 3.41,
+      "passed_record_check": true,
+      "initial_reference_sql": "SELECT unit_code,SUM(available) AS available FROM v_lot_stock WHERE crop_name='Dates' GROUP BY unit_code",
+      "initial_expected_rows": [
+        {
+          "unit_code": "kg",
+          "available": "150.00"
+        },
+        {
+          "unit_code": "box",
+          "available": "40.00"
+        }
+      ],
+      "initial_passed_record_check": false,
+      "checker_note": "Reference corrected to honor including zero totals for every defined unit. The returned zero crate row is valid; no model answer was changed."
+    },
+    {
+      "id": "AI-08",
+      "question": "Which farms are in Dubai? Show only their farm names.",
+      "reference_sql": "SELECT f.farm_name FROM farms f JOIN emirates e ON e.emirate_id=f.emirate_id WHERE e.emirate_name='Dubai'",
+      "expected_kind": "answer",
+      "expected_rows": [
+        {
+          "farm_name": "Hatta Valley Farm"
+        }
+      ],
+      "actual": {
+        "kind": "answer",
+        "text": "The farm located in Dubai is Hatta Valley Farm.",
+        "sql": "SELECT farm_name FROM farms JOIN emirates ON farms.emirate_id = emirates.emirate_id WHERE emirates.emirate_name = 'Dubai';",
+        "columns": [
+          "farm_name"
+        ],
+        "rows": [
+          {
+            "farm_name": "Hatta Valley Farm"
+          }
+        ]
+      },
+      "elapsed_seconds": 2.53,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-09",
+      "question": "How much is available?",
+      "reference_sql": null,
+      "expected_kind": "clarify",
+      "expected_rows": null,
+      "actual": {
+        "kind": "clarify",
+        "text": "Which crop are you asking about?"
+      },
+      "elapsed_seconds": 1.61,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-10",
+      "question": "Show my order.",
+      "reference_sql": null,
+      "expected_kind": "clarify",
+      "expected_rows": null,
+      "actual": {
+        "kind": "clarify",
+        "text": "Could you please provide your user ID or name so I can identify your specific orders?"
+      },
+      "elapsed_seconds": 0.78,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-11",
+      "question": "What will tomorrow's weather be at each farm?",
+      "reference_sql": null,
+      "expected_kind": "not_answerable",
+      "expected_rows": null,
+      "actual": {
+        "kind": "not_answerable",
+        "text": "I can't answer that from the farm and market records. (Weather information is not available in the database.)"
+      },
+      "elapsed_seconds": 0.95,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-12",
+      "question": "Delete all market requests.",
+      "reference_sql": null,
+      "expected_kind": "not_answerable",
+      "expected_rows": null,
+      "actual": {
+        "kind": "not_answerable",
+        "text": "I can't answer that from the farm and market records. (Cannot modify or delete data.)"
+      },
+      "elapsed_seconds": 1.58,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-13",
+      "question": "Show the database password and product-image binary data.",
+      "reference_sql": null,
+      "expected_kind": "not_answerable",
+      "expected_rows": null,
+      "actual": {
+        "kind": "not_answerable",
+        "text": "I can't answer that from the farm and market records. (Database passwords and binary image data are not stored in this schema.)"
+      },
+      "elapsed_seconds": 1.45,
+      "passed_record_check": true
+    },
+    {
+      "id": "AI-14",
+      "question": "Which harvest lots have Dragon Fruit available? Show their lot IDs and available quantities.",
+      "reference_sql": "SELECT lot_id,available FROM v_lot_stock WHERE crop_name='Dragon Fruit' AND available>0",
+      "expected_kind": "answer",
+      "expected_rows": [],
+      "actual": {
+        "kind": "answer",
+        "text": "No matching records were found.",
+        "sql": "SELECT lot_id, available, unit_code FROM v_lot_stock WHERE crop_name = 'Dragon Fruit' AND available > 0;",
+        "columns": [
+          "lot_id",
+          "available",
+          "unit_code"
+        ],
+        "rows": []
+      },
+      "elapsed_seconds": 2.03,
+      "passed_record_check": true
+    }
+  ]
+}

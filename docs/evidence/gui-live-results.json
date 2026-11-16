@@ -1,0 +1,14 @@
+[
+  {
+    "question": "What are the on-hand, reserved and available quantities and unit for harvest lot 2?",
+    "answer": "\u2714 For harvest lot 2, there are 78.00 kg on hand, 0.00 kg reserved, and 78.00 kg available.",
+    "seconds": 9.06,
+    "supporting_rows": 1
+  },
+  {
+    "question": "How much is available?",
+    "answer": "? Which crop are you asking about?",
+    "seconds": 0.88,
+    "supporting_rows": 0
+  }
+]
