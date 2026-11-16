@@ -15,7 +15,7 @@ Use **Not started**, **In progress**, **Blocked**, **Ready for review**, **Accep
 | Existing business-rule suite | 65/65 local pass; [runtime evidence](docs/evidence/VALIDATION.md); not exhaustive |
 | Windows GUI/photo persistence | 18 tabs and harvest/image restart checks observed; broader manual flow pending |
 | Live Gemini | 14 questions + two GUI checks observed; [AI evidence](docs/evidence/AI_VALIDATION.md) retains initial failures/fixes/limits |
-| Git sharing | Remote `origin` configured for https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem.git; initial snapshot prepared for publication on `main`. Check Git for live synchronization state |
+| Git sharing | Initial snapshot published to https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem on `main` (initial commit `e67b94a`). Check Git for subsequent synchronization |
 | Final diagrams, technical PDF, poster PDF and new candidate ZIP | Not present at handoff creation |
 
 ## Remaining tasks
@@ -25,7 +25,7 @@ Assignments below are suggestions until a teammate claims them. **Owner is Uncla
 | ID | Task / completion evidence | Suggested lead | Owner | Status | Dependency / review note |
 |---|---|---|---|---|---|
 | ADMIN-01 | Confirm three-member registration, booked slot, location and attendance | Abd Alrahman / all | Unclaimed | Not started | Human external confirmation; November 16 deadline passed; no agent booking |
-| GIT-01 | Publish initial project snapshot to supplied GitHub remote | Abd Alrahman / Codex | Codex (authorized by Abd Alrahman) | In progress | Remote configured and empty; credential scan passed; verify origin/main after push |
+| GIT-01 | Publish initial project snapshot to supplied GitHub remote | Abd Alrahman / Codex | Codex (authorized by Abd Alrahman) | Ready for review | Initial commit e67b94a pushed to origin/main; real credentials/runtime excluded; publication is not acceptance of unfinished course deliverables |
 | DB-01 | Conceptual ER `.drawio` + SVG/PDF with justified cardinalities/rules | Ali / Track A | Unclaimed | Not started | Source: proposal + actual DDL; reviewer must inspect |
 | DB-02 | Separate relational schema `.drawio` + SVG/PDF with all columns/types/keys/constraints | Ali / Track A | Unclaimed | Not started | Actual 15-table/two-view model; no schema invention |
 | DB-03 | Database-design explanation and policy/findings decision list | Ali / Track A | Unclaimed | Not started | Document existing semantics; reviewer decides behavior changes |
@@ -45,6 +45,7 @@ Append dated factual entries. Include member/agent, task IDs, artifact paths, ac
 | Date | Member / agent | Task | Work and evidence | Next action |
 |---|---|---|---|---|
 | 2026-11-17 | Codex preparation session | Handoff | Added teammate/Claude instructions, task ledger and current evidence links; no student contribution inferred | Teammates claim tasks; Abd Alrahman reviews later outputs |
+| 2026-11-17 | Codex, user-authorized publication | GIT-01 | Scanned 184 staged files and archived ZIP for local credentials; published initial commit e67b94a to supplied public remote/main; ignored runtime stayed local | Teammates can clone and claim tracks; reviewer acceptance remains pending |
 
 ## Reviewer decisions
 

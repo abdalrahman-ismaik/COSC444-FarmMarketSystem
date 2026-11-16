@@ -18,6 +18,10 @@ Reviewed on **November 16, 2026**. The working folder was not a Git repository a
 
 File byte counts describe the scan snapshot and will change with documentation updates. Secret-pattern scanning does not prove absence of every possible credential. These checks establish local upload preparation, not runtime/rubric completion.
 
+## GitHub publication — November 17
+
+The user supplied and authorized https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem.git. It was empty and public. Initial commit `e67b94a` containing 184 project/source/evidence/skill files was pushed to `origin/main`. Exact local API key/database password checks and common credential-pattern scans passed; `.env`, `.local/`, `.venv/` and caches remained excluded. A whitespace check reported pre-existing formatting issues in copied/reference material; those original materials were preserved rather than reformatted. No new application runtime tests were needed for this publication-only change. Earlier no-commit/no-remote statements below are historical snapshots.
+
 ## Current verification
 
 **November 17 live AI update:** see [AI validation](evidence/AI_VALIDATION.md) for fourteen live questions, two GUI checks, model-access/provider failures, the crop-filter prompt fix and integrity results. `assistant.py`, `setup_database.py`, and `.env.example` intentionally changed to support the working model, bounded calls, and clearer prompts. Existing historical file hashes are baseline records, not claims that those current files still match the ZIP. Runtime credentials remain ignored.
