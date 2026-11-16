@@ -6,6 +6,15 @@
 
 Use **Not started**, **In progress**, **Blocked**, **Ready for review**, **Accepted**, or **Needs revision**. An agent can prepare a deliverable and mark Ready for review; only Abd Alrahman Ismaik marks Accepted. Record the blocker/dependency for Blocked and the reason for Needs revision. Do not report an unfinished test as passed or a proposed responsibility as a completed contribution.
 
+Track A/B agents may commit/push to their assigned feature branches and open/update PRs into `main`, requesting `abdalrahman-ismaik`. Record PR details below; use draft PRs for incomplete dependencies. No direct push to `main`, force-push, merge or self-acceptance. See the [PR workflow](docs/CLAUDE_TASK_PROMPTS.md#authorized-branch-and-pr-workflow).
+
+## Pull request register
+
+| Track | Branch | PR URL | Status / reviewer |
+|---|---|---|---|
+| A — database/design/validation | `ali/database-diagrams-validation` | Not created | Awaiting task owner; reviewer: abdalrahman-ismaik |
+| B — report/poster/exports | `mohammad/report-poster` | Not created | Awaiting task owner; reviewer: abdalrahman-ismaik |
+
 ## Existing baseline
 
 | Item | Current evidence/status |
@@ -67,4 +76,6 @@ Requirements covered and evidence links:
 Blocked dependencies / exact reviewer decisions needed:
 Remaining work and next action:
 Ready-for-review artifact paths:
+Feature branch / PR URL / draft or ready status:
+Review comments addressed / commits / affected rechecks:
 ```
