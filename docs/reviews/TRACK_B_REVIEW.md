@@ -2,7 +2,7 @@
 
 **Owner:** Mohammad Arwani (100064908), with Codex. **Date:** 17 November 2026. **Branch:** `mohammad/report-poster`. **Reviewer:** @abdalrahman-ismaik.
 
-**PR:** to be recorded after creation. **Status:** draft PR; produced artifacts are Ready for review, not Accepted. Final exports/package remain dependent on Track A review and decisions below.
+**PR:** https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/3. **Status:** draft PR; produced artifacts are Ready for review, not Accepted. Final exports/package remain dependent on Track A review and decisions below.
 
 The assessed technical/poster PDFs were missing. This change supplies a 12-page technical report, a one-page 16:9 poster, editable sources, reproducible exports and an attribution audit. The report incorporates the real Track A diagrams and expected/actual findings, including failures, with provenance pinned to `80529fbfddf58b58735963f6a35847e22dedeadc` from [PR #2](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/2). Earlier test observations are cited as team evidence, not rerun by Mohammad.
 
@@ -51,7 +51,7 @@ Observed locally on 17 November:
 
 - Build succeeded: **12 report pages, 1 poster page**; both PDFs reopened and contain team identities. Two consecutive builds have identical SHA-256s.
 - **All 12 report pages and the poster were rendered and individually inspected.** Fixed the poster's clipped connector labels and the report's awkward long row label, rebuilt and reinspected affected pages. Final no clipping/overlap/missing glyphs observed. Poppler's Symbol/ArialUnicode font warnings are documented; the relevant rendered symbols were checked.
-- Static checks preserve **14 exact AI questions**, Track A backend **163 Pass / 4 Fail / 1 Info**, GUI **21 Pass / 1 Fail**, seven core ER entities/six relationships, and the original application snapshot. Python AST parse and working-tree `git diff --check` passed. The first staged check exposed a PDF text-diff/CRLF setting; a scoped `submission/.gitattributes` binary rule fixes it, and staged PDF bytes are checked against the outputs.
+- Static checks preserve **14 exact AI questions**, Track A backend **163 Pass / 4 Fail / 1 Info**, GUI **21 Pass / 1 Fail**, seven core ER entities/six relationships, and the original application snapshot. Python AST parse and working-tree `git diff --check` passed. The first staged check exposed a PDF text-diff/CRLF setting; a scoped `submission/.gitattributes` binary rule fixes it, and the staged whitespace check passed with PDF bytes identical to the outputs.
 - Local image audit: **4/4 external JPEGs and 12/12 SQL BLOB tuples match the original archive**; SHA-256/dimensions recorded, no EXIF keys. Upstream dataset-level attribution/license verified; exact local source version/file mapping unknown.
 - No database setup, mutating tests, live GUI or Gemini runs were executed by Track B. No `.env` was read/overwritten. No new application-runtime or fresh-extraction claim is made.
 
@@ -68,3 +68,5 @@ Earlier results cited: original 65/65, 18 tabs and photo restart; fourteen live 
 7. Human team members confirm registration, actual booking/location and attendance, and rehearse the existing request-before-allocation-before-delivery sequence within 3 + 12 minutes. No newer eLearn announcements, registration or bookings were checked or performed here.
 
 Only Abd Alrahman records acceptance and decides merging. No course submission, merge, force-push or direct main push is part of this work.
+
+PR delivery: draft PR #3 is open against main; GitHub confirmed `abdalrahman-ismaik` in requested reviewers. Commit `686b297` contains the artifacts. The connector returned 403 for PR creation; the authorized request succeeded using the existing Git authentication without exposing credentials. This note is the PR description source.

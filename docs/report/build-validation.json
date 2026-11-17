@@ -31,5 +31,11 @@
   "application_tests_run": false,
   "package_created": false,
   "visual_qa": "All 12 report pages individually inspected at full render size; all changed report pages rechecked; final poster inspected at 1920x1080 after connector and wording fixes. No clipping, overlap or missing glyphs observed.",
-  "image_archive_comparison": "4/4 external JPEGs and 12/12 SQL BLOB tuples byte-identical to original ZIP; no EXIF identifiers; exact upstream mapping unresolved"
+  "image_archive_comparison": "4/4 external JPEGs and 12/12 SQL BLOB tuples byte-identical to original ZIP; no EXIF identifiers; exact upstream mapping unresolved",
+  "staged_checks": {
+    "paths": "14 scoped files; no runtime/archive/credential files",
+    "known_credential_patterns": "no matches",
+    "pdf_bytes": "index byte-identical to working exports after binary attribute",
+    "whitespace": "git diff --cached --check passed after PDF binary rule"
+  }
 }

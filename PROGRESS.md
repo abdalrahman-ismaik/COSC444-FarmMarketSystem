@@ -83,4 +83,6 @@ Mohammad Arwani, working with Codex, claims DOC-01, POSTER-01, BUILD-01, ATTR-01
 
 Database contribution in this pass: documented movement formulas, transaction/constraint boundaries and the receipt-normalization qualification; checked poster cardinalities against Ali's actual Draw.io source. No authorship of imported SQL/application implementation is inferred.
 
-Branch: `mohammad/report-poster`. PR URL and reviewer-request outcome will be appended after creation. Review note: [TRACK_B_REVIEW.md](docs/reviews/TRACK_B_REVIEW.md). Only Abd Alrahman records Accepted.
+Branch: `mohammad/report-poster`. PR: https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/3 (draft, targets main). GitHub confirmed `abdalrahman-ismaik` as requested reviewer. Review note: [TRACK_B_REVIEW.md](docs/reviews/TRACK_B_REVIEW.md). Only Abd Alrahman records Accepted.
+
+2026-11-17 publication evidence: scoped commit `686b297` pushed to `origin/mohammad/report-poster`; draft PR #3 opened with TRACK_B_REVIEW as its body, and reviewer request succeeded. First connector attempt returned 403 (integration access); existing Git authentication completed the authorized API operation. Staged checks passed after a scoped PDF binary attribute prevented text/CRLF handling; both staged PDF byte sequences equal the visually checked exports. No main push, force-push, merge, acceptance or course submission.
