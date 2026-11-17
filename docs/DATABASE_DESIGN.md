@@ -12,6 +12,8 @@ This document explains the design of the existing database: entities, relationsh
 | Source of truth | [app/schema.sql](../app/schema.sql) (15 tables, 2 views, 32 FKs, 13 named CHECKs) |
 | Test evidence | [REMAINING_TEST_RESULTS.md](evidence/REMAINING_TEST_RESULTS.md) |
 
+**Follow-up update (Codex, November 17):** normalization wording and transaction details were corrected after reviewer instructions. The original Track A failure records remain intact; [follow-up validation](evidence/FIX_VALIDATION.md) records the implemented fixes and new outcomes.
+
 The schema diagram was checked mechanically against the live MySQL `information_schema` with `docs/diagrams/tools/check_diagrams_vs_sql.py`. That run passed 851 checks with 0 failures, and all 32 FKs are drawn. The checker parses the `.drawio` XML itself, and a mutation test confirmed that it detects injected errors.
 
 ## 1. Conceptual model
@@ -80,7 +82,7 @@ No `ON DELETE`/`ON UPDATE` actions are declared, so MySQL's default (RESTRICT) b
 
 ## 3. Normalization and deliberate redundancy
 
-Every table has a single-column surrogate key, or the composite key `(farm_id, user_id)`. Non-key attributes describe only that key. There are no repeating groups and no attribute depends on part of a composite key. The base design is in 3NF/BCNF with respect to the declared keys and natural UNIQUE keys. The crop and farm of a lot are not stored on the lot (no transitive copy); they come through `crop_cycles`.
+Reference entities and the farmer-assignment junction use simple keys, atomic values and separate relationships rather than repeating groups. The crop and farm of a lot are derived through `crop_cycles`. This is not a claim that every operational table is in 3NF or BCNF: `(allocated_quantity, received_quantity)` determines the stored `delivery_receipts.discrepancy_quantity`, but that pair is not a candidate key. Units copied across quantity records and promised-quantity snapshots are also deliberate redundancies. These choices make records explicit/auditable and are controlled as described below; primary keys alone do not prove normalization.
 
 The following redundancies are intentional. Each is controlled as stated:
 
@@ -140,16 +142,18 @@ Each operation in `db.py` runs inside `transaction()`: one connection, commit on
 |---|---|---|
 | Record harvest | cycle row | lot, HARVEST_ADDED movement, cycle → HARVESTING, optional image |
 | Allocate | request row, then lot row | allocation, RESERVED movement, request status + history |
-| Release | allocation row, lot row | RESERVATION_RELEASED, allocation → RELEASED, request status + history |
-| Cancel request | request row, lot rows of reserved allocations | releases, allocations → RELEASED, request → CANCELLED + history |
-| Confirm delivery | allocation + request rows, lot row | receipt, DELIVERED, (release + LOSS if short), allocation → DELIVERED, request status + history |
+| Release | request row, allocation row, lot row | RESERVATION_RELEASED, allocation → RELEASED, request status + history |
+| Cancel request | request row, ordered allocation rows, sorted affected lot rows | releases, allocations → RELEASED, request → CANCELLED + history |
+| Confirm delivery | request row, allocation row, lot row | receipt, DELIVERED, (release + LOSS if short), allocation → DELIVERED, request status + history |
 | Loss / correction / donate / dispose | lot row | one movement |
 
-**Observed (this pass):**
+**Track A baseline observations (before follow-up fixes):**
 
 - Injected failures after the first write rolled back every table. CHECKSUM TABLE was identical before and after for harvest + image, allocation, partial delivery, release, cancellation and add farm (TX-01a–f).
 - Duplicate confirmations, release vs confirm, cancel vs allocate and cancel vs confirm were serialized correctly (TX-03a–d).
-- **Finding F-01:** two allocations to *different* requests, or an allocation racing a donation, on the same lot can oversell it (TX-02a/b/c). The availability read in `allocate`, `dispose_lot` and `record_adjustment` is a non-locking read of `v_lot_stock`. Under MySQL's default REPEATABLE READ, it uses the snapshot created by the earlier plain SELECT in `_check_lot_owner`, taken *before* the lot lock was granted. It therefore misses the movement that the lock holder committed. The existing suite's race test uses one request, whose row lock serializes the threads first, so it does not exercise this path. The proposed fix and validation are in the [Track A review](reviews/TRACK_A_REVIEW.md#f-01-concurrent-oversell).
+- **Baseline finding F-01 (fixed in the follow-up):** two allocations to *different* requests, or an allocation racing a donation, on the same lot can oversell it (TX-02a/b/c). The availability read in `allocate`, `dispose_lot` and `record_adjustment` is a non-locking read of `v_lot_stock`. Under MySQL's default REPEATABLE READ, it uses the snapshot created by the earlier plain SELECT in `_check_lot_owner`, taken *before* the lot lock was granted. It therefore misses the movement that the lock holder committed. The existing suite's race test uses one request, whose row lock serializes the threads first, so it does not exercise this path. The proposed fix and validation are in the [Track A review](reviews/TRACK_A_REVIEW.md#f-01-concurrent-oversell).
+
+The current follow-up explicitly uses READ COMMITTED with request → allocation → lot lock ordering. It passed 173 expanded checks, including the former failing interleaving and additional same-request status/history races. The settlement/shortfall policy is retained by reviewer direction; this is not an instructor endorsement. See [dated expected/actual results](evidence/FIX_VALIDATION.md).
 
 ## 9. SQL-enforced vs application-enforced rules
 

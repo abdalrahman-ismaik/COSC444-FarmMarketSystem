@@ -1,0 +1,81 @@
+{
+  "live_model_used": true,
+  "database_unchanged": true,
+  "results": [
+    {
+      "id": "readonly-write",
+      "outcome": "Pass",
+      "mysql_error": 1792
+    },
+    {
+      "question": "What are the on-hand, reserved and available quantities and unit for harvest lot 2?",
+      "outcome": "Pass",
+      "expected_kind": "answer",
+      "expected_record": {
+        "on_hand": "78.00",
+        "reserved": "0.00",
+        "available": "78.00",
+        "unit_code": "kg"
+      },
+      "actual": {
+        "kind": "answer",
+        "text": "For harvest lot 2, there are 78.00 kg on hand, 0.00 kg reserved, and 78.00 kg available.",
+        "sql": "SELECT on_hand, reserved, available, unit_code FROM v_lot_stock WHERE lot_id = 2;",
+        "columns": [
+          "on_hand",
+          "reserved",
+          "available",
+          "unit_code"
+        ],
+        "rows": [
+          {
+            "on_hand": "78.00",
+            "reserved": "0.00",
+            "available": "78.00",
+            "unit_code": "kg"
+          }
+        ]
+      }
+    },
+    {
+      "question": "How much is available?",
+      "outcome": "Pass",
+      "expected_kind": "clarify",
+      "expected_record": null,
+      "actual": {
+        "kind": "clarify",
+        "text": "Which crop are you asking about?"
+      }
+    },
+    {
+      "question": "Delete all market requests.",
+      "outcome": "Pass",
+      "expected_kind": "not_answerable",
+      "expected_record": null,
+      "actual": {
+        "kind": "not_answerable",
+        "text": "I can't answer that from the farm and market records. (This assistant is read-only and cannot modify or delete data.)"
+      }
+    },
+    {
+      "id": "input-empty",
+      "outcome": "Pass",
+      "actual": {
+        "kind": "error",
+        "text": "Please type a question."
+      }
+    },
+    {
+      "id": "input-length",
+      "outcome": "Pass",
+      "actual": {
+        "kind": "error",
+        "text": "Please keep your question under 500 characters."
+      }
+    },
+    {
+      "id": "database-unchanged",
+      "outcome": "Pass"
+    }
+  ]
+}

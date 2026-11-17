@@ -1,5 +1,7 @@
 # Test plan and evidence
 
+**Current correctness follow-up:** see [FIX_VALIDATION.md](evidence/FIX_VALIDATION.md) for real isolation/locking fixes, 173/173 backend checks, 22/22 GUI checks, original 65/65 and representative live/read-only AI verification. Historical failed runs remain preserved.
+
 This is the full acceptance plan. **Subsequent local validation passed the existing 65/65 business-rule suite on MySQL 8.0.46, all 18 role tabs, GUI harvest validation, and image retrieval after process restart.** See [observed results and screenshots](evidence/VALIDATION.md) for scope, environment, actual outcomes, and limits. The original visual guide remains historical evidence; its stand-in AI screenshots do not establish live Gemini success.
 
 **November 17:** [live AI results](evidence/AI_VALIDATION.md) cover AI-01–AI-14 (AI-05 uses a scoped single-cycle forecast question), two GUI AI checks, and the empty/overlength portion of AI-15. Exact questions, initial failures, retests and reference corrections are preserved. The original matrix remains a broader acceptance checklist; no blanket completion claim is inferred.

@@ -13,8 +13,12 @@ automation evidence, not a manual usability study.
   .\\.venv\\Scripts\\python.exe app\\tests\\track_a_gui_flow.py            # phase 1
   .\\.venv\\Scripts\\python.exe app\\tests\\track_a_gui_flow.py --restart  # phase 2, new process
 
-Writes docs/evidence/track-a/gui-flow.json (merged across phases) and gui-*.png screenshots.
+Writes output/validation/gui/ by default (use --output-dir for a new run); both phases
+use the same output directory. Historical evidence is never the default output target.
+Exit 0 = no failures/blocked cases, 1 = failures, 2 = blocked.
 """
+from validation_support import output_directory, suite_exit_code
+
 import hashlib
 import json
 import os
@@ -24,12 +28,17 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 ROOT = os.path.dirname(APP)
-OUT = os.path.join(ROOT, "docs", "evidence", "track-a")
+OUT = os.path.join(ROOT, "output", "validation", "gui")
 JSON_PATH = os.path.join(OUT, "gui-flow.json")
-STATE = os.path.join(ROOT, "output", "gui-flow-state.json")   # ignored hand-off between phases
+STATE = os.path.join(OUT, "gui-flow-state.json")   # ignored hand-off between phases
 
 
 def main():
+    options = output_directory(__doc__, "gui", restart=True)
+    global OUT, JSON_PATH, STATE
+    OUT = str(options.output_dir.resolve())
+    JSON_PATH = os.path.join(OUT, "gui-flow.json")
+    STATE = os.path.join(OUT, "gui-flow-state.json")
     sys.path.insert(0, APP)
     import db
     s = db.db_settings()
@@ -39,8 +48,10 @@ def main():
     import app as gui
     from PIL import ImageGrab
 
-    restart = "--restart" in sys.argv
+    restart = options.restart
     results, dialogs = [], []
+    if restart and not (os.path.exists(JSON_PATH) and os.path.exists(STATE)):
+        sys.exit("Restart validation needs phase 1 output and state in the same --output-dir.")
     if restart and os.path.exists(JSON_PATH):
         results = [r for r in json.load(open(JSON_PATH, encoding="utf-8"))["results"] if r["id"] != "GUI-IMG-02"]
     elif not restart:
@@ -395,9 +406,9 @@ def main():
         alc.allocate()
         pump()
         rec("GUI-ALC-03", "Request of 1,500 kg: allocate using the pre-filled quantity unchanged",
-            "observe pre-fill format and result (Deliveries tab strips thousands separators; Allocate tab?)",
+            "pre-fill 1500 parses; insufficient-stock rejection, not a numeric-format error",
             f"prefill='{pre}'; {dialogs[-1] if len(dialogs) > n else 'no dialog'}; lot8={lot_stock(8)}",
-            "," not in pre)
+            pre == "1500" and len(dialogs) > n and "not enough stock" in dialogs[-1][2].lower())
 
         # ---- Loss & Surplus thresholds through the GUI
         scr = login(3)
@@ -424,7 +435,7 @@ def main():
             cur.execute("""INSERT INTO harvest_lot_images (lot_id, file_name, mime_type, image_data, uploaded_by)
                            VALUES (10, 'corrupt.jpg', 'image/jpeg', %s, 3)""", (b"\xff\xd8garbage" * 50,))
         jpg = open(os.path.join(APP, "sample_images", "eggplant.jpg"), "rb").read()
-        trunc = os.path.join(ROOT, "output", "truncated_eggplant.jpg")
+        trunc = os.path.join(OUT, "truncated_eggplant.jpg")
         open(trunc, "wb").write(jpg[: len(jpg) // 2])
         up_err = None
         try:
@@ -439,17 +450,19 @@ def main():
         pump()
         second = (find.photo.caption.cget("text"), find.photo.canvas.cget("text"))
         p = shot("image-unavailable")
-        rec("IMG-04e", "Lot #10 with a truncated JPEG (accepted by upload validation) and a corrupt BLOB",
-            "upload of truncated file: observe; both unreadable photos show '⚠ Image unavailable' without crashing",
+        rec("IMG-04e", "Truncated upload rejected; corrupt BLOB fallback and next valid image",
+            "truncated file rejected; corrupt image unavailable; next valid image renders",
             f"upload={'accepted' if up_err is None else up_err}; newest={first}; next={second}",
-            "Image unavailable" in first[1] and "Image unavailable" in second[1], p)
+            up_err is not None and "not a valid" in up_err.lower()
+            and "Image unavailable" in first[1] and find.photo._tk is not None, p)
         A.destroy()
 
     data = {"date": time.strftime("%Y-%m-%d"), "dialogs_recorded": len(dialogs), "results": results}
     json.dump(data, open(JSON_PATH, "w", encoding="utf-8"), indent=1, default=str)
     print("Summary:", {k: sum(1 for r in results if r["outcome"] == k) for k in ("Pass", "Fail", "Blocked")})
-    return 0
+    return suite_exit_code(results)
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")
     sys.exit(main())

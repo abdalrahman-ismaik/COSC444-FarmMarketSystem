@@ -1,5 +1,7 @@
 # Remaining acceptance test results — Track A (TEST-01)
 
+**Later follow-up:** [FIX_VALIDATION.md](FIX_VALIDATION.md) records implemented fixes and 173/173 backend + 22/22 GUI checks. This document retains Ali's original failing baseline and must not be relabeled as a passing run.
+
 **Date:** 2026-11-17 · **Tester:** Ali Alshamsi, with a Claude Code agent, on Ali's Windows PC · **Status:** Ready for review. Abd Alrahman Ismaik decides acceptance.
 
 This report adds **new, separately executed** evidence to the existing team evidence. It does not replace it:

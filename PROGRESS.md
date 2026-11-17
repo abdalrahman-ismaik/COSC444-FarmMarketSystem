@@ -72,3 +72,12 @@ Blocked dependencies / exact reviewer decisions needed:
 Remaining work and next action:
 Ready-for-review artifact paths:
 ```
+
+## Correctness follow-up (user-approved plan, November 17)
+
+- Branch: `fix/stock-integrity-validation`, based on Ali's PR #2; PR URL to be recorded after creation.
+- Owner: Codex, authorized by Abd Alrahman; status **Ready for review**, not Accepted.
+- Implemented F-01 isolation/lock ordering, F-05 numeric prefill, F-06 decode validation; failure-sensitive test exits/output and bounded concurrency; qualified normalization.
+- Policy decision: preserve allocation-settlement DELIVERED and one-receipt/shortfall-as-loss, with GUI explanation.
+- Observed: 65/65 original, 173/173 expanded backend, 22/22 GUI, 3 validation-support, 7 assistant/read-only and 851 diagram checks. See [FIX_VALIDATION](docs/evidence/FIX_VALIDATION.md).
+- Teammate baseline evidence and contributions remain intact. No PR merge or final artifact acceptance is claimed.

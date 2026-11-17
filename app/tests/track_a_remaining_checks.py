@@ -12,10 +12,13 @@ Typical run (PowerShell, repository root, disposable server already configured i
   $env:FARM_DISPOSABLE_DB_CONFIRM = "127.0.0.1:3317/farm_market_db"
   .\\.venv\\Scripts\\python.exe app\\tests\\track_a_remaining_checks.py
 
-Writes docs/evidence/track-a/remaining-checks.json and prints one line per check.
-This script does not modify application code. A few checks simulate a proposed fix by
-patching the connection inside this process only; they are labelled "proposed-fix simulation".
+Writes output/validation/backend/remaining-checks.json by default; --output-dir selects a new run.
+Exit 0 = no failures/blocked cases, 1 = failures, 2 = blocked. Historical evidence is not overwritten.
+This script does not modify application code. Rollback checks inject failures only inside
+this process; concurrency checks exercise the actual connection isolation and locking.
 """
+from validation_support import output_directory, suite_exit_code, run_concurrently
+
 import datetime as dt
 import hashlib
 import importlib.metadata
@@ -33,7 +36,7 @@ from decimal import Decimal
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 ROOT = os.path.dirname(APP)
-OUT_DIR = os.path.join(ROOT, "docs", "evidence", "track-a")
+OUT_DIR = os.path.join(ROOT, "output", "validation", "backend")
 
 RESULTS = []
 TODAY = dt.date.today()
@@ -60,6 +63,9 @@ def guard():
 
 
 def main():
+    options = output_directory(__doc__, "backend")
+    global OUT_DIR
+    OUT_DIR = str(options.output_dir.resolve())
     db = guard()
     import pymysql
     q, q1 = db.query, db.query_one
@@ -671,9 +677,8 @@ def main():
     record("IMG-04a", "PNG of exactly 5 MiB (5,242,880 bytes)", "accepted (limit is inclusive)", got or "accepted",
            "Pass" if got is None else "Fail", G)
     got = err(db.validate_image, p_trunc)
-    record("IMG-04b", "JPEG truncated to half its bytes", "observe: validate_image uses Pillow verify()",
-           got or "accepted by validate_image", "Info", G,
-           "Informational: records actual behaviour of the existing validator for truncated JPEGs.")
+    record("IMG-04b", "JPEG truncated to half its bytes", "rejected before storage",
+           got or "accepted", "Pass" if got and "not a valid" in got.lower() else "Fail", G)
     n_img = q1("SELECT COUNT(*) n FROM harvest_lot_images")["n"]
     for path in (p_over, p_fake, p_empty):
         err(db.add_lot_image, omar, L, path)
@@ -756,21 +761,7 @@ def main():
     G = "TX-02/03 concurrency"
 
     def race(fns):
-        """Run callables in parallel threads released by one barrier; return outcomes in order."""
-        out = [None] * len(fns)
-        bar = threading.Barrier(len(fns))
-
-        def run(i, f):
-            bar.wait()
-            try:
-                f()
-                out[i] = "ok"
-            except Exception as e:  # noqa: BLE001
-                out[i] = db.friendly_error(e)
-        th = [threading.Thread(target=run, args=(i, f)) for i, f in enumerate(fns)]
-        [t.start() for t in th]
-        [t.join() for t in th]
-        return out
+        return run_concurrently(fns, db.friendly_error)
 
     def oversell_trials(n, label):
         overs, both, detail = 0, 0, []
@@ -815,16 +806,20 @@ def main():
             res["A"] = "ok"
         except Exception as e:  # noqa: BLE001
             res["A"] = db.friendly_error(e)
-    ta = threading.Thread(target=A, name="A")
+    ta = threading.Thread(target=A, name="A", daemon=True)
     ta.start()
-    entered.wait(10)
+    if not entered.wait(10):
+        gate.set()
+        raise TimeoutError("Deterministic allocation did not reach its checkpoint")
     try:
         db.allocate(omar, rb, lot, "80")
         res["B"] = "ok"
     except Exception as e:  # noqa: BLE001
         res["B"] = db.friendly_error(e)
     gate.set()
-    ta.join()
+    ta.join(15)
+    if ta.is_alive():
+        raise TimeoutError("Deterministic allocation did not finish")
     db._check_lot_owner = orig_owner
     s = stock(lot)
     record("TX-02b", "Deterministic interleaving: A reads ownership (snapshot), B allocates 80 and commits, A continues",
@@ -845,21 +840,23 @@ def main():
            "never both; available never negative", f"negative availability in {overs2}/10 trials",
            "Pass" if overs2 == 0 else "Fail", G)
 
-    # proposed-fix simulation: READ COMMITTED for every connection in this process
-    def rc_get():
-        conn = orig_get()
-        with conn.cursor() as cur:
-            cur.execute("SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED")
-        return conn
-    db.get_connection = rc_get
-    try:
-        overs_fix, both_fix, _ = oversell_trials(20, "rc")
-    finally:
-        db.get_connection = orig_get
-    record("TX-02d", "Proposed-fix simulation: same 20 trials with READ COMMITTED sessions",
-           "no oversell", f"both succeeded {both_fix}/20; negative availability {overs_fix}/20",
-           "Pass" if overs_fix == 0 and both_fix == 0 else "Fail", G,
-           "Simulation inside this test process only; application code unchanged. Not a reviewed fix.")
+    isolation = q1("SELECT @@transaction_isolation i")["i"]
+    record("TX-02d", "Application connections use READ COMMITTED", "READ-COMMITTED", isolation,
+           "Pass" if isolation == "READ-COMMITTED" else "Fail", G,
+           "This is the actual application setting, not an in-process fix simulation.")
+
+    for kind in ("LOSS", "CORRECTION"):
+        overs = 0
+        for _ in range(10):
+            lot = db.record_harvest(omar, 1, "100", iso(), iso(10), None)
+            rq = db.create_request(aisha, 1, "80", 1, iso(5), "removal race")
+            amount = "80" if kind == "LOSS" else "-80"
+            out = race([lambda: db.allocate(omar, rq, lot, "80"),
+                        lambda: db.record_adjustment(omar, lot, kind, amount, "race validation")])
+            overs += stock(lot)[2] < 0 or out.count("ok") != 1
+        record("TX-02-" + kind, "10 trials: allocation versus " + kind,
+               "one succeeds; availability nonnegative", f"violations={overs}",
+               "Pass" if overs == 0 else "Fail", G)
 
     # two confirmations of the same allocation
     lot = db.record_harvest(omar, 1, "50", iso(), iso(10), None)
@@ -900,6 +897,39 @@ def main():
            f"outcomes={out}; request={st}; allocation={a_st}; lot {fmt3(stock(lot))}",
            "Pass" if out.count("ok") == 1 and ((st, a_st, stock(lot)) in (("CANCELLED", "RELEASED", (50, 0, 50)),
                                                                             ("DELIVERED", "DELIVERED", (0, 0, 0)))) else "Fail", G)
+    for mode in ("two releases", "release versus allocation", "two partial receipts"):
+        violations = []
+        for trial in range(10):
+            l1 = db.record_harvest(omar, 1, "50", iso(), iso(10), None)
+            l2 = db.record_harvest(omar, 1, "50", iso(), iso(10), None)
+            rq = db.create_request(aisha, 1, "100", 1, iso(5), mode)
+            a1 = db.allocate(omar, rq, l1, "50")
+            if mode == "release versus allocation":
+                functions = [lambda: db.release_allocation(omar, a1, "race"),
+                             lambda: db.allocate(omar, rq, l2, "50")]
+                expected_status, expected_reserved = "PARTIALLY_ALLOCATED", 50
+            else:
+                a2 = db.allocate(omar, rq, l2, "50")
+                if mode == "two releases":
+                    functions = [lambda: db.release_allocation(omar, a1, "race"),
+                                 lambda: db.release_allocation(omar, a2, "race")]
+                    expected_status, expected_reserved = "OPEN", 0
+                else:
+                    functions = [lambda: db.confirm_delivery(aisha, a1, "45", "5 short"),
+                                 lambda: db.confirm_delivery(aisha, a2, "45", "5 short")]
+                    expected_status, expected_reserved = "DELIVERED", 0
+            out = race(functions)
+            req = q1("SELECT status FROM market_requests WHERE request_id=%s", (rq,))
+            history = db.request_history(rq)
+            chain_ok = all(history[i]["old_status"] == history[i-1]["new_status"]
+                           for i in range(1, len(history)))
+            reserved = stock(l1)[1] + stock(l2)[1]
+            if out.count("ok") != 2 or req["status"] != expected_status or reserved != expected_reserved or not chain_ok:
+                violations.append((trial, out, req["status"], str(reserved), chain_ok))
+        record("TX-03-" + mode.replace(" ", "-"), "10 trials: " + mode + " on one request",
+               "serialized status/history, both valid actions succeed", violations or "no violations",
+               "Fail" if violations else "Pass", G)
+
     ok, detail = inv_ok()
     record("TX-03z", "Ledger invariants after all concurrency scenarios",
            "no lot with reserved != open RESERVED allocations; no duplicate receipt",
@@ -932,8 +962,9 @@ def main():
     with open(os.path.join(OUT_DIR, "remaining-checks.json"), "w", encoding="utf-8") as fh:
         json.dump({"environment": env, "summary": summary, "results": RESULTS}, fh, indent=1, default=str)
     print("\nSummary:", summary)
-    return 0
+    return suite_exit_code(RESULTS)
 
 
 if __name__ == "__main__":
+    sys.stdout.reconfigure(encoding="utf-8")
     sys.exit(main())
