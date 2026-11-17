@@ -1,6 +1,6 @@
 # Track A review note — database diagrams, design and remaining validation
 
-**Owner:** Ali Alshamsi (100062530), working with a Claude Code agent · **Date:** 2026-11-17 · **Branch:** `ali/database-diagrams-validation` · **Reviewer:** Abd Alrahman Ismaik (`abdalrahman-ismaik`)
+**Owner:** Ali Alshamsi (100062530), working with a Claude Code agent · **Date:** 2026-11-17 · **Branch:** `ali/database-diagrams-validation` · **PR:** https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/2 · **Reviewer:** Abd Alrahman Ismaik (`abdalrahman-ismaik`)
 **Tasks:** DB-01, DB-02, DB-03, TEST-01 → **Ready for review** (not Accepted; only the reviewer records acceptance)
 
 ## What changed and why
