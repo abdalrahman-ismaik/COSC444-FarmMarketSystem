@@ -75,7 +75,7 @@ Ready-for-review artifact paths:
 
 ## Correctness follow-up (user-approved plan, November 17)
 
-- Branch: `fix/stock-integrity-validation`, based on Ali's PR #2; PR URL to be recorded after creation.
+- Branch: `fix/stock-integrity-validation`, based on Ali's PR #2; PR [#4](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/4) (base: Ali's branch).
 - Owner: Codex, authorized by Abd Alrahman; status **Ready for review**, not Accepted.
 - Implemented F-01 isolation/lock ordering, F-05 numeric prefill, F-06 decode validation; failure-sensitive test exits/output and bounded concurrency; qualified normalization.
 - Policy decision: preserve allocation-settlement DELIVERED and one-receipt/shortfall-as-loss, with GUI explanation.

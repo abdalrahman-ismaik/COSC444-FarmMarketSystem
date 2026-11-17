@@ -1,5 +1,7 @@
 # Correctness follow-up for PR #2
 
+PR: https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/4
+
 Prepared by Codex under Abd Alrahman Ismaik's approved implementation plan. Status: **Ready for review**, not Accepted. Base: Ali's Track A commit `80529fb` / PR #2. No schema or seed change; original Track A drawings/results remain preserved.
 
 ## Resulting behavior
