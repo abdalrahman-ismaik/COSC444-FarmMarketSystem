@@ -2,7 +2,7 @@
 
 Reviewed on **November 16, 2026**. The working folder was not a Git repository at intake; this pass did not initialize Git, create commits, or publish a remote. No MySQL reset, business-rule execution, live Gemini request, registration, or booking was performed.
 
-**Subsequent GitHub preparation:** Git was later initialized locally on `main` at the user's request. No commit, remote, or push was created. Ignore rules were extended for private-key files and coverage output; see [GitHub readiness](GITHUB_READINESS.md) for current checks and remaining rubric work. Empty-folder deletion was retried after the user's explicit request and again rejected by automatic approval review with “blocked by policy.” Git does not track those empty directories.
+**Later updates:** This November 16 intake snapshot predates the GitHub publication and teammate PRs. The repository was subsequently pushed to the supplied remote and PRs were opened; use `PROGRESS.md` and GitHub for current branch/PR status. This page records the earlier intake observations only. Ignore rules were later extended for private-key files and coverage output; see [GitHub readiness](GITHUB_READINESS.md) for the original upload audit. Empty-folder deletion was retried after the user's explicit request and again rejected by automatic approval review with “blocked by policy.” Git does not track those empty directories.
 
 ### GitHub preparation checks
 

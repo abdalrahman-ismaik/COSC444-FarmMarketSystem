@@ -70,3 +70,8 @@ Earlier results cited: original 65/65, 18 tabs and photo restart; fourteen live 
 Only Abd Alrahman records acceptance and decides merging. No course submission, merge, force-push or direct main push is part of this work.
 
 PR delivery: draft PR #3 is open against main; GitHub confirmed `abdalrahman-ismaik` in requested reviewers. Commit `686b297` contains the artifacts. The connector returned 403 for PR creation; the authorized request succeeded using the existing Git authentication without exposing credentials. This note is the PR description source.
+
+
+## Later integrity/document/package follow-up
+
+A separate follow-up now preserves the original reports and failure evidence while documenting the tested fixes. See `docs/reviews/DOCUMENT_FIX_REVIEW.md`, `docs/evidence/FIX_VALIDATION.md`, and the 17 November entries in `PROGRESS.md`. The candidate PDF sources rebuild from checked-in hash-verified inputs. `submission/FarmMarketSystem_B1_review_candidate.zip` and `submission/MANIFEST.md` have been created and checked from a clean extraction; the package is still awaiting Abd Alrahman’s review and is not submitted. Exact image-to-source mapping remains unresolved.

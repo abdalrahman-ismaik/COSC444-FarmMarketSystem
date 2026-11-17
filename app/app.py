@@ -604,7 +604,7 @@ class AllocateTab(Tab):
         if req:
             remaining = req["requested_quantity"] - req["allocated_quantity"]
             self.qty.delete(0, "end")
-            self.qty.insert(0, fmt(remaining))
+            self.qty.insert(0, fmt(remaining).replace(",", ""))
 
     def allocate(self):
         req, lot = self.requests.selected(), self.lots.selected()
@@ -758,6 +758,8 @@ class MyRequestsTab(Tab):
     def build(self):
         self.header([("✚ New request", lambda: self.new_request(), "Primary.TButton"), ("✎ Edit", self.edit, None),
                      ("☰ Status history", self.history, None), ("✖ Cancel request", self.cancel, "Danger.TButton")])
+        ttk.Label(self, text="Delivered means all allocations are settled. Check Received and Difference for shortfalls.",
+                  style="Muted.TLabel").pack(anchor="w", pady=(0, 6))
         self.table = Table(self, [
             ("request_id", "Req #", 60, "center"), ("crop_name", "Crop", 110, "w"),
             ("requested_quantity", "Requested", 90, "e"), ("allocated_quantity", "Allocated", 90, "e"),

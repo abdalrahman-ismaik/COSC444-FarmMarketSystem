@@ -1,14 +1,14 @@
 # Farm to Market technical report
 COSC444 Database Systems | Khalifa University | Fall 2026-2027 | Lab B1
 
-Review draft | 17 November 2026 | Mohammad Arwani with Codex
+Review candidate | 17 November 2026 | Mohammad Arwani with Codex
 
 Abd Alrahman Ismaik - 100064692; Ali Alshamsi - 100062530; Mohammad Arwani - 100064908.
 
 ## Purpose and current result
 Farm-to-Market is a Python desktop prototype for local produce visibility. Farmers record crop cycles and harvest lots, buyers request supply and confirm receipts, and administrators maintain reference data. Operational data is fictional. The system does not represent national reserves or connect to government services. Loss & Surplus is the selected advanced feature. [R1, R2]
 
-The implementation demonstrates these workflows, but broader testing found concurrent overselling. This review draft includes the failure and other open findings; it does not claim complete acceptance. Earlier team tests and Track A's results are cited as their observations, not reruns by Mohammad. Track A PR #2 is unmerged and awaits review. No application behavior was changed for this report. [R3-R6]
+The implementation demonstrates these workflows. Track A first reproduced concurrent overselling and a quantity-prefill failure; a later isolated follow-up corrected those issues and added bounded concurrency, receipt-race and image-decode checks. The report separates both evidence snapshots so the original findings remain auditable. Application fixes are proposed for review, not accepted. [R3-R6]
 
 ## Application and data design
 The maintained entry point is `python app/app.py`. Tkinter/ttk handles the three role interfaces; `db.py` validates input, ownership and transactional SQL through PyMySQL; MySQL stores records and BLOB photos. `assistant.py` uses LangChain/Gemini for read-only questions. The demo-user selector supplies an identity for workflows; it is not password authentication. Shared search and assistant reads are not restricted to the selected user's own records. [R3]
@@ -37,7 +37,7 @@ The last row is current shortfall policy, observed by Track A DEL-02. A release 
 <!-- page -->
 # Transactions and operational rules
 ## Atomic writes and ownership
-Values use parameterized SQL. A transaction commits on success, rolls back on exception and closes its connection. `SELECT ... FOR UPDATE` locks coordinate relevant rows, but F-01 shows that locks do not by themselves prove correctness under the current isolation level. [R3, R6]
+Values use parameterized SQL. A transaction commits on success, rolls back on exception and closes its connection. `get_connection` uses READ COMMITTED; write paths lock the parent request before its allocations and lock affected lots in stable order. The dated follow-up exercised competing allocations, loss/correction, same-request releases and partial receipts. See the before/after results on page 3. [R3, R6]
 
 | Operation | Checks and records in the transaction |
 |---|---|
@@ -51,18 +51,18 @@ Values use parameterized SQL. A transaction commits on success, rolls back on ex
 SQL enforces PK/FK/UNIQUE constraints, enumerated domains, positive lot/request/allocation quantities, nonnegative forecasts/receipts, receipt bounds and discrepancy arithmetic. CHECK constraints require sensible cycle and sell-by dates and a market link only for buyers. Application logic adds active-reference checks, role/record ownership, matching units, finite quantities with at most two decimal places, current-date rules and stock/remainder checks. Reference data is deactivated to preserve history. [R3, R6]
 
 ## Images and role interfaces
-Farmers upload JPEG/PNG files of up to 5 MiB. Bytes, filename, MIME type, uploader and timestamp are stored in `harvest_lot_images` as MEDIUMBLOB data. Buyers retrieve photos by lot, including after restart. Missing/corrupt images have a fallback display. Track A found that Pillow `verify()` accepts one truncated JPEG; decoding then fails in the viewer (F-06). No claim is made that upload validation rejects every invalid image. [R3-R6]
+Farmers upload JPEG/PNG files of up to 5 MiB. Bytes, filename, MIME type, uploader and timestamp are stored in `harvest_lot_images` as MEDIUMBLOB data. Buyers retrieve photos by lot, including after restart. Upload validation now decodes the image after verification; truncated JPEG rejection, valid image display and corrupt stored-image fallback were exercised. This does not establish rejection of every malformed image. [R3-R6]
 
 ## Loss and Surplus
 Active lots with available stock above zero are candidates. Priority is expired, then near expiry, then currently unallocated ageing stock. Defaults are 3 expiry days and 7 surplus days; inclusive whole-number ranges are 0-60 and 0-365. Expired means sell-by before today; near expiry includes sell-by today through the selected threshold; surplus requires age at least the threshold and no non-RELEASED allocation. Query thresholds are not persisted settings. [R3, R6]
 
 Donation and disposal each reduce on-hand and available equally, leave reservations unchanged, and record actor/date/reason. Farmers act only on assigned lots; administrators inspect history without operational controls. The app permits donation of expired lots; no suitability policy is defined. This is a prototype stock action, not a food-safety determination. [R3, R6]
 
-## Current policies awaiting review
+## Current policies for reviewer confirmation
 DELIVERED uses settled allocated totals, not actual received totals: seed request #6 is 60 allocated/52 received. One receipt finalizes an allocation and turns shortfall into loss; there is no later top-up receipt. The GUI's “approved correction” is a farmer action with a required reason and no administrator approval step. Released historical allocations do not disqualify surplus. These policies are described, not endorsed by an instructor or reviewer. [R6]
 
 <!-- page -->
-# Observed tests and open defects
+# Test evidence and reviewed fixes
 ## Evidence environments
 The original team validation used Windows, Python 3.12.12 and isolated MySQL 8.0.46 at loopback port 3307 on 16 November 2026. It recorded 65/65 checks, 18 role tabs, harvest validation and image retrieval in a new process. Track A independently reran the 65-check suite on 17 November with Windows 11 Home, Python 3.12.1, MySQL 8.0.46 at disposable port 3317, strict SQL mode and REPEATABLE-READ. Its newer results are below. Track B performed document/static checks only. [R4-R6]
 
@@ -82,12 +82,14 @@ The original team validation used Windows, Python 3.12.12 and isolated MySQL 8.0
 | GUI-ALC-03 unchanged 1,500 pre-fill | Numeric quantity accepted | “Must be a number.” Fail F-05. |
 | GUI-IMG-02 new-process photo retrieval | Same bytes and rendered photo | SHA-256 equal; photo rendered. Pass. |
 
-Backend final run: 163 Pass, 4 Fail, 1 Info; all four failures concern F-01. GUI final run: 21 Pass, 1 Fail (F-05). The first backend run had 162 Pass, 5 Fail, 1 Info; an empty-tuple comparator error was corrected, with its original JSON preserved. These totals include simulated/observational cases and are not a universal correctness score. [R6]
+### Follow-up after the fixes
 
-## Reproduction and proposed fixes requiring decisions
-F-01: simultaneous 80 kg allocations to different requests from one 100 kg lot read a stale snapshot established by the ownership SELECT before the lot lock. Track A proposes READ COMMITTED in `get_connection`; its in-process simulation saw 0/20 oversells. Required follow-up: repeat deterministic and racing allocation/donation tests, invariants, 65-check suite, GUI and assistant read-only checks after an authorized change. No fix is applied here. [R6]
+On 17 November, an authorized follow-up used a fresh MySQL 8.0.46 instance on loopback port 3318 with READ COMMITTED. It recorded 173 backend checks, 22 GUI checks including restart, 7 assistant/read-only checks, 3 validation-helper checks, the original suite at 65/65, and the diagram checker at 851/851. Concurrent allocation/loss/correction and same-request release/receipt races passed their bounded trials. The assistant database fingerprint was unchanged; its three live model questions used the configured Gemini model. Full dated JSON, screenshots and source hashes are in `docs/evidence/fixes-2026-11-17/`. These are observed checks, not a guarantee of arbitrary concurrency or model behavior. The isolated database was separate from ports 3307 and 3306. [R4, R6]
 
-F-05: selecting a 1,500 kg request inserts a comma; strip thousands separators in `AllocateTab.on_request`, then retest unchanged pre-fill and the GUI flow. F-06: half a JPEG passes upload verification; reopen and decode with `.load()` before storage, then retest invalid/valid images and GUI upload/restart. These are Track A proposals awaiting reviewer authorization. [R6]
+The earlier Track A run remains recorded as 163 Pass / 4 Fail / 1 Info and GUI 21 Pass / 1 Fail. The follow-up supersedes those defect outcomes for the tested source; it does not rewrite or erase the earlier observations. The first backend run (162 Pass / 5 Fail / 1 Info) and its corrected comparator oracle remain preserved. [R6]
+
+## Earlier findings and disposition
+F-01 reproduced a stale availability snapshot while competing requests reserved one lot. F-05 failed when a selected 1,500 quantity retained its comma; F-06 showed that `verify()` alone accepted one truncated JPEG. The follow-up changed isolation/lock order, normalized the quantity prefill and decoded image bytes before storage. Its backend and GUI results above cover those cases plus additional races. Review the code and evidence before accepting the fixes; the historical failures remain in `docs/evidence/track-a/`. [R6]
 
 <!-- page -->
 # Live assistant evidence
@@ -120,11 +122,11 @@ The old model returned 404; other probes saw 503/504 before the recorded model s
 The GUI uses a background worker. The assistant supplies an allowlisted non-BLOB schema, asks Gemini for SELECT/CTE or clarification/refusal, applies regex checks and a 200-row result cap, then executes `START TRANSACTION READ ONLY` and rolls back. A second chain summarizes only the first 50 rows. SQL and supporting records are visible. Regex checking is not a complete parser, and read-only execution does not prove semantic correctness, function safety or role-scoped confidentiality. The existing direct write attempt was refused by MySQL error 1792. [R3-R5]
 
 ## Delivery and remaining work
-The full conceptual ER and six separate schema sheets follow as seven vector appendix pages. The 12-page document uses five narrative/evidence pages plus seven large diagram sheets so labels remain readable; the assignment's 6-10-page working target is not an instructor limit. Editable Draw.io sources and Track A evidence are pinned at commit `80529fbfddf58b58735963f6a35847e22dedeadc`, PR #2, awaiting review. The conceptual diagram states intended availability rules; F-01 is the observed implementation exception. The normalization qualification on page 1 should be reconciled with Track A's broader BCNF statement. [R6]
+The full conceptual ER and six separate schema sheets follow as seven vector appendix pages. The 12-page document uses five narrative/evidence pages plus seven large diagram sheets so labels remain readable; the assignment's 6-10-page working target is not an instructor limit. Editable Draw.io sources and original Track A evidence are retained with their commit provenance; the later integrity follow-up is linked in `docs/evidence/FIX_VALIDATION.md` and PR #4. The conceptual diagram states intended availability rules; the follow-up tests observed no oversell in the documented trials. Track A’s normalization note is qualified on page 1. [R6]
 
 Remaining checks include demo-PC live AI, user switch during a pending AI call, full keyboard/accessibility testing, 100/125% scaling, minimum window behavior and a human timed rehearsal. At 150% scaling Track A observed the receipt table needs scrolling. Model paraphrases, injection variants and large-result summaries are not exhaustively tested. [R5, R6]
 
-The candidate ZIP is withheld until artifact reviews and decisions are satisfied. A fresh-extraction install/run check has not occurred. Existing setup drops and recreates the hardcoded `farm_market_db`; changing DB_NAME does not retarget it. Neither setup nor any mutating test was run for Track B. Local database/API configuration has not been established by this document build. [R3]
+The review-candidate ZIP was extracted, dependencies installed, and documents rebuilt. On isolated port 3318, seed setup and the 65-check suite passed; the GUI flow passed 21 checks plus 22 after restart. This is not acceptance or a course submission. Image provenance and demo rehearsal remain open. Setup drops and recreates hardcoded `farm_market_db`; DB_NAME does not retarget it. This document build itself did not use app credentials or database state. [R3]
 
 The saved notices specify submission on 19 November 2026 without a cutoff time. The later registration/booking deadline is 16 November, retaining the earlier 12 November notice. Actual registration, slot, location and attendance remain unconfirmed; no newer eLearn announcements were checked. Rehearse 3 minutes of poster plus 12 of demo/questions, with request before allocation before delivery. [R2, R7]
 
@@ -136,7 +138,7 @@ The imported package claims Fruits-360 / CC BY-SA 4.0. Upstream sources confirm 
 
 [R2] Supplied `docs/ANNOUNCEMENTS.md`, `docs/PROJECT_REQUIREMENTS.md` and `docs/RUBRIC_AND_COVERAGE.md`; all ten rubric categories total 100, without predicted marks.
 
-[R3] Application snapshot `c8fd6cd`: `app/schema.sql`, `app/db.py`, `app/app.py`, `app/assistant.py`, `app/setup_database.py`, root README and `docs/ARCHITECTURE.md`. Later dated evidence supersedes stale “not tested” passages in older narrative documents.
+[R3] Application baseline `c8fd6cd` and tested follow-up source are hash-recorded in `docs/evidence/fixes-2026-11-17/summary.json`; current checks use the follow-up source. Earlier dated records remain historical.
 
 [R4] `docs/evidence/VALIDATION.md`, 16 November with 17 November update; original Windows/MySQL observations and limits.
 

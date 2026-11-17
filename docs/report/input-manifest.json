@@ -1,0 +1,31 @@
+{
+  "track_a_commit": "80529fbfddf58b58735963f6a35847e22dedeadc",
+  "fix_commit": "e1ea45b",
+  "input_provenance": {
+    "diagram_source": "Ali Track A PR #2",
+    "track_a_evidence": "Ali Track A PR #2",
+    "followup_evidence": "Codex integrity follow-up PR #4",
+    "historical_ai": "team evidence dated 2026-11-17"
+  },
+  "inputs_sha256": {
+    "docs/diagrams/conceptual-er.pdf": "b5e0af8be1c86279ccc1af29145dfa5d529276363c99b648166e10434a29d4c3",
+    "docs/diagrams/relational-schema.pdf": "f88c0fd972548920c7e291102351c3087e3c0d221b3cc6794344b0d7a0309f26",
+    "docs/diagrams/conceptual-er.drawio": "4ab71b348f82e02ccb58e128e917f79c5789b9983b95a44934011ed50cc6b1e7",
+    "docs/diagrams/relational-schema.drawio": "ca2266b5608f741ba07bdfe62eef9f33d8f17be25f0cf82aa029926f909594c6",
+    "docs/evidence/track-a/remaining-checks.json": "dc7073a6cf24aaf14aa9af3813e19f326e8269de9e6d2c166a5416f48c898a3f",
+    "docs/evidence/track-a/gui-flow.json": "cf37e3b617914cb587f2f6ad2b6430d36778c7d83cd1e6a4d359e0223ef0a6cb",
+    "docs/evidence/fixes-2026-11-17/backend.json": "876a55f175f374c1231a4dc6261628fe522cbbc55f6b393d77de18ed66dee6d8",
+    "docs/evidence/fixes-2026-11-17/gui-flow.json": "b82f543d867911819185afca1fa8b3df02bd98bbb5900b65866e02b24c389d14",
+    "docs/evidence/fixes-2026-11-17/assistant.json": "66a5f5123968d3937a92f0fcb8d1e180280b1c0fb64615781636398e1fc63201",
+    "docs/evidence/fixes-2026-11-17/summary.json": "76df59e17cb35ec56c898b40ea3f895da16de8438a0cf1cd65b7c63b495f2481",
+    "docs/evidence/live-ai-results.json": "5f783b0274da2552ded9928c395b6147ec9e169d80b309b38ddc02bb4fd751a2"
+  },
+  "tested_source_lf_sha256": {
+    "app/db.py": "26476aaba2a37d9fc523622ded6d6ca18b0ea4b7770e9ad0fb4608d4304ebd80",
+    "app/app.py": "2b5ef3dcbdcc6b804f9d32a93450bc809597452af16a06ab1d4415b1514ad735",
+    "app/tests/track_a_remaining_checks.py": "a0ae2dcfb9266db2bf65408ca9772c3bc29867255fc3da086f873bc139e2c177",
+    "app/tests/track_a_gui_flow.py": "a31015254c623fdde07d560d62f2c5eb85001099c1b7169da568636e5a6e562c",
+    "app/tests/validation_support.py": "4a9c5187179af38e966081658a61a6931085ccb891a1ac77b68db59dc7e3dd6a",
+    "app/tests/check_assistant_readonly.py": "0748cac66c3898cd68190656b36b341be22532ad2f2da83ba40109f0e56d522e"
+  }
+}

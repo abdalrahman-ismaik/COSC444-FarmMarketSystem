@@ -1,0 +1,182 @@
+{
+ "date": "2026-11-17",
+ "dialogs_recorded": 0,
+ "results": [
+  {
+   "id": "GUI-HAR-01",
+   "title": "Farmer records 12.5 kg Zucchini harvest with JPG through the form",
+   "expected": "toast 'Harvest lot #N recorded'; lot 12.5/0/12.5; one BLOB; photo shown",
+   "actual": "toast='\u2714 Harvest lot #14 recorded.'; stock=(12.5, 0, 12.5); photos=1; rendered=True",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-farmer-harvest.png"
+  },
+  {
+   "id": "GUI-HAR-02",
+   "title": "Negative harvest quantity in the form",
+   "expected": "inline error; dialog stays open; no new lot",
+   "actual": "error='\u26a0 Harvested quantity cannot be negative.'; open=1; max lot=14",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-SRCH-01",
+   "title": "Buyer filters Tomato with minimum 50 and selects lot #8",
+   "expected": "only Tomato lots with available >= 50; lot #8 photo tomato_3.jpg rendered",
+   "actual": "lots=[2, 8, 13]; caption='1 / 1   tomato_3.jpg'",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-buyer-search-photo.png"
+  },
+  {
+   "id": "IMG-04d",
+   "title": "Buyer selects lot #13 (seed lot without a photo)",
+   "expected": "'No photo for this lot yet', no crash",
+   "actual": "No photo for this lot yet",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-SRCH-02",
+   "title": "Buyer enters minimum quantity 'abc'",
+   "expected": "friendly error dialog, no crash",
+   "actual": "('error', 'Search', 'Minimum quantity must be a number.')",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-02a",
+   "title": "Escape in the New request form",
+   "expected": "dialog closes; no request created",
+   "actual": "dialog open=0; requests 9->9",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-02b",
+   "title": "New request form opened from a selected lot pre-selects its crop and unit",
+   "expected": "crop Tomato, unit kg",
+   "actual": "crop=Tomato; unit=kg",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-02c",
+   "title": "First text entry (Quantity) receives keyboard focus",
+   "expected": "focus on Quantity entry",
+   "actual": "focus is qty=True",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-02d",
+   "title": "Return submits the form",
+   "expected": "dialog submits",
+   "actual": "submitted by Return",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-REQ-01",
+   "title": "Buyer creates 150 kg Tomato request from the selected lot (Return key)",
+   "expected": "request OPEN, 150 kg, market 3, by user 7",
+   "actual": "#10 OPEN 150.00 market=3 by=7; toast='\u2714 Request #10 created.'",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-ALC-00",
+   "title": "Selecting the request lists only Fatima's matching Tomato kg lots and pre-fills the remainder",
+   "expected": "lots [8, 13]; quantity 150",
+   "actual": "lots=[8, 13]; qty='150'",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-ALC-02",
+   "title": "Allocate 150 from lot #13 (120 available)",
+   "expected": "error 'Not enough stock\u2026 only 120'; nothing reserved",
+   "actual": "('error', 'Action not completed', 'Not enough stock. Lot #13 has only 120 kg available.'); lot13=(120, 0, 120)",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-allocate-blocked.png"
+  },
+  {
+   "id": "GUI-ALC-01",
+   "title": "Allocate 120 from lot #13, then the pre-filled remainder from lot #8",
+   "expected": "remainder pre-filled 30; request FULLY_ALLOCATED; lot13 120/120/0; lot8 150/80/70",
+   "actual": "remainder='30'; FULLY_ALLOCATED; lot13=(120, 120, 0); lot8=(150, 80, 70)",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-allocate-done.png"
+  },
+  {
+   "id": "GUI-DEL-03",
+   "title": "Confirm 110 of 120 without a reason",
+   "expected": "error asking for a discrepancy reason; no receipt",
+   "actual": "('error', 'Action not completed', 'Please enter a reason for the difference (discrepancy).'); receipts for request=0",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-DEL-02",
+   "title": "Partial receipt 110/120 with reason, then full receipt 30/30 (pre-filled)",
+   "expected": "pending listed [(8,30),(13,120)]; receipts lot8 30/30/0, lot13 120/110/10 with reason; lot13 0/0/0; lot8 120/50/70",
+   "actual": "pending=[(8, 30), (13, 120)]; prefill='30'; receipts=[(8, '30.00', '30.00', '0.00', None), (13, '120.00', '110.00', '10.00', '10 kg bruised in transit')]; lot13=(0, 0, 0); lot8=(120, 50, 70)",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-deliveries-partial.png"
+  },
+  {
+   "id": "GUI-DEL-05",
+   "title": "My Requests shows the request after delivery",
+   "expected": "allocated 150, received 140; status shown per current policy (DELIVERED)",
+   "actual": "status=DELIVERED, allocated=150.00, received=140.00; allocations listed=2",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-requests-status.png"
+  },
+  {
+   "id": "GUI-ALC-03",
+   "title": "Request of 1,500 kg: allocate using the pre-filled quantity unchanged",
+   "expected": "observe pre-fill format and result (Deliveries tab strips thousands separators; Allocate tab?)",
+   "actual": "prefill='1,500'; ('error', 'Action not completed', 'Allocation quantity must be a number.'); lot8=(120, 50, 70)",
+   "outcome": "Fail",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-LS-02a",
+   "title": "Near-expiry spinbox 'abc' then Apply",
+   "expected": "friendly 'Invalid threshold' dialog",
+   "actual": "('error', 'Invalid threshold', 'Thresholds must be whole numbers of days.')",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-LS-02b",
+   "title": "Near-expiry spinbox '61' then Apply",
+   "expected": "friendly 'Invalid threshold' dialog",
+   "actual": "('error', 'Invalid threshold', 'Use 0-60 days for expiry and 0-365 days for surplus.')",
+   "outcome": "Pass",
+   "screenshot": null
+  },
+  {
+   "id": "GUI-LS-01",
+   "title": "Valid thresholds 3/7 for Fatima",
+   "expected": "only Fatima's farm; rows sorted by priority",
+   "actual": "2 rows, farms=['Al Dhaid Fresh Farm'], priorities=[2, 3]",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-loss-surplus.png"
+  },
+  {
+   "id": "IMG-04e",
+   "title": "Lot #10 with a truncated JPEG (accepted by upload validation) and a corrupt BLOB",
+   "expected": "upload of truncated file: observe; both unreadable photos show '\u26a0 Image unavailable' without crashing",
+   "actual": "upload=accepted; newest=('1 / 3   truncated_eggplant.jpg', '\u26a0 Image unavailable'); next=('2 / 3   corrupt.jpg', '\u26a0 Image unavailable')",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-image-unavailable.png"
+  },
+  {
+   "id": "GUI-IMG-02",
+   "title": "New process: buyer finds the GUI-uploaded lot and its photo renders",
+   "expected": "lot 14 listed; photo rendered; caption 'zucchini.jpg'; stored bytes unchanged",
+   "actual": "listed=True; rendered=True; caption='1 / 1   zucchini.jpg'; sha256 equal=True",
+   "outcome": "Pass",
+   "screenshot": "docs/evidence/track-a/gui-restart-photo.png"
+  }
+ ]
+}

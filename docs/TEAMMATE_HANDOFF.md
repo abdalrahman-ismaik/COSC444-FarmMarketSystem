@@ -32,16 +32,16 @@ Submission is **Thursday, November 19, 2026**; no cutoff time was supplied. Earl
 
 | Area | Current work/evidence | Important limit |
 |---|---|---|
-| Application | MySQL, PyMySQL, Tkinter/ttk, Pillow, LangChain/Gemini, three role workflows, BLOB photos | Preserve working implementation; final artifacts are still missing |
+| Application | MySQL, PyMySQL, Tkinter/ttk, Pillow, LangChain/Gemini, three role workflows, BLOB photos | Preserve the working implementation; diagrams, report, poster and review-candidate ZIP are present; review and demo rehearsal remain |
 | Database | 15 tables, two views; sample SQL includes 4 farms, 4 markets, 6 crops, 10 cycles, 13 lots, 38 movements, 9 requests, 6 receipts, 12 BLOB photos | Counts/state change after testing; dates are relative to SQL execution date |
 | Business rules | **65/65 existing checks passed locally** on MySQL 8.0.46 | Representative suite, not exhaustive coverage or independent verification of every assertion |
-| GUI | **18 role tabs**, valid/invalid harvest submission, buyer images, image retrieval after full process restart verified | Automated widget/callback smoke tests; full manual end-to-end and accessibility checks remain |
-| Live AI | **14 questions** checked against reference SQL/expected handling, two actual Ask AI GUI checks; no database changes | Completed in segments; initial filter error fixed; not a proof of arbitrary-question accuracy |
+| GUI | 18 role tabs; follow-up GUI automation 21/21 plus restart 22/22 covering full request/allocation/partial-delivery/photo path | Automated widget/callback checks; manual accessibility/scaling/projector checks remain |
+| Live AI | 14 baseline questions and seven follow-up assistant/read-only cases; DB unchanged in follow-up | Not a proof of arbitrary-question accuracy; final demo-PC check remains |
 | Selected advanced feature | Loss & Surplus query, adjustable thresholds, donation/disposal and stock checks implemented/tested in suite | Full threshold/image/boundary/permission matrix still needs completion |
-| Documentation | Root README, architecture, test plan/evidence, announcements, rubric, team, product/design spec and corrected demo runbook | Markdown is not the required technical/poster PDF |
-| Repository | Organized app/source/archive/evidence folders, local skills, ignore rules; `main` and supplied GitHub remote | Publication destination: https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem; use Git to verify current synchronization |
+| Documentation | Root README, architecture, test plan/evidence, announcements, rubric, team, product/design spec, runbook, technical report and poster PDFs | Files are review candidates; human approval/demo remains |
+| Repository | App/docs, editable diagrams, dated evidence, review-candidate ZIP/manifest, ignore rules; PRs #1–#5 open/unmerged | Check `git status`/PR state; reviewer acceptance and course submission are not inferred |
 
-Evidence sources: [Windows/MySQL validation](evidence/VALIDATION.md), [live AI validation](evidence/AI_VALIDATION.md), JSON expected/actual results and PNG screenshots in `docs/evidence/`. These are observations on the original test PC. Teammates may cite them as existing team evidence, but must not relabel them as tests they personally reran.
+Evidence sources: baseline [Windows/MySQL](evidence/VALIDATION.md) and [live AI](evidence/AI_VALIDATION.md) reports plus the later isolated [integrity follow-up](evidence/FIX_VALIDATION.md), raw JSON and screenshots. Preserve each run's tester/source/date; do not attribute another person's checks to yourself.
 
 Gemini default is **`gemini-3.1-flash-lite`**. The older 2.5 Flash returned a new-user model-access 404; several newer models were busy/timed out. The prompt was corrected after one Dates-filter failure, and requests now have a 30-second timeout per provider call with limited retry configuration. Initial and corrected results are both retained. Each teammate provides their own permitted local credentials; no shared API key is in the repository.
 
@@ -66,8 +66,8 @@ Gemini default is **`gemini-3.1-flash-lite`**. The older 2.5 Flash returned a ne
 | `docs/DEMO_AND_SUBMISSION.md` | Corrected dependency order, proposed presentation split, PDF/ZIP checklist |
 | `docs/REPOSITORY_REVIEW.md` | Original-file inventory, historical checks, later updates and implementation findings |
 | `docs/GITHUB_READINESS.md` | Initial Git/upload preparation and later testing updates |
-| `docs/SKILLS.md`, `.agents/skills/` | Provenance and project-local Impeccable/Ponytail skills with references |
-| `archive/` | Original ZIP/README and separate school-enrollment lab sample; never develop the farm app from here |
+| `docs/SKILLS.md`, `.agents/skills/` | Skill provenance; reusable skills are repository-only and omitted from the course ZIP |
+| `archive/` | Original ZIP/README and separate school-enrollment lab sample; retained in repo, omitted from course ZIP |
 | `.env`, `.venv/`, `.local/` | Ignored local configuration/environment/runtime. Not shared, not submission inputs |
 
 When sources appear inconsistent: use the proposal/announcements for requirements; current SQL/source for implemented behavior; dated evidence for observed results; and PROGRESS for assignment/review status. Older guide screenshots or initial review paragraphs never override later observed results. Report discrepancies rather than silently rewriting instructor text.
@@ -113,34 +113,34 @@ The script changes balances/statuses; reset only that disposable instance afterw
 
 | Rubric category | Points | Remaining work |
 |---|---:|---|
-| ER and relational schema | 10 | Produce conceptual Draw.io ER source/export and a **separate** schema diagram with actual PK/FK/types/constraints; validate cardinalities |
-| Implementation/population | 15 | Preserve working SQL; finish exact per-table count/constraint/scenario evidence and fresh-machine checks; cross-check diagrams against DDL |
-| Python GUI | 10 | Complete real request → allocation → partial-delivery flow through GUI; remaining error, keyboard/focus/scaling and image boundary cases |
-| Backend/embedded SQL | 10 | Fill rollback and broader repeated/concurrent cases; explain or escalate status/shortfall/correction policies |
-| LangChain | 10 | Incorporate existing fourteen-question/live-GUI evidence; retain caveats; check on demo PC and cover remaining robustness cases only where useful |
-| Advanced feature | 10 | Finish threshold boundaries, fully reserved/unauthorized/excess dispositions and persisted history evidence |
-| Errors/business rules | 5 | Complete uncovered input/unit/date/image/connection/transaction cases with observed results |
-| Group demo/poster | 5 | Create poster PDF and readable ER inclusion; timed three-minute poster plus twelve-minute demo/questions |
+| ER and relational schema | 10 | Human review of conceptual notation/cardinalities and relational schema; decide acceptance |
+| Implementation/population | 15 | Review verified SQL counts/constraints and fresh-extraction database results; demo-machine check |
+| Python GUI | 10 | Manual accessibility/scaling/usability checks and demo-PC rehearsal |
+| Backend/embedded SQL | 10 | Reviewer confirms fixes and current settlement/correction/surplus policies |
+| LangChain | 10 | Demo-PC live check and remaining prompt robustness review |
+| Advanced feature | 10 | Rehearse Loss & Surplus and explain thresholds/disposition behavior |
+| Errors/business rules | 5 | Review dated passing evidence; human usability checks |
+| Group demo/poster | 5 | Projector check and timed 3 + 12 minute rehearsal |
 | Individual demo/Q&A | 10 | All three rehearse all topics and attend; only actual participation counts |
-| Technical PDF/test evidence | 15 | Concise final technical PDF containing both diagrams, key rules/transactions, and expected/actual results; not just a screenshot guide |
+| Technical PDF/test evidence | 15 | Reviewer acceptance; actual final course upload |
 | **Total** | **100** | Categories indicate assessment scope, not marks already earned/lost |
 
-Also missing: final submission ZIP, verified image attribution/source mapping, human confirmation of registration/booking/location, and reviewer acceptance. **Do not implement a second advanced feature**: analytics/export dashboards, secure password login, matching and forecasting are optional alternatives, not extra obligations of Loss & Surplus.
+Still outstanding: exact image attribution/source mapping, human confirmation of registration/booking/location, Abd Alrahman’s acceptance, projector check, timed rehearsal, and final course upload. A review-candidate ZIP exists but is not a final or submitted package. **Do not implement a second advanced feature**: analytics/export dashboards, secure password login, matching and forecasting are optional alternatives, not extra obligations of Loss & Surplus.
 
 ## Required deliverable contract
 
-These output paths are reserved for the remaining work; their existence is not implied yet.
+These paths are present in the review candidate. Use the ledger for current readiness and do not mark Accepted before Abd Alrahman reviews.
 
 | Owner | Deliverables for review |
 |---|---|
 | Track A | `docs/diagrams/conceptual-er.drawio`, `conceptual-er.svg`, `conceptual-er.pdf`; `relational-schema.drawio`, `relational-schema.svg`, `relational-schema.pdf`; `docs/DATABASE_DESIGN.md`; `docs/evidence/REMAINING_TEST_RESULTS.md`; `docs/reviews/TRACK_A_REVIEW.md` |
 | Track B | `docs/report/technical-report.md`; editable poster source under `docs/poster/`; `submission/technical-report.pdf`, `submission/poster.pdf`; `docs/BUILD_DOCUMENTS.md`; `docs/reviews/TRACK_B_REVIEW.md` |
-| Track B after artifact review | New `submission/FarmMarketSystem_B1_candidate.zip` and `submission/MANIFEST.md`; label as candidate, never submitted/accepted |
+| Review package | `submission/FarmMarketSystem_B1_review_candidate.zip`, `submission/MANIFEST.md`; validated from fresh extraction, not submitted or accepted |
 | Everyone | Own task rows/evidence/contribution entries in [PROGRESS.md](../PROGRESS.md); factual gaps and review requests |
 
 Use a small documented export/build workflow with document-generation dependencies separate from runtime requirements. Include editable sources and commands, not only PDFs. Render every PDF page and inspect it; record visual checks, page counts, legibility and unresolved defects. Keep final artifacts in `submission/` and generated previews in ignored `output/` or `tmp/`.
 
-Track B can draft narrative and layout immediately. Final diagrams, final test claims and final exports depend on Track A's delivered artifacts. Do not invent missing drawings/results; explicitly mark draft dependencies and finish independent work while waiting.
+The original Track A and Track B PRs remain open. Their later integrity/document follow-up is recorded separately; preserve historical failures and both teammates' authorship. Review [PROGRESS.md](../PROGRESS.md) and [review notes](reviews/) before making changes.
 
 ## Policies to explain or escalate
 
@@ -160,6 +160,6 @@ Document current behavior accurately. If it contradicts requirements or a new te
 3. On shared disk, do not run two Git checkouts/resets or database resets against the same directory/instance. Prefer separate clones once an initial commit exists.
 4. Preserve prior evidence; append dated runs rather than altering failed results into passes. Cite actual environment, setup, expected/actual results and limitations.
 5. Update your task to **Ready for review**, with exact paths, build/test commands, observations, known gaps and decisions requested. Create the assigned review note.
-6. Abd Alrahman reviews artifacts and may mark them **Accepted** or return them for revision. Agents must not self-accept, push/merge/publish, submit, or make external registrations.
+6. Abd Alrahman reviews artifacts and may mark them **Accepted** or return them for revision. PR authors never self-accept or merge. Branch commits, pushes and PR creation follow the task owner’s explicit authorization; course submission and external registration remain with the human team.
 
 The main success criterion is a complete, reproducible, honest set of reviewable deliverables, not merely more Markdown or an assertion that all rubric points are satisfied.

@@ -25,9 +25,9 @@
     "Loss & Surplus",
     "Prioritize expired, near-expiry or currently unallocated lots (defaults: 3 / 7 days). Donate or dispose; record actor, date and reason."
   ],
-  "evidence": "Team evidence: 65/65 baseline checks; 14 live AI questions. Track A still reports 4 backend failures and 1 GUI failure.",
-  "caveat": "REVIEW DRAFT  |  F-01 concurrent overselling remains open; F-05 quantity input and F-06 image validation fixes await decisions.",
-  "diagram_note": "Presentation view derived from Track A conceptual ER (PR #2, 80529fb). Core entities and cardinalities retained; supporting reference, ownership and history links omitted. Full ER + schema: report pp. 6-12.",
+  "evidence": "Observed: 65/65 original suite; follow-up 173 backend, 22 GUI and 7 assistant/read-only checks; 851 diagram checks. Evidence is dated; review pending.",
+  "caveat": "REVIEW CANDIDATE  |  Fixes and documents await Abd Alrahman’s review; demo rehearsal and image-source decision remain.",
+  "diagram_note": "Core ER view derived from Ali’s Track A diagram; supporting reference, ownership and history links omitted. Full ER + schema sheets are in the report.",
   "nodes": [
     {
       "id": "er1-v3",

@@ -1,0 +1,2 @@
+Database farm_market_db: 15 base tables, 2 views, 32 FKs, 13 CHECK constraints
+851 checks passed, 0 failed; FK edges drawn 32/32

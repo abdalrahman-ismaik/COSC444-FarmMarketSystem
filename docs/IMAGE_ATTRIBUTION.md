@@ -46,6 +46,6 @@ For every row below, **exact original URL, creator of that specific image, datas
 
 ## Decision needed before packaging
 
-Ask the original package provider for the download/source list, dataset commit/version and transformations. Then record a verified URL and applicable credit/license per image (or a demonstrably common source/version). If that cannot be recovered, Abd Alrahman must decide whether to obtain replacement images with documented provenance and authorize the corresponding SQL/demo-image change and validation. Track B has not replaced images or inferred redistribution clearance. PACKAGE-01 remains blocked on artifact review and this attribution decision.
+Ask the original package provider for the download/source list, dataset commit/version and transformations. Then record a verified URL and applicable credit/license per image (or a demonstrably common source/version). If that cannot be recovered, Abd Alrahman must decide whether to obtain replacement images with documented provenance and authorize the corresponding SQL/demo-image change and validation. Track B has not replaced images or inferred redistribution clearance. The candidate ZIP exists for review and includes this limitation. The image-source decision remains open before the team marks the package final; no per-image provenance is claimed.
 
 This attribution record does not license the application code, student work or instructor PDF/PPTX. No blanket project license is introduced.

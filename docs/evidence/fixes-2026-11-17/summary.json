@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-17T22:21:52.733300+04:00",
+  "operator": "Codex follow-up, authorized by Abd Alrahman Ismaik",
+  "mysql": "8.0.46",
+  "isolation": "READ-COMMITTED",
+  "target": "isolated loopback port 3318; existing demo/service untouched",
+  "original_suite": {
+    "Pass": 65
+  },
+  "backend": {
+    "Pass": 173
+  },
+  "gui": {
+    "Pass": 22
+  },
+  "validation_support": {
+    "Pass": 3
+  },
+  "assistant": {
+    "Pass": 7
+  },
+  "assistant_database_unchanged": true,
+  "diagram_checker": {
+    "Pass": 851,
+    "Fail": 0
+  },
+  "settlement_policy": "preserved per user decision; DELIVERED means allocations settled, not all requested quantity received",
+  "source_sha256_lf": {
+    "app/db.py": "26476aaba2a37d9fc523622ded6d6ca18b0ea4b7770e9ad0fb4608d4304ebd80",
+    "app/app.py": "2b5ef3dcbdcc6b804f9d32a93450bc809597452af16a06ab1d4415b1514ad735",
+    "app/tests/track_a_remaining_checks.py": "a0ae2dcfb9266db2bf65408ca9772c3bc29867255fc3da086f873bc139e2c177",
+    "app/tests/track_a_gui_flow.py": "a31015254c623fdde07d560d62f2c5eb85001099c1b7169da568636e5a6e562c",
+    "app/tests/validation_support.py": "4a9c5187179af38e966081658a61a6931085ccb891a1ac77b68db59dc7e3dd6a",
+    "app/tests/check_assistant_readonly.py": "0748cac66c3898cd68190656b36b341be22532ad2f2da83ba40109f0e56d522e"
+  }
+}
