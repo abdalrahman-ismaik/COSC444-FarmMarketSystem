@@ -110,3 +110,7 @@ Run it only against a disposable `farm_market_db` configured in `app/.env`. Rest
 | No records / missing photo | Check filters and selected lot; the application provides empty and unavailable-image states |
 
 Sample produce photos are attributed by the supplied package to Fruits-360 under CC BY-SA 4.0. See [sources and attribution](docs/SKILLS.md#sample-image-attribution); exact upstream image provenance remains to be verified.
+
+## Track B review draft on 17 November 2026
+
+Mohammad's [technical report](submission/technical-report.pdf) and [poster](submission/poster.pdf) now exist as review drafts, with [editable sources and build/visual-check instructions](docs/BUILD_DOCUMENTS.md). They include the real, pinned diagrams and newer test findings from [Track A PR #2](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/2), including concurrent overselling and GUI/image defects. This supersedes the earlier “PDFs missing” artifact status above; it does not turn those findings into passes. Both tracks await Abd Alrahman's review. See [Track B review](docs/reviews/TRACK_B_REVIEW.md) and [image attribution gaps](docs/IMAGE_ATTRIBUTION.md). Candidate ZIP creation remains blocked on the review dependencies.

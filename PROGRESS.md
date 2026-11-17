@@ -30,13 +30,13 @@ Assignments below are suggestions until a teammate claims them. **Owner is Uncla
 | DB-02 | Separate relational schema `.drawio` + SVG/PDF with all columns/types/keys/constraints | Ali / Track A | Unclaimed | Not started | Actual 15-table/two-view model; no schema invention |
 | DB-03 | Database-design explanation and policy/findings decision list | Ali / Track A | Unclaimed | Not started | Document existing semantics; reviewer decides behavior changes |
 | TEST-01 | Complete uncovered acceptance cases and expected/actual results | Ali / Track A | Unclaimed | Not started | Disposable runtime; cite prior evidence without claiming personal reruns |
-| DOC-01 | Editable concise technical report + final rendered PDF | Mohammad / Track B | Unclaimed | Not started | Draft now; final requires DB-01/02/03 and TEST-01 |
-| POSTER-01 | Editable poster + projector-readable PDF, ER included | Mohammad / Track B | Unclaimed | Not started | Draft now; final requires DB-01 and current feature truth |
-| BUILD-01 | Document reproducible exports and per-page PDF visual QA | Mohammad / Track B | Unclaimed | Not started | DOC-01 and POSTER-01 outputs; keep doc dependencies separate |
-| ATTR-01 | Verify exact sample-image source/attribution/license mapping | Mohammad / Track B | Unclaimed | Not started | Existing Fruits-360/CC BY-SA claim incomplete; do not invent source URLs |
+| DOC-01 | Editable concise technical report + final rendered PDF | Mohammad / Track B | Mohammad Arwani / Codex | Ready for review | Review draft PDF/source complete; 12 pages incl. seven pinned Track A diagram sheets. Final depends on PR #2 and policy/fix decisions; see docs/reviews/TRACK_B_REVIEW.md |
+| POSTER-01 | Editable poster + projector-readable PDF, ER included | Mohammad / Track B | Mohammad Arwani / Codex | Ready for review | Review draft PDF + editable JSON; 16:9, core ER checked against Track A. Final/projector rehearsal pending reviewer decisions |
+| BUILD-01 | Document reproducible exports and per-page PDF visual QA | Mohammad / Track B | Mohammad Arwani / Codex | Ready for review | Reproducible builder + exact commands/versions; all 13 PDF pages inspected; two builds identical; docs/BUILD_DOCUMENTS.md |
+| ATTR-01 | Verify exact sample-image source/attribution/license mapping | Mohammad / Track B | Mohammad Arwani / Codex | Ready for review | Audit and 16-asset hashes complete; dataset/license verified; exact source/version/transformation mapping unresolved; reviewer decision required |
 | REVIEW-01 | Review A/B outputs, resolve reported policy issues, record acceptance/revisions | Abd Alrahman | Unclaimed | Not started | A/B review notes and actual artifacts |
 | DEMO-01 | Full three-person timed rehearsal and cross-topic Q&A | All three | Unclaimed | Not started | Final diagrams/poster, configured demo PC, actual booked slot |
-| PACKAGE-01 | Candidate ZIP + manifest, fresh-extraction install/run/document checks | Mohammad / Track B | Unclaimed | Not started | Reviewed report/poster/diagrams/evidence; never label submitted |
+| PACKAGE-01 | Candidate ZIP + manifest, fresh-extraction install/run/document checks | Mohammad / Track B | Mohammad Arwani / Codex | Blocked | Awaiting artifact review, Track A decisions and attribution resolution; no ZIP/manifest/fresh-extraction run yet |
 
 ## Contribution and activity log
 
@@ -68,3 +68,19 @@ Blocked dependencies / exact reviewer decisions needed:
 Remaining work and next action:
 Ready-for-review artifact paths:
 ```
+
+## Track B claim on 2026-11-17
+
+Mohammad Arwani, working with Codex, claims DOC-01, POSTER-01, BUILD-01, ATTR-01 and PACKAGE-01 on `mohammad/report-poster`. Fetch completed; branch and working tree were clean at `c8fd6cd`. PR #1 remains open/unmerged; the session explicitly authorizes scoped commits, pushes and PR creation. Track A ownership and Ready-for-review outputs are recorded on PR #2 (`80529fb`); the old unclaimed Track A rows above are this branch's baseline, not a new claim. Preserve that owner's artifacts. Draft report/poster will use pinned real Track A inputs and cite its failures. PACKAGE-01 is blocked until artifact review dependencies are satisfied. No application tests or resets run for this claim.
+
+## Track B delivery observations on 2026-11-17
+
+| Member / agent | Task IDs | Files and actual observations | Remaining work |
+|---|---|---|---|
+| Mohammad Arwani / Codex | DOC-01, POSTER-01, BUILD-01 | docs/report/technical-report.md; docs/poster/poster.json; docs/report/build_documents.py and requirements-docs.txt; submission/technical-report.pdf (12 pages) and poster.pdf (1 page); docs/BUILD_DOCUMENTS.md; build-validation.json. Bundled Python 3.12.14/ReportLab 4.4.9/pypdf 6.21.4/Pillow 13.0.0 on Windows 11; Poppler 26.07.0 rendered all pages. All 13 pages viewed; initial label defects fixed and affected pages rechecked. Two builds have identical hashes. Fourteen actual AI questions and Track A result totals retained; 7 ER nodes/6 relationships checked; application snapshot unchanged. No application/DB/Gemini tests rerun. | Review draft outputs; PR #2 unmerged; final decisions and demo-machine rehearsal pending |
+| Mohammad Arwani / Codex | ATTR-01 | docs/IMAGE_ATTRIBUTION.md: 4/4 external JPEGs and 12/12 SQL BLOB tuples match archive; dimensions/SHA-256s/empty EXIF observed. Verified upstream dataset-level credit/license, not exact source mappings. | Recover version/source-file/transformations or reviewer-authorized replacement plan |
+| Mohammad Arwani / Codex | PACKAGE-01 | submission/README.md records gate. No candidate ZIP or MANIFEST produced; no fresh-extraction/runtime check claimed. | Artifact review, bug/policy/attribution decisions and disposable runtime |
+
+Database contribution in this pass: documented movement formulas, transaction/constraint boundaries and the receipt-normalization qualification; checked poster cardinalities against Ali's actual Draw.io source. No authorship of imported SQL/application implementation is inferred.
+
+Branch: `mohammad/report-poster`. PR URL and reviewer-request outcome will be appended after creation. Review note: [TRACK_B_REVIEW.md](docs/reviews/TRACK_B_REVIEW.md). Only Abd Alrahman records Accepted.
