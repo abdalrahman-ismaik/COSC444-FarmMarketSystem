@@ -103,6 +103,8 @@ Ready-for-review artifact paths:
 
 ## Integrated review-candidate follow-up (2026-11-17)
 
+- Branch `docs/reviewed-submission`; [PR #5](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/5), based on `mohammad/report-poster`; Ready for review, not merged. PRs #2–#4 and `main` remain unchanged.
+
 - Local branch `docs/reviewed-submission` integrates the Track B report/poster with Ali’s diagrams and Codex’s integrity fixes while preserving the original teammate branches and evidence. The single `PROGRESS.md` merge conflict was resolved by retaining both contribution histories and adding the later follow-up.
 - Report builder now consumes checked-in, SHA-256-verified inputs and works from a fresh extraction without fetching unmerged Git objects. Latest exports: 12-page report (`38b99e1d…`) and one-page poster (`7927f1f3…`); all rendered pages and the 1920×1080 poster were visually inspected.
 - Candidate archive: `submission/FarmMarketSystem_B1_review_candidate.zip` (116 members); external and embedded manifests list member hashes; ZIP SHA-256 is recorded in `submission/MANIFEST.md`. Fresh extraction verified paths/hashes, installed current app/document dependencies, loaded seed only into isolated MySQL 8.0.46 port 3318, passed 65/65 original tests and GUI flow 21/21 + restart 22/22, and rebuilt both PDFs identically. Existing demo ports were not targeted.

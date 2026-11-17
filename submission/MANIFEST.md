@@ -9,7 +9,7 @@ and the archive hash is recorded only in the external `submission/MANIFEST.md`.
 | `.gitignore` | 428 | `34edcbcb681179f93490be7fa6539062a03877fb2527b54bd6894a862e682ce4` |
 | `DESIGN.md` | 6246 | `aed9a56fff757c8603aba31f76f230a2d6306082f746f6d6c24467dbf177740b` |
 | `PRODUCT.md` | 3162 | `c454e6cbf57585c3c5fa63858a2d780e92c44147297b69227c696cbf62a471a8` |
-| `PROGRESS.md` | 15035 | `7e1271f9f25c3b5a964102b6e52e1a26d5b1a308b78a3e3d55f382370e80e080` |
+| `PROGRESS.md` | 15259 | `eed54b72c4896b740b14f3060c68db5a0d686be586a1832ecfd24cf830e218ce` |
 | `README.md` | 9555 | `a7b249bdfa72f9d33f6651248392c095b0d50552ad865896af22fc7a5f3e675c` |
 | `app/.env.example` | 166 | `d7cf495c461d5279ac0a5de6b3d5660f13512616906389ecb7c1daa02c302b03` |
 | `app/app.py` | 70539 | `21548fdc83d13e5bcd7b62d9875a02ad02353c2346359f0c0c9e8baf72bfc69c` |
@@ -109,7 +109,7 @@ and the archive hash is recorded only in the external `submission/MANIFEST.md`.
 | `docs/report/input-manifest.json` | 2255 | `14685303259a20b777579b4766a170641ec491fa9e50659b30966f9f0c14919f` |
 | `docs/report/requirements-docs.txt` | 49 | `6de4959290ef3239adc7630e293784734471fdcec68b5b42a0fee99dbb430552` |
 | `docs/report/technical-report.md` | 19241 | `171038b0e6748fbf7b0fcd944511d2e0c8acd6c1b223ea0c5d3908468eba849e` |
-| `docs/reviews/DOCUMENT_FIX_REVIEW.md` | 1776 | `817bba3325dbdc5cafe71bb24686152074113423df34c3a307fea54fb30cc09c` |
+| `docs/reviews/DOCUMENT_FIX_REVIEW.md` | 1907 | `5ec5ecc53636453d3b4a181ee0044260d7bfe0c0da1dc70070f156f1f1314d76` |
 | `docs/reviews/INTEGRITY_FIX_REVIEW.md` | 2630 | `71825031ea8195572b930fd51f86e10bad21242b4675c6f5734e37e4e540c0e2` |
 | `docs/reviews/TRACK_A_REVIEW.md` | 13888 | `2f40be064e165b5ccfc5ca412d9b3e89fdf71e98983a1ba7cb74721f6e904596` |
 | `docs/reviews/TRACK_B_REVIEW.md` | 10173 | `54c8f3a4fc36ae027217a1c79a730175cf40db615976d20177060abe021488f4` |
@@ -123,10 +123,10 @@ and the archive hash is recorded only in the external `submission/MANIFEST.md`.
 | `submission/poster.pdf` | 4076 | `7927f1f35bb029cc84ef2fdefc0f79793dfa3e51f224f339db3c4aa1cd2e8234` |
 | `submission/technical-report.pdf` | 832294 | `2b0f31b2ea27c22af2007ca48cb58efa4529cb22df164f7aadb987bca58642c4` |
 
-| `MANIFEST.md` | 13963 | `d20637920017b579f4c4c711335ebeb4f9646463d2c478aec47ad18088c93d4d` |
+| `MANIFEST.md` | 13963 | `30a9a27f74fb9bf0e9985fd7c57ff64400c4cb909b48c5f3a789dd8b85a15552` |
 
 Excluded: Git metadata, real `.env` files, local virtual environments, `.local`,
 generated output/logs/caches, archived ZIPs, and agent skill folders.
 
-ZIP SHA-256: `05340463a18074ef2d183c64bb3e1ed130964ed1a16026b69492477eb2f86c1a`
-ZIP bytes: 14270271
+ZIP SHA-256: `de7f1049086f9f645fc1d17df06c7f89fd882dc47ecc8b9cfec0241732f33e9e`
+ZIP bytes: 14270411

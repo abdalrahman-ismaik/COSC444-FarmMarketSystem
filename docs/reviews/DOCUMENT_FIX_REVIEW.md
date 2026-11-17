@@ -1,6 +1,6 @@
 # Document and package follow-up review
 
-**Owner:** Codex, authorized by Abd Alrahman Ismaik. **Status:** Ready for review, not Accepted.
+**Owner:** Codex, authorized by Abd Alrahman Ismaik. **Status:** Ready for review, not Accepted. **PR:** [#5](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/5), based on Mohammad’s `report-poster` branch.
 
 This follow-up integrates Mohammad's report/poster and Ali's diagrams with the tested integrity fixes. It retains both teammates' contributions and evidence. Historical failures remain visible and are labeled historical; later outcomes have a separate source/date and hash manifest.
 
