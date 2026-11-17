@@ -4,6 +4,8 @@ This is the full acceptance plan. **Subsequent local validation passed the exist
 
 **November 17:** [live AI results](evidence/AI_VALIDATION.md) cover AI-01–AI-14 (AI-05 uses a scoped single-cycle forecast question), two GUI AI checks, and the empty/overlength portion of AI-15. Exact questions, initial failures, retests and reference corrections are preserved. The original matrix remains a broader acceptance checklist; no blanket completion claim is inferred.
 
+**November 17 (Track A, review pending):** [remaining acceptance results](evidence/REMAINING_TEST_RESULTS.md) add executed rollback, concurrency, boundary, image, Loss & Surplus and GUI-flow cases with expected/actual outcomes and findings (including a failing concurrent-allocation case, F-01). The Pending labels in the matrices below are the original plan and are not edited.
+
 ## Test environment and recording
 
 Use a **disposable** MySQL instance/database named `farm_market_db`, never a valuable database. The supplied setup script drops that name regardless of a custom `DB_NAME`. Record Windows version, Python version, MySQL version/SQL mode/isolation level, dependency versions, test date, tester, and seed/reset state. Keep credentials in `app/.env`, outside evidence files.

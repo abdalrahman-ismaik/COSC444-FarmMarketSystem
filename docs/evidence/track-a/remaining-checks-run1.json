@@ -1,0 +1,1531 @@
+{
+ "environment": {
+  "date": "2026-11-17",
+  "python": "3.12.1",
+  "os": "Windows-11-10.0.26300-SP0",
+  "mysql": "8.0.46",
+  "isolation": "REPEATABLE-READ",
+  "sql_mode": "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION",
+  "pymysql": "2.2.8",
+  "target": "127.0.0.1:3317/farm_market_db"
+ },
+ "summary": {
+  "Pass": 162,
+  "Fail": 5,
+  "Info": 1
+ },
+ "results": [
+  {
+   "id": "DB-01a",
+   "group": "DB-01 seed",
+   "title": "Fresh seed: exact row count of every table",
+   "expected": "{\"emirates\": 7, \"units\": 3, \"crops\": 6, \"markets\": 4, \"farms\": 4, \"users\": 8, \"farm_users\": 4, \"crop_cycles\": 10, \"harvest_lots\": 13, \"harvest_lot_images\": 12, \"market_requests\": 9, \"request_status_history\": 25, \"allocations\": 10, \"delivery_receipts\": 6, \"stock_movements\": 38}",
+   "actual": "{\"emirates\": 7, \"units\": 3, \"crops\": 6, \"markets\": 4, \"farms\": 4, \"users\": 8, \"farm_users\": 4, \"crop_cycles\": 10, \"harvest_lots\": 13, \"harvest_lot_images\": 12, \"market_requests\": 9, \"request_status_history\": 25, \"allocations\": 10, \"delivery_receipts\": 6, \"stock_movements\": 38}",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-01b",
+   "group": "DB-01 seed",
+   "title": "Seed meets every proposal minimum",
+   "expected": "{\"farms\": 3, \"markets\": 4, \"crops\": 5, \"crop_cycles\": 8, \"harvest_lots\": 12, \"stock_movements\": 15, \"market_requests\": 8, \"delivery_receipts\": 6}",
+   "actual": "farms=4, markets=4, crops=6, crop_cycles=10, harvest_lots=13, stock_movements=38, market_requests=9, delivery_receipts=6",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-03a",
+   "group": "DB-03 seed scenarios",
+   "title": "Seed represents available, reserved, partial, lost, discrepancy and image scenarios",
+   "expected": "every scenario count > 0",
+   "actual": "{\"available\": 11, \"reserved\": 3, \"partially_delivered\": 2, \"lost\": 4, \"discrepancy\": 3, \"images\": 12}",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-03b",
+   "group": "DB-03 seed scenarios",
+   "title": "Seed ledger invariants: no negative balance; reserved = open RESERVED allocations; one receipt per allocation",
+   "expected": "no violations",
+   "actual": "ok",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-03c",
+   "group": "DB-03 seed scenarios",
+   "title": "Seed unit consistency across lot/cycle/allocation/request/receipt/movement",
+   "expected": "0 mismatches",
+   "actual": "0 mismatches ()",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02a",
+   "group": "DB-02 SQL constraints",
+   "title": "Duplicate crop_name (UNIQUE)",
+   "expected": "rejected with MySQL error 1062",
+   "actual": "MySQL 1062: Duplicate entry 'Tomato' for key 'crops.crop_name'",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02b",
+   "group": "DB-02 SQL constraints",
+   "title": "Duplicate user email (UNIQUE)",
+   "expected": "rejected with MySQL error 1062",
+   "actual": "MySQL 1062: Duplicate entry 'omar@greenoasis.example' for key 'users.email'",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02c",
+   "group": "DB-02 SQL constraints",
+   "title": "Invalid role ENUM value (strict mode)",
+   "expected": "rejected with MySQL error 1265",
+   "actual": "MySQL 1265: Data truncated for column 'role' at row 1",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02d",
+   "group": "DB-02 SQL constraints",
+   "title": "Market buyer without market (chk_user_market)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_user_market' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02e",
+   "group": "DB-02 SQL constraints",
+   "title": "Farmer with a market (chk_user_market)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_user_market' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02f",
+   "group": "DB-02 SQL constraints",
+   "title": "Unknown FK (farm emirate 99)",
+   "expected": "rejected with MySQL error 1452",
+   "actual": "MySQL 1452: Cannot add or update a child row: a foreign key constraint fails (`farm_market_db`.`farms`",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02g",
+   "group": "DB-02 SQL constraints",
+   "title": "Request quantity 0 (chk_req_qty)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_req_qty' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02h",
+   "group": "DB-02 SQL constraints",
+   "title": "Lot sell-by before harvest (chk_lot_sell_by)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_lot_sell_by' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02i",
+   "group": "DB-02 SQL constraints",
+   "title": "Cycle expected date before planting (chk_cycle_dates)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_cycle_dates' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02j",
+   "group": "DB-02 SQL constraints",
+   "title": "Negative LOSS movement (chk_mov_sign)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_mov_sign' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02k",
+   "group": "DB-02 SQL constraints",
+   "title": "Zero CORRECTION movement (chk_mov_nonzero)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_mov_nonzero' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02l",
+   "group": "DB-02 SQL constraints",
+   "title": "Receipt received > allocated (chk_rcpt_max)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_rcpt_max' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02m",
+   "group": "DB-02 SQL constraints",
+   "title": "Receipt discrepancy not equal to allocated-received (chk_rcpt_diff)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_rcpt_diff' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02n",
+   "group": "DB-02 SQL constraints",
+   "title": "Second receipt for an allocation (UNIQUE allocation_id)",
+   "expected": "rejected with MySQL error 1062",
+   "actual": "MySQL 1062: Duplicate entry '1' for key 'delivery_receipts.allocation_id'",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02o",
+   "group": "DB-02 SQL constraints",
+   "title": "GIF MIME type on image (chk_img_type)",
+   "expected": "rejected with MySQL error 3819",
+   "actual": "MySQL 3819: Check constraint 'chk_img_type' is violated.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02p",
+   "group": "DB-02 SQL constraints",
+   "title": "Duplicate farm assignment (composite PK)",
+   "expected": "rejected with MySQL error 1062",
+   "actual": "MySQL 1062: Duplicate entry '1-2' for key 'farm_users.PRIMARY'",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02q",
+   "group": "DB-02 SQL constraints",
+   "title": "Invalid allocation status ENUM",
+   "expected": "rejected with MySQL error 1265",
+   "actual": "MySQL 1265: Data truncated for column 'status' at row 1",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DB-02z",
+   "group": "DB-02 SQL constraints",
+   "title": "No table changed after the 17 rejected statements (CHECKSUM TABLE)",
+   "expected": "identical checksums",
+   "actual": "identical",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02a",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest quantity '0' rejected",
+   "expected": "error containing 'greater than zero'",
+   "actual": "Harvested quantity must be greater than zero.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02b",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest quantity '-5' rejected",
+   "expected": "error containing 'cannot be negative'",
+   "actual": "Harvested quantity cannot be negative.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02c",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest quantity 'NaN' rejected",
+   "expected": "error containing 'must be a number'",
+   "actual": "Harvested quantity must be a number.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02d",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest quantity 'Infinity' rejected",
+   "expected": "error containing 'must be a number'",
+   "actual": "Harvested quantity must be a number.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02e",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest quantity '1000000.01' rejected",
+   "expected": "error containing 'too large'",
+   "actual": "Harvested quantity is too large.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02f",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest quantity '1.234' rejected",
+   "expected": "error containing '2 decimal places'",
+   "actual": "Harvested quantity can have at most 2 decimal places.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02g",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest quantity 'abc' rejected",
+   "expected": "error containing 'must be a number'",
+   "actual": "Harvested quantity must be a number.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02h",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest quantity '' rejected",
+   "expected": "error containing 'is required'",
+   "actual": "Harvested quantity is required.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-02z",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "No lot created by rejected quantities",
+   "expected": "13 lots",
+   "actual": "13",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-04a",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Minimum positive quantity 0.01 with blank sell-by and no photo accepted",
+   "expected": "lot created; balances 0.01/0/0.01; sell_by NULL; 0 photos",
+   "actual": "lot 14: 0.01/0/0.01; sell_by=None; photos=0",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-04b",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Upper boundary 1,000,000 accepted",
+   "expected": "lot created with on_hand 1000000",
+   "actual": "1,000,000/0/1,000,000",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-03a",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest date one day before cycle planting date rejected",
+   "expected": "error 'before the planting date'",
+   "actual": "Harvest date cannot be before the planting date.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-03b",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest date tomorrow rejected",
+   "expected": "error 'future'",
+   "actual": "Harvest date cannot be in the future.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-03c",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Impossible date 2027-02-29 rejected",
+   "expected": "error 'real date'",
+   "actual": "Harvest date must be a real date in the format YYYY-MM-DD.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "HAR-03d",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Sell-by equal to harvest date accepted (boundary)",
+   "expected": "lot created",
+   "actual": "lot 16",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-01",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Farmer adds farm; farm and self-assignment committed together",
+   "expected": "farm row + 1 assignment",
+   "actual": "farm 6, assignments=1, visible=True",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-01b",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Duplicate farm name rejected without orphan assignment",
+   "expected": "duplicate error; farm count unchanged",
+   "actual": "This record already exists (duplicate name or email).; farms=5",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-02a",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Zero-forecast cycle accepted; forecast stays separate from stock",
+   "expected": "expected 0, on_hand/reserved/available 0",
+   "actual": "{\"Tomato\": {\"expected\": \"0.00\", \"on_hand\": \"0.00\", \"available\": \"0.00\"}}",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-02b",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Harvest on a COMPLETED cycle rejected",
+   "expected": "error 'completed'",
+   "actual": "This crop cycle is completed. Choose an active cycle.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-02c",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Completing a cycle twice rejected",
+   "expected": "error 'already completed'",
+   "actual": "This crop cycle is already completed.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-03a",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Cycle expected date before planting rejected",
+   "expected": "error",
+   "actual": "Expected harvest date cannot be before the planting date.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-03b",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Farmer cannot add cycle to another farmer's farm",
+   "expected": "error 'assigned to you'",
+   "actual": "You can only change farms assigned to you.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-03c",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Inactive unit rejected for new cycle",
+   "expected": "error 'inactive'",
+   "actual": "This unit is inactive and cannot be used.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "FARM-03d",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Unknown crop rejected for new cycle",
+   "expected": "error 'Unknown crop'",
+   "actual": "Unknown crop. Please pick one from the list.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "STK-04",
+   "group": "STK stock ledger",
+   "title": "Large forecast (999,999 kg) changes expected only, never stock",
+   "expected": "expected +999999; on_hand/reserved/available unchanged",
+   "actual": "expected 220.00->1000219.00; stock 0/0/0->0/0/0",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-02a",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Needed-by today accepted (boundary)",
+   "expected": "request created",
+   "actual": "request 10",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-02b",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Needed-by yesterday rejected",
+   "expected": "error 'past'",
+   "actual": "Needed-by date cannot be in the past.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-02c",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Request quantity 0 rejected",
+   "expected": "error 'greater than zero'",
+   "actual": "Requested quantity must be greater than zero.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-02d",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Request quantity -3 rejected",
+   "expected": "error 'negative'",
+   "actual": "Requested quantity cannot be negative.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-02e",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Unknown unit rejected",
+   "expected": "error 'Unknown unit'",
+   "actual": "Unknown unit. Please pick one from the list.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-02f",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "Farmer cannot create a market request",
+   "expected": "error 'Only market buyers'",
+   "actual": "Only market buyers can do this.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-01a",
+   "group": "HAR/FARM/REQ input validation",
+   "title": "New request records initial status history with actor and reason",
+   "expected": "1 row NULL->OPEN by Noura (7), reason 'Request created'",
+   "actual": "[{\"old_status\": \"None\", \"new_status\": \"OPEN\", \"changed_by\": \"7\", \"reason\": \"Request created\"}]",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "STK-01",
+   "group": "STK stock ledger",
+   "title": "Harvest 100 -> reserve 30 -> release 30",
+   "expected": "100/0/100 -> 100/30/70 -> 100/0/100",
+   "actual": "100/0/100 -> 100/30/70 -> 100/0/100",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ALC-04",
+   "group": "ALC allocation",
+   "title": "Releasing the same allocation twice",
+   "expected": "second release rejected; exactly 1 release movement",
+   "actual": "Only reserved (not yet delivered) allocations can be released.; release movements=1",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "STK-02",
+   "group": "STK stock ledger",
+   "title": "Loss 10, correction +2, correction -1 on unreserved 100",
+   "expected": "available 90 -> 92 -> 91; each movement has actor and reason",
+   "actual": "90 -> 92 -> 91; LOSS 10.00 by 2 'Spoiled'; CORRECTION 2.00 by 2 'Approved correction: Recount +2'; CORRECTION -1.00 by 2 'Approved correction: Recount -1'",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "STK-03",
+   "group": "STK stock ledger",
+   "title": "Loss/negative correction/dispose/donate of 12 when available=11 but on_hand=91",
+   "expected": "all four rejected (reserved stock protected); balances unchanged",
+   "actual": "['Only 11 kg is available in lot #17. Reserved stock cannot be removed.', 'Only 11 kg is available in lot #17. Reserved stock cannot be removed.', 'Only 11 kg is available in lot #17. Reserved stock cannot be donated or disposed.', 'Only 11 kg is available in lot #17. Reserved stock cannot be donated or disposed.']; 91/80/11 -> 91/80/11",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "STK-03b",
+   "group": "STK stock ledger",
+   "title": "Loss without reason rejected",
+   "expected": "error 'Reason is required'",
+   "actual": "Reason is required.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "STK-03c",
+   "group": "STK stock ledger",
+   "title": "Another farmer cannot record loss on this lot",
+   "expected": "error 'assigned to you'",
+   "actual": "You can only change lots from farms assigned to you.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ALC-02a",
+   "group": "ALC allocation",
+   "title": "Allocate available + 0.01 (50.01 of 50)",
+   "expected": "rejected 'Not enough stock'; no allocation",
+   "actual": "Not enough stock. Lot #18 has only 50 kg available.; allocations=0",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ALC-01a",
+   "group": "ALC allocation",
+   "title": "Allocate exactly the available quantity (50)",
+   "expected": "accepted; lot 50/50/0; request PARTIALLY_ALLOCATED",
+   "actual": "50/50/0; PARTIALLY_ALLOCATED",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ALC-02b",
+   "group": "ALC allocation",
+   "title": "Allocate request remainder + 0.01 (20.01 when 20 remain)",
+   "expected": "rejected 'only needs 20'",
+   "actual": "The request only needs 20 kg more.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ALC-01b",
+   "group": "ALC allocation",
+   "title": "Allocate exactly the remainder (20)",
+   "expected": "FULLY_ALLOCATED with one new history row",
+   "actual": "FULLY_ALLOCATED; history rows 2->3",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ALC-03a",
+   "group": "ALC allocation",
+   "title": "Allocate to a FULLY_ALLOCATED request",
+   "expected": "rejected 'not open'",
+   "actual": "This request is not open for allocation.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "UNIT-01a",
+   "group": "UNIT units",
+   "title": "Dates request in boxes vs Dates lot in kg",
+   "expected": "rejected 'different units'",
+   "actual": "The lot and the request use different units. Quantities in different units cannot be mixed.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "UNIT-01b",
+   "group": "UNIT units",
+   "title": "Dates request in kg vs Dates lot #12 in boxes",
+   "expected": "rejected 'different units'",
+   "actual": "The lot and the request use different units. Quantities in different units cannot be mixed.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "UNIT-01c",
+   "group": "UNIT units",
+   "title": "Fatima's stock summary keeps Dates (box) separate from kg crops; no duplicate crop/unit rows",
+   "expected": "one row per (crop, unit); Dates row unit = box",
+   "actual": "[[\"Dates\", \"box\", \"40.00\"], [\"Eggplant\", \"kg\", \"100.00\"], [\"Tomato\", \"kg\", \"220.00\"]]",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ALC-03b",
+   "group": "ALC allocation",
+   "title": "Administrator cannot allocate",
+   "expected": "rejected 'Only farmers'",
+   "actual": "Only farmers can do this.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ALC-03c",
+   "group": "ALC allocation",
+   "title": "Farmer cannot allocate another farm's lot",
+   "expected": "rejected 'assigned to you'",
+   "actual": "You can only change lots from farms assigned to you.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DEL-02",
+   "group": "DEL delivery",
+   "title": "Allocate 30 of 100, receive 25 with 5 shortfall",
+   "expected": "receipt 30/25/5; movements RESERVED 30, DELIVERED 25, RESERVATION_RELEASED 5, LOSS 5; lot 100/30/70 -> 70/0/70",
+   "actual": "receipt 30.00/25.00/5.00; [('RESERVED', '30.00'), ('DELIVERED', '25.00'), ('RESERVATION_RELEASED', '5.00'), ('LOSS', '5.00')]; 100/30/70 -> 70/0/70",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DEL-05a",
+   "group": "DEL delivery",
+   "title": "Request fully allocated (30) but only 25 received",
+   "expected": "documents current policy: status DELIVERED",
+   "actual": "status=DELIVERED, allocated=30.00, received=25.00",
+   "outcome": "Pass",
+   "notes": "Observation of existing allocation-based policy (finding F-02), not an endorsement."
+  },
+  {
+   "id": "DEL-04",
+   "group": "DEL delivery",
+   "title": "Confirm the same allocation again",
+   "expected": "rejected; still exactly 1 receipt and 4 movements",
+   "actual": "This delivery was already confirmed or released.; receipts=1; movements=4",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DEL-03b",
+   "group": "DEL delivery",
+   "title": "Receipt quantity '-1' reason 'x' rejected",
+   "expected": "error containing 'negative'",
+   "actual": "Received quantity cannot be negative.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DEL-03c",
+   "group": "DEL delivery",
+   "title": "Receipt quantity '20.01' reason 'x' rejected",
+   "expected": "error containing 'cannot be more'",
+   "actual": "Received quantity cannot be more than the allocated 20.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DEL-03d",
+   "group": "DEL delivery",
+   "title": "Receipt quantity '10' reason '' rejected",
+   "expected": "error containing 'reason'",
+   "actual": "Please enter a reason for the difference (discrepancy).",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DEL-03e",
+   "group": "DEL delivery",
+   "title": "Receipt quantity 'abc' reason 'x' rejected",
+   "expected": "error containing 'number'",
+   "actual": "Received quantity must be a number.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-03a",
+   "group": "REQ ownership",
+   "title": "Other market confirms this delivery",
+   "expected": "rejected 'own market'",
+   "actual": "You can only confirm deliveries for your own market.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DEL-03a",
+   "group": "DEL delivery",
+   "title": "Receive zero with a reason",
+   "expected": "accepted; discrepancy 20; no DELIVERED movement; release 20 + loss 20; on_hand -20",
+   "actual": "received 0.00 discrepancy 20.00; movements ['RESERVED', 'RESERVATION_RELEASED', 'LOSS']; 70/20/50 -> 50/0/50",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "DEL-01",
+   "group": "DEL delivery",
+   "title": "Full receipt of 40",
+   "expected": "one receipt 40/0, reason NULL; one DELIVERED movement; lot 20/0/20",
+   "actual": "40.00/0.00 reason=None; 20/0/20",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-04a",
+   "group": "REQ ownership",
+   "title": "Lower request quantity below its allocation (29.99 < 30)",
+   "expected": "rejected 'less than what is already allocated'",
+   "actual": "Quantity cannot be less than what is already allocated (30).",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-01b",
+   "group": "REQ ownership",
+   "title": "Update request quantity down to exactly the allocated amount",
+   "expected": "accepted; status FULLY_ALLOCATED",
+   "actual": "FULLY_ALLOCATED",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-03b",
+   "group": "REQ ownership",
+   "title": "Other market edits this request",
+   "expected": "rejected 'own market'",
+   "actual": "You can only manage your own market's requests.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-03c",
+   "group": "REQ ownership",
+   "title": "Other market cancels this request",
+   "expected": "rejected 'own market'",
+   "actual": "You can only manage your own market's requests.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-01c",
+   "group": "REQ ownership",
+   "title": "Cancel request with a reserved allocation",
+   "expected": "allocation RELEASED; reservation returned; status CANCELLED",
+   "actual": "allocation RELEASED; lot 100/30/70 -> 100/0/100; request CANCELLED",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-04b",
+   "group": "REQ ownership",
+   "title": "Edit a cancelled request",
+   "expected": "rejected",
+   "actual": "Delivered or cancelled requests cannot be changed.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "REQ-04c",
+   "group": "REQ ownership",
+   "title": "Cancel a request that already has a delivery",
+   "expected": "rejected",
+   "actual": "This request is already closed.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ADM-02a",
+   "group": "ADM admin",
+   "title": "Duplicate farm assignment",
+   "expected": "rejected 'already assigned'",
+   "actual": "This farmer is already assigned to that farm.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ADM-02b",
+   "group": "ADM admin",
+   "title": "Assign a market buyer to a farm",
+   "expected": "rejected 'only be assigned to farmers'",
+   "actual": "Farms can only be assigned to farmers.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ADM-02c",
+   "group": "ADM admin",
+   "title": "Invalid email",
+   "expected": "rejected 'valid email'",
+   "actual": "Please enter a valid email address.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ADM-01a",
+   "group": "ADM admin",
+   "title": "Admin deactivates own account",
+   "expected": "rejected",
+   "actual": "You cannot deactivate your own account.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ADM-01b",
+   "group": "ADM admin",
+   "title": "Deactivate then reactivate a user (history kept, row not deleted)",
+   "expected": "hidden from user selector while inactive; visible again after reactivation",
+   "actual": "hidden=True, shown=True",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ADM-01c",
+   "group": "ADM admin",
+   "title": "Farmer cannot add reference data",
+   "expected": "rejected 'Only administrators'",
+   "actual": "Only administrators can do this.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-01a",
+   "group": "SRCH search",
+   "title": "Crop filter Tomato",
+   "expected": "only Tomato lots",
+   "actual": "13 rows, crops=['Tomato']",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-01b",
+   "group": "SRCH search",
+   "title": "Emirate filter Dubai",
+   "expected": "only Hatta Valley Farm lots",
+   "actual": "farms=['Hatta Valley Farm']",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-01c",
+   "group": "SRCH search",
+   "title": "Availability 'Sold out'",
+   "expected": "only lots with on_hand <= 0 (seed lots #1, #5)",
+   "actual": "lots=[1, 5]",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-01d",
+   "group": "SRCH search",
+   "title": "Availability 'Fully reserved'",
+   "expected": "only lots with available <= 0 and reserved > 0",
+   "actual": "lots=[18]",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-01e",
+   "group": "SRCH search",
+   "title": "Minimum available 100",
+   "expected": "every row available >= 100",
+   "actual": "5 rows, min=100.00",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-01f",
+   "group": "SRCH search",
+   "title": "Available on a date 61 days ahead",
+   "expected": "only lots with sell_by NULL or >= that date",
+   "actual": "lots=[12, 14, 15]",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-01g",
+   "group": "SRCH search",
+   "title": "Request status filter PARTIALLY_DELIVERED",
+   "expected": "seed requests #1 and #3 only",
+   "actual": "requests=[1, 3]",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-02a",
+   "group": "SRCH search",
+   "title": "Empty result (unknown crop id)",
+   "expected": "0 rows, no error",
+   "actual": "0 rows",
+   "outcome": "Fail",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-02b",
+   "group": "SRCH search",
+   "title": "Invalid search input {'min_available': 'abc'}",
+   "expected": "error 'must be a number'",
+   "actual": "Minimum quantity must be a number.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-02c",
+   "group": "SRCH search",
+   "title": "Invalid search input {'min_available': '-1'}",
+   "expected": "error 'negative'",
+   "actual": "Minimum quantity cannot be negative.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-02d",
+   "group": "SRCH search",
+   "title": "Invalid search input {'date_from': '2026-11-22', 'date_to': '2026-11-18'}",
+   "expected": "error 'cannot be before'",
+   "actual": "'To date' cannot be before 'From date'.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "SRCH-02e",
+   "group": "SRCH search",
+   "title": "Invalid search input {'date_from': '2026-13-01'}",
+   "expected": "error 'real date'",
+   "actual": "From date must be a real date in the format YYYY-MM-DD.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02a",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='0' surplus='0'",
+   "expected": "accepted",
+   "actual": "accepted",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02b",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='60' surplus='365'",
+   "expected": "accepted",
+   "actual": "accepted",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02c",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='-1' surplus='7'",
+   "expected": "rejected with friendly message",
+   "actual": "Use 0-60 days for expiry and 0-365 days for surplus.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02d",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='61' surplus='7'",
+   "expected": "rejected with friendly message",
+   "actual": "Use 0-60 days for expiry and 0-365 days for surplus.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02e",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='3' surplus='366'",
+   "expected": "rejected with friendly message",
+   "actual": "Use 0-60 days for expiry and 0-365 days for surplus.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02f",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='3' surplus='-1'",
+   "expected": "rejected with friendly message",
+   "actual": "Use 0-60 days for expiry and 0-365 days for surplus.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02g",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='abc' surplus='7'",
+   "expected": "rejected with friendly message",
+   "actual": "Thresholds must be whole numbers of days.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02h",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='1.5' surplus='7'",
+   "expected": "rejected with friendly message",
+   "actual": "Thresholds must be whole numbers of days.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-02i",
+   "group": "LS Loss & Surplus",
+   "title": "Thresholds near='' surplus='7'",
+   "expected": "rejected with friendly message",
+   "actual": "Thresholds must be whole numbers of days.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-03a",
+   "group": "LS Loss & Surplus",
+   "title": "Defaults 3/7: lot 23 sell-by today (days_left 0)",
+   "expected": "NEAR EXPIRY",
+   "actual": "NEAR EXPIRY",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-03b",
+   "group": "LS Loss & Surplus",
+   "title": "Defaults 3/7: lot 24 sell-by today+3 (=N)",
+   "expected": "NEAR EXPIRY",
+   "actual": "NEAR EXPIRY",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-03c",
+   "group": "LS Loss & Surplus",
+   "title": "Defaults 3/7: lot 25 sell-by today+4 (N+1), age 0",
+   "expected": "not flagged",
+   "actual": "not flagged",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-03d",
+   "group": "LS Loss & Surplus",
+   "title": "Defaults 3/7: lot 26 no sell-by, age 7 (=M)",
+   "expected": "UNALLOCATED SURPLUS",
+   "actual": "UNALLOCATED SURPLUS",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-03e",
+   "group": "LS Loss & Surplus",
+   "title": "Defaults 3/7: lot 27 no sell-by, age 6 (M-1)",
+   "expected": "not flagged",
+   "actual": "not flagged",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-01b",
+   "group": "LS Loss & Surplus",
+   "title": "Defaults 3/7: lot 28 expired but fully reserved (available 0)",
+   "expected": "not flagged",
+   "actual": "not flagged",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-06",
+   "group": "LS Loss & Surplus",
+   "title": "Defaults 3/7: lot 29 age 9, only allocation RELEASED",
+   "expected": "UNALLOCATED SURPLUS",
+   "actual": "UNALLOCATED SURPLUS",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-03f",
+   "group": "LS Loss & Surplus",
+   "title": "Near-expiry threshold 0: sell-by today is NEAR EXPIRY, not EXPIRED; today+3 not flagged",
+   "expected": "NEAR EXPIRY / not flagged",
+   "actual": "NEAR EXPIRY / not flagged",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-01a",
+   "group": "LS Loss & Surplus",
+   "title": "Seed: lot #3 EXPIRED priority 1; lot #12 surplus; ordering by priority",
+   "expected": "lot 3 EXPIRED/1, lot 12 UNALLOCATED SURPLUS/3; first row priority 1",
+   "actual": "lot3=('EXPIRED', 1), lot12=('UNALLOCATED SURPLUS', 3), first=1",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-01c",
+   "group": "LS Loss & Surplus",
+   "title": "Result sorted by priority (non-decreasing)",
+   "expected": "sorted",
+   "actual": "[1, 2, 2, 2, 2, 2, 2, 3, 3, 3]",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-04a",
+   "group": "LS Loss & Surplus",
+   "title": "Donate 0.01 then dispose exactly the remaining 9.99",
+   "expected": "9.99/0/9.99 then 0/0/0",
+   "actual": "9.99/0/9.99 then 0/0/0",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-04b",
+   "group": "LS Loss & Surplus",
+   "title": "Disposition history persists actor, date, type and reason",
+   "expected": "2 rows by Fatima Rashid with reasons",
+   "actual": "[('DONATED', '0.01', 'Fatima Rashid', 'Donated to: Sharjah Charity'), ('DISPOSED', '9.99', 'Fatima Rashid', 'Disposed: Bruised')]",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-04c",
+   "group": "LS Loss & Surplus",
+   "title": "Donate qty '0.01' note 'x'",
+   "expected": "rejected 'only 0'",
+   "actual": "Only 0 kg is available in lot #30. Reserved stock cannot be donated or disposed.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-04d",
+   "group": "LS Loss & Surplus",
+   "title": "Donate qty '0' note 'x'",
+   "expected": "rejected 'greater than zero'",
+   "actual": "Quantity must be greater than zero.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-04e",
+   "group": "LS Loss & Surplus",
+   "title": "Donate qty '-1' note 'x'",
+   "expected": "rejected 'negative'",
+   "actual": "Quantity cannot be negative.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-04f",
+   "group": "LS Loss & Surplus",
+   "title": "Donate qty '1' note ' '",
+   "expected": "rejected 'required'",
+   "actual": "Recipient / reason is required.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-05a",
+   "group": "LS Loss & Surplus",
+   "title": "Another farmer disposes Fatima's lot",
+   "expected": "rejected 'assigned to you'",
+   "actual": "You can only change lots from farms assigned to you.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-05b",
+   "group": "LS Loss & Surplus",
+   "title": "Administrator attempts donation",
+   "expected": "rejected 'Only farmers'",
+   "actual": "Only farmers can do this.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-05c",
+   "group": "LS Loss & Surplus",
+   "title": "Administrator (no farm filter) sees flags across all farms",
+   "expected": "> 1 farm in result",
+   "actual": "['Al Dhaid Fresh Farm', 'Desert Bloom Farm', 'Green Oasis Farm', 'Hatta Valley Farm']",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "LS-04g",
+   "group": "LS Loss & Surplus",
+   "title": "Unknown disposition action",
+   "expected": "rejected",
+   "actual": "Choose Donate or Dispose.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03a",
+   "group": "IMG images",
+   "title": "Upload missing.jpg",
+   "expected": "rejected 'not found'",
+   "actual": "The selected image file was not found.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03b",
+   "group": "IMG images",
+   "title": "Upload empty.jpg",
+   "expected": "rejected 'empty'",
+   "actual": "The image file is empty.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03c",
+   "group": "IMG images",
+   "title": "Upload notes.txt",
+   "expected": "rejected 'only jpg and png'",
+   "actual": "Only JPG and PNG images are allowed.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03d",
+   "group": "IMG images",
+   "title": "Upload fake.jpg",
+   "expected": "rejected 'not a valid'",
+   "actual": "This file is not a valid JPG or PNG image.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03e",
+   "group": "IMG images",
+   "title": "Upload over.png",
+   "expected": "rejected 'larger than 5 mb'",
+   "actual": "The image is larger than 5 MB. Please choose a smaller image.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03f",
+   "group": "IMG images",
+   "title": "Upload anim.gif",
+   "expected": "rejected 'only jpg and png'",
+   "actual": "Only JPG and PNG images are allowed.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03g",
+   "group": "IMG images",
+   "title": "Upload gif_named.png",
+   "expected": "rejected 'not a valid'",
+   "actual": "This file is not a valid JPG or PNG image.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-04a",
+   "group": "IMG images",
+   "title": "PNG of exactly 5 MiB (5,242,880 bytes)",
+   "expected": "accepted (limit is inclusive)",
+   "actual": "accepted",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-04b",
+   "group": "IMG images",
+   "title": "JPEG truncated to half its bytes",
+   "expected": "observe: validate_image uses Pillow verify()",
+   "actual": "accepted by validate_image",
+   "outcome": "Info",
+   "notes": "Informational: records actual behaviour of the existing validator for truncated JPEGs."
+  },
+  {
+   "id": "IMG-03z",
+   "group": "IMG images",
+   "title": "No image row inserted by rejected uploads",
+   "expected": "12 rows",
+   "actual": "12",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-04c",
+   "group": "IMG images",
+   "title": "5 MiB PNG stored as MEDIUMBLOB and read back byte-identical",
+   "expected": "SHA-256 equal",
+   "actual": "stored 5242880 bytes sha256 1d5674673aae3084\u2026 orig 1d5674673aae3084\u2026",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03h",
+   "group": "IMG images",
+   "title": "Farmer uploads photo to another farm's lot",
+   "expected": "rejected 'assigned to you'",
+   "actual": "You can only change lots from farms assigned to you.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "IMG-03i",
+   "group": "IMG images",
+   "title": "Market buyer uploads a photo",
+   "expected": "rejected 'Only farmers'",
+   "actual": "Only farmers can do this.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-01a",
+   "group": "TX-01 rollback",
+   "title": "Harvest with photo: fail on image INSERT after lot + movement + cycle-status UPDATE",
+   "expected": "operation fails with friendly message; every table's checksum unchanged",
+   "actual": "The database connection was lost. Please try again.; tables unchanged=True",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-01a2",
+   "group": "TX-01 rollback",
+   "title": "Cycle #9 status not changed by the rolled-back harvest",
+   "expected": "GROWING",
+   "actual": "GROWING",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-01b",
+   "group": "TX-01 rollback",
+   "title": "Allocate: fail on status-history INSERT after allocation + RESERVED movement + status UPDATE",
+   "expected": "operation fails with friendly message; every table's checksum unchanged",
+   "actual": "The database connection was lost. Please try again.; tables unchanged=True",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-01c",
+   "group": "TX-01 rollback",
+   "title": "Partial delivery: fail on LOSS movement after receipt, DELIVERED and release rows",
+   "expected": "operation fails with friendly message; every table's checksum unchanged",
+   "actual": "The database connection was lost. Please try again.; tables unchanged=True",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-01d",
+   "group": "TX-01 rollback",
+   "title": "Release: fail on status-history INSERT after release movement + allocation UPDATE",
+   "expected": "operation fails with friendly message; every table's checksum unchanged",
+   "actual": "The database connection was lost. Please try again.; tables unchanged=True",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-01e",
+   "group": "TX-01 rollback",
+   "title": "Cancel with reservation: fail on final history INSERT after release + status UPDATE",
+   "expected": "operation fails with friendly message; every table's checksum unchanged",
+   "actual": "The database connection was lost. Please try again.; tables unchanged=True",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-01f",
+   "group": "TX-01 rollback",
+   "title": "Add farm: fail on farm_users INSERT after farms INSERT",
+   "expected": "operation fails with friendly message; every table's checksum unchanged",
+   "actual": "The database connection was lost. Please try again.; tables unchanged=True",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-01z",
+   "group": "TX-01 rollback",
+   "title": "Ledger invariants after all injected failures",
+   "expected": "no violations",
+   "actual": "ok",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-02a",
+   "group": "TX-02/03 concurrency",
+   "title": "20 trials: two farmers' threads allocate 80 each from one 100 kg lot to DIFFERENT requests",
+   "expected": "at most one allocation per trial; available never negative",
+   "actual": "both succeeded in 16/20 trials; negative availability in 16/20 (e.g. ['100/160/-60', '100/160/-60', '100/160/-60'])",
+   "outcome": "Fail",
+   "notes": "Finding F-01 if failing: the availability read uses a REPEATABLE READ snapshot taken before the lot lock."
+  },
+  {
+   "id": "TX-02b",
+   "group": "TX-02/03 concurrency",
+   "title": "Deterministic interleaving: A reads ownership (snapshot), B allocates 80 and commits, A continues",
+   "expected": "A rejected 'Not enough stock'; lot available 20",
+   "actual": "A=ok, B=ok; lot 100/160/-60",
+   "outcome": "Fail",
+   "notes": "The pause only widens a timing window that exists in normal scheduling; no SQL is changed."
+  },
+  {
+   "id": "TX-02c",
+   "group": "TX-02/03 concurrency",
+   "title": "10 trials: allocation of 80 races a donation of 80 on one 100 kg lot",
+   "expected": "never both; available never negative",
+   "actual": "negative availability in 6/10 trials",
+   "outcome": "Fail",
+   "notes": ""
+  },
+  {
+   "id": "TX-02d",
+   "group": "TX-02/03 concurrency",
+   "title": "Proposed-fix simulation: same 20 trials with READ COMMITTED sessions",
+   "expected": "no oversell",
+   "actual": "both succeeded 0/20; negative availability 0/20",
+   "outcome": "Pass",
+   "notes": "Simulation inside this test process only; application code unchanged. Not a reviewed fix."
+  },
+  {
+   "id": "TX-03a",
+   "group": "TX-02/03 concurrency",
+   "title": "Two concurrent confirmations of one allocation",
+   "expected": "exactly one succeeds; 1 receipt; no duplicate movements",
+   "actual": "outcomes=['This delivery was already confirmed or released.', 'ok']; receipts=1; post-reservation movements=3",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-03b",
+   "group": "TX-02/03 concurrency",
+   "title": "Release races confirmation on one allocation",
+   "expected": "exactly one succeeds; allocation status matches ledger",
+   "actual": "outcomes=['ok', 'This delivery was already confirmed or released.']; allocation=RELEASED; lot 50/0/50",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-03c",
+   "group": "TX-02/03 concurrency",
+   "title": "Cancellation races allocation on one request",
+   "expected": "request CANCELLED; no RESERVED allocation left; lot 50/0/50",
+   "actual": "outcomes=['ok', 'ok']; request=CANCELLED; reserved allocations=0; lot 50/0/50",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-03d",
+   "group": "TX-02/03 concurrency",
+   "title": "Cancellation races delivery confirmation",
+   "expected": "exactly one succeeds; consistent request/allocation/ledger",
+   "actual": "outcomes=['This request is already closed.', 'ok']; request=DELIVERED; allocation=DELIVERED; lot 0/0/0",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "TX-03z",
+   "group": "TX-02/03 concurrency",
+   "title": "Ledger invariants after all concurrency scenarios",
+   "expected": "no lot with reserved != open RESERVED allocations; no duplicate receipt",
+   "actual": "lot problems=[(35, '100/160/-60', Decimal('160.00')), (36, '100/160/-60', Decimal('160.00')), (38, '100/160/-60', Decimal('160.00')), (39, '100/160/-60', Decimal('160.00')), (41, '100/160/-60', Decimal('160.00')), (42, '100/160/-60', Decimal('160.00')), (43, '100/160/-60', Decimal('160.00')), (44, '100/160/-60', Decimal('160.00')), (46, '100/160/-60', Decimal('160.00')), (47, '100/160/-60', Decimal('160.00')), (48, '100/160/-60', Decimal('160.00')), (49, '100/160/-60', Decimal('160.00')), (50, '100/160/-60', Decimal('160.00')), (51, '100/160/-60', Decimal('160.00')), (52, '100/160/-60', Decimal('160.00')), (53, '100/160/-60', Decimal('160.00')), (54, '100/160/-60', Decimal('160.00')), (55, '20/80/-60', Decimal('80.00')), (56, '20/80/-60', Decimal('80.00')), (57, '20/80/-60', Decimal('80.00')), (61, '20/80/-60', Decimal('80.00')), (63, '20/80/-60', Decimal('80.00')), (64, '20/80/-60', Decimal('80.00'))] dup_receipts=() delivered_without_receipt=()",
+   "outcome": "Fail",
+   "notes": "Lots oversold in TX-02a/02c (if any) appear here as negative availability."
+  },
+  {
+   "id": "ERR-01a",
+   "group": "ERR connection",
+   "title": "Missing database name",
+   "expected": "friendly 'database was not found' (MySQL 1049)",
+   "actual": "The database was not found. Run setup.bat first.",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ERR-01b",
+   "group": "ERR connection",
+   "title": "Unreachable host (TEST-NET address)",
+   "expected": "friendly 'Cannot reach the MySQL server' within the 5 s connect timeout",
+   "actual": "Cannot reach the MySQL server. Make sure MySQL is running. after 5.1s",
+   "outcome": "Pass",
+   "notes": ""
+  },
+  {
+   "id": "ERR-01c",
+   "group": "ERR connection",
+   "title": "Friendly messages contain no traceback, driver name or password",
+   "expected": "no leakage",
+   "actual": "none",
+   "outcome": "Pass",
+   "notes": ""
+  }
+ ]
+}
