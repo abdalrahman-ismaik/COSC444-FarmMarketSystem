@@ -4,14 +4,14 @@
 
 The approved repository pass copies two reusable skills from KU Planner's Windows bootstrap distribution. It does not run the bootstrap installer or transfer that project's app instructions, credentials, global settings, dependencies, or Liquid Glass theme.
 
-| Skill | Local entry point | Original local source | Use |
-|---|---|---|---|
-| Impeccable | [SKILL.md](../.agents/skills/impeccable/SKILL.md) | `C:/Users/4bais/kuplannar/opencode-student-bootstrap/Windows/skills/impeccable/` | Desktop theme documentation and future interface work; preserve Tkinter context |
-| Ponytail | [SKILL.md](../.agents/skills/ponytail/SKILL.md) | `C:/Users/4bais/kuplannar/opencode-student-bootstrap/Windows/skills/ponytail/` | Keep implementation and repository structure simple; do not remove rubric requirements |
+| Skill | Repository entry point | Use |
+|---|---|---|
+| Impeccable | `.agents/skills/impeccable/SKILL.md` (repository only) | Desktop theme documentation and future interface work; preserve Tkinter context |
+| Ponytail | `.agents/skills/ponytail/SKILL.md` (repository only) | Keep implementation and repository structure simple; do not remove rubric requirements |
 
-Directories are copied with their supporting references/scripts/agent instructions, not just the entry Markdown. The source distribution and copied files are hash-checked in this pass. No provider credentials or paid generation jobs are needed for the documentation. Skills are project-local and available for discovery in subsequent turns; global skills are not overwritten.
+In the full Git repository, the skill directories include supporting references/scripts/agent instructions. They are not runtime dependencies and are excluded from the course review ZIP. No provider credentials or paid generation jobs were needed for documentation; global skills are not overwritten.
 
-The installed PDF skill at `C:/Users/4bais/.codex/skills/pdf/SKILL.md` was used to guide source-document review. It is already available in the environment and was not copied from KU Planner. No video, hosting, image-generation, or presentation-production workflow is needed to organize this repository.
+The PDF skill was used to guide source-document review; it is environment-provided and is not part of this repository. No video, hosting, image-generation, or presentation-production workflow was needed to organize this repository. The reusable skill files are omitted from the review-candidate ZIP.
 
 Skill instructions remain subordinate to user scope, environment rules, and actual project requirements. Automated design checks intended for CSS/web projects do not establish Tkinter accessibility or visual correctness.
 
@@ -22,10 +22,10 @@ Skill instructions remain subordinate to user scope, environment rules, and actu
 | Four-page proposal | [Original PDF](sources/Local_Farm_Market_Food_Availability_Project_Proposal.pdf) | Primary project requirements |
 | Twelve-slide Lab 6 deck | [Original PPTX](sources/langchain.pptx) | Teaching context for Gemini/MySQL natural-language queries |
 | Supplied announcements | [Announcement record](ANNOUNCEMENTS.md) | Later logistics and detailed rubric; external form state unverified |
-| Original application package | `archive/original-package/FarmMarketSystem_Team.zip` | Immutable baseline for preservation comparisons |
-| Original application README | [Archived README](../archive/original-package/README.md) | Historical instructions; root README is maintained |
+| Original application package | Preserved in the working repository archive; excluded from the review-candidate ZIP | Historical baseline for preservation comparisons |
+| Original application README | Preserved in the working repository archive; excluded from the review-candidate ZIP | Historical instructions; root README is maintained |
 | Existing 37-page visual guide | [Visual_Guide.pdf](reference/Visual_Guide.pdf) | Historical screenshots and reported tests; known demo-order issue, stand-in AI disclosure |
-| School-database starter | `archive/lab-example/` | Teaching code/schema/data; not the maintained farm app |
+| School-database starter | Preserved in the working repository archive; excluded from the review-candidate ZIP | Teaching code/schema/data; not the maintained farm app |
 
 ## Sample-image attribution
 

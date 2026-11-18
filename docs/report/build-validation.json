@@ -1,0 +1,41 @@
+{
+  "technical-report": {
+    "pages": 12,
+    "sha256": "95dfabca465619b3ada80f9788f6976c8e3aac6602b6e4d104980544da56cd45"
+  },
+  "poster": {
+    "pages": 1,
+    "sha256": "0f809ae60f0f89fefb3ca39a35258fd751112023bbe01002dadd0ca2656299fa"
+  },
+  "track_a_commit": "80529fbfddf58b58735963f6a35847e22dedeadc",
+  "inputs": {
+    "docs/diagrams/conceptual-er.pdf": "b5e0af8be1c86279ccc1af29145dfa5d529276363c99b648166e10434a29d4c3",
+    "docs/diagrams/relational-schema.pdf": "f88c0fd972548920c7e291102351c3087e3c0d221b3cc6794344b0d7a0309f26",
+    "docs/diagrams/conceptual-er.drawio": "249763d47d1016941390fdb2ca56993a0d6b40617af45ea8f22df2bfc269a83e",
+    "docs/diagrams/relational-schema.drawio": "652c9b36c12b2e9efdc0f0662ee9e455e09a7fdce430f93130dcd807f54fb757",
+    "docs/evidence/track-a/remaining-checks.json": "c0ebde4b03c77dda9010ffa2ecc1e5590d20267ee7c716d451ec3f58e664579c",
+    "docs/evidence/track-a/gui-flow.json": "c4ae9f113f3e57c1140afb634b8f2bf8c97431b02235a1ea8e0de65765458458"
+  },
+  "checks": [
+    "14 actual AI questions retained",
+    "Track A result totals retained",
+    "7 poster entities and 6 relationships match Draw.io",
+    "12 report pages and 1 poster page",
+    "team identities in both PDFs",
+    "overflow guard passed"
+  ],
+  "date": "2026-11-17",
+  "operator": "Mohammad Arwani with Codex",
+  "environment": "Windows 11 10.0.26200; bundled Python 3.12.14; ReportLab 4.4.9; pypdf 6.21.4; Pillow 13.0.0; Poppler 26.07.0",
+  "repeated_build_hashes_identical": true,
+  "application_tests_run": false,
+  "package_created": false,
+  "visual_qa": "All 12 report pages individually inspected at full render size; all changed report pages rechecked; final poster inspected at 1920x1080 after connector and wording fixes. No clipping, overlap or missing glyphs observed.",
+  "image_archive_comparison": "4/4 external JPEGs and 12/12 SQL BLOB tuples byte-identical to original ZIP; no EXIF identifiers; exact upstream mapping unresolved",
+  "staged_checks": {
+    "paths": "14 scoped files; no runtime/archive/credential files",
+    "known_credential_patterns": "no matches",
+    "pdf_bytes": "index byte-identical to working exports after binary attribute",
+    "whitespace": "git diff --cached --check passed after PDF binary rule"
+  }
+}

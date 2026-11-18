@@ -40,7 +40,8 @@ def db_settings():
 def get_connection():
     return pymysql.connect(
         **db_settings(), charset="utf8mb4", autocommit=False,
-        cursorclass=pymysql.cursors.DictCursor, connect_timeout=5)
+        cursorclass=pymysql.cursors.DictCursor, connect_timeout=5,
+        init_command="SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED")
 
 
 @contextmanager
@@ -168,6 +169,8 @@ def validate_image(path):
         img.verify()
         if img.format not in ("JPEG", "PNG"):
             raise ValueError
+        with Image.open(io.BytesIO(data)) as decoded:
+            decoded.load()
     except Exception:
         raise BusinessError("This file is not a valid JPG or PNG image.")
     return os.path.basename(path)[:150], ALLOWED_IMAGE_EXT[ext], data
@@ -470,7 +473,7 @@ def record_adjustment(user, lot_id, kind, qty, reason):
 # Market requests
 # ----------------------------------------------------------------------
 def _refresh_request_status(cur, request_id, user_id, reason):
-    cur.execute("SELECT status, requested_quantity FROM market_requests WHERE request_id=%s", (request_id,))
+    cur.execute("SELECT status, requested_quantity FROM market_requests WHERE request_id=%s FOR UPDATE", (request_id,))
     req = cur.fetchone()
     if req["status"] == "CANCELLED":
         return
@@ -569,13 +572,14 @@ def cancel_request(user, request_id, reason):
         req = _lock_own_request(cur, user, request_id)
         if req["status"] in ("DELIVERED", "CANCELLED"):
             raise BusinessError("This request is already closed.")
-        cur.execute("SELECT * FROM allocations WHERE request_id=%s", (request_id,))
+        cur.execute("SELECT * FROM allocations WHERE request_id=%s ORDER BY allocation_id FOR UPDATE", (request_id,))
         allocs = cur.fetchall()
         if any(a["status"] == "DELIVERED" for a in allocs):
             raise BusinessError("This request already has deliveries and cannot be cancelled.")
+        for lot_id in sorted({a["lot_id"] for a in allocs if a["status"] == "RESERVED"}):
+            lot_available(cur, lot_id)
         for a in allocs:
             if a["status"] == "RESERVED":
-                lot_available(cur, a["lot_id"])  # lock lot
                 cur.execute("""INSERT INTO stock_movements (lot_id, movement_type, quantity, unit_id, user_id,
                                reason, allocation_id) VALUES (%s,'RESERVATION_RELEASED',%s,%s,%s,%s,%s)""",
                             (a["lot_id"], a["allocated_quantity"], a["unit_id"], user["user_id"],
@@ -665,14 +669,28 @@ def list_allocations(request_id=None, farm_ids=None, market_id=None, status=None
     return query(sql + " ORDER BY a.allocated_at DESC", params)
 
 
+def _lock_allocation(cur, allocation_id):
+    """Lock parent request before allocation; all request changes use the same order."""
+    cur.execute("SELECT request_id FROM allocations WHERE allocation_id=%s", (allocation_id,))
+    link = cur.fetchone()
+    if not link:
+        raise BusinessError("Allocation not found.")
+    cur.execute("SELECT request_id FROM market_requests WHERE request_id=%s FOR UPDATE",
+                (link["request_id"],))
+    cur.execute("""SELECT a.*, r.market_id FROM allocations a
+                   JOIN market_requests r ON r.request_id=a.request_id
+                   WHERE a.allocation_id=%s FOR UPDATE""", (allocation_id,))
+    allocation = cur.fetchone()
+    if not allocation:
+        raise BusinessError("Allocation not found.")
+    return allocation
+
+
 def release_allocation(user, allocation_id, reason):
     _require_role(user, "farmer")
     reason = require_text(reason, "Reason")
     with transaction() as cur:
-        cur.execute("SELECT * FROM allocations WHERE allocation_id=%s FOR UPDATE", (allocation_id,))
-        a = cur.fetchone()
-        if not a:
-            raise BusinessError("Allocation not found.")
+        a = _lock_allocation(cur, allocation_id)
         _check_lot_owner(cur, user, a["lot_id"])
         if a["status"] != "RESERVED":
             raise BusinessError("Only reserved (not yet delivered) allocations can be released.")
@@ -693,12 +711,7 @@ def confirm_delivery(user, allocation_id, received, reason):
         raise BusinessError("Select a pending delivery first.")
     received = parse_qty(received, "Received quantity", allow_zero=True)
     with transaction() as cur:
-        cur.execute("""SELECT a.*, r.market_id FROM allocations a
-                       JOIN market_requests r ON r.request_id=a.request_id
-                       WHERE a.allocation_id=%s FOR UPDATE""", (allocation_id,))
-        a = cur.fetchone()
-        if not a:
-            raise BusinessError("Delivery not found.")
+        a = _lock_allocation(cur, allocation_id)
         if a["market_id"] != user["market_id"]:
             raise BusinessError("You can only confirm deliveries for your own market.")
         if a["status"] != "RESERVED":

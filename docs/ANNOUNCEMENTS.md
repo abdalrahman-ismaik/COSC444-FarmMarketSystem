@@ -6,16 +6,16 @@ Source: announcement text supplied by the team in this conversation. Announcemen
 
 | Item | Supplied instruction | Current status |
 |---|---|---|
-| Team registration | Three–four students; all members in the team sheet | Three B1 members identified; external registration unconfirmed |
-| Earlier demo-booking deadline | November 12, 2026 | Historical instruction; booking unconfirmed |
-| Later penalty deadline | Monday, November 16, 2026, for demo booking and team-sheet registration; failure incurs 5% group penalty | Action required if not already done; completion unconfirmed |
+| Team registration | Three–four students; all members in the team sheet | User reports all three B1 members registered; verify each name appears in the sheet |
+| Earlier demo-booking deadline | November 12, 2026 | Historical instruction; user reports a slot booked for November 19 at 1:30 PM |
+| Later penalty deadline | Monday, November 16, 2026, for demo booking and team-sheet registration; failure incurs 5% group penalty | User reports both complete; completion date not provided, so confirm with course staff if completed after the deadline |
 | Submission | Thursday, November 19, 2026 | No cutoff hour or submission portal instructions supplied |
 | Demo dates | Initially November 19, 20, and 23; later slot notice says all available slots are Thursday, November 19 | Confirm actual booked slot directly; do not assume another date is available |
-| Demo duration | Strictly fifteen minutes: ~three-minute poster plus ~twelve-minute live demo/questions | Rehearsal required |
+| Demo duration | Strictly fifteen minutes: ~three-minute poster plus ~twelve-minute live demo/questions | Slot booked for November 19 at 1:30 PM per user; rehearsal required |
 | Attendance | Every member attends; official excuse needed for absence to avoid lost marks | Attendance unconfirmed |
-| Location | To be announced | Unknown |
+| Location | To be announced | Not yet provided; confirm before the slot |
 | Late/incomplete demo | May incur a 10% penalty | Keep system ready before slot |
-| Poster | Digital poster permitted; include in submission and project it instead of printing | Final poster PDF missing |
+| Poster | Digital poster permitted; include in submission and project it instead of printing | Poster PDF prepared as a review candidate; team projector check and final submission remain |
 
 Team registration: [Project information spreadsheet](https://docs.google.com/spreadsheets/d/1SXa0kR_Kgh19I0jOCFS4hiCuGGMwqTUkNJGFYdy6zrQ/edit?usp=sharing).
 

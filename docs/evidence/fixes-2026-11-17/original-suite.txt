@@ -1,0 +1,87 @@
+
+== Harvest & images ==
+PASS Farmer records harvest with photo
+PASS Harvest adds stock movement
+PASS Photo stored as BLOB
+PASS Negative harvest rejected  ->  Harvested quantity cannot be negative.
+PASS Invalid date rejected  ->  Harvest date must be a real date in the format YYYY-MM-DD.
+PASS Future harvest rejected  ->  Harvest date cannot be in the future.
+PASS Sell-by before harvest rejected  ->  Sell-by date cannot be before the harvest date.
+PASS Farmer cannot use another farm's cycle  ->  You can only record harvests for farms assigned to you.
+PASS Non-image upload rejected  ->  Only JPG and PNG images are allowed.
+PASS Market buyer cannot record harvest  ->  Only farmers can do this.
+
+== Expected vs stock ==
+PASS Crop cycle forecast created
+PASS Expected harvest never counted as available stock
+
+== Allocation rules ==
+PASS Allocation larger than lot is rejected  ->  Not enough stock. Lot #2 has only 78 kg available.
+PASS Farmer cannot allocate from another farm  ->  You can only change lots from farms assigned to you.
+PASS Wrong crop rejected  ->  This lot is a different crop from the request.
+PASS Valid allocation 78 kg from lot 2
+PASS Lot 2 now fully reserved
+PASS Over-allocating the request is rejected  ->  The request only needs 42 kg more.
+PASS Second farmer allocates remaining 42 kg
+PASS Request becomes FULLY_ALLOCATED
+PASS Allocating a closed request rejected  ->  This request is not open for allocation.
+
+== Delivery ==
+PASS Other market cannot confirm  ->  You can only confirm deliveries for your own market.
+PASS Received > allocated rejected  ->  Received quantity cannot be more than the allocated 78.
+PASS Shortfall without reason rejected  ->  Please enter a reason for the difference (discrepancy).
+PASS Partial delivery confirmed (70 of 78)
+PASS Lot 2: on hand 0, reserved 0 after delivery+discrepancy
+PASS Receipt records difference 8
+PASS Request becomes PARTIALLY_DELIVERED
+PASS Confirming twice rejected  ->  This delivery was already confirmed or released.
+PASS Cancel after delivery rejected  ->  This request already has deliveries and cannot be cancelled.
+
+== Release & requests ==
+PASS Market creates request
+PASS Unit mismatch rejected (box lot vs kg request)  ->  The lot and the request use different units. Quantities in different units cannot be mixed.
+PASS Allocate 20 kg eggplant
+PASS Release allocation
+PASS Released stock is available again
+PASS Past needed-by date rejected  ->  Needed-by date cannot be in the past.
+PASS Other market cannot edit request  ->  You can only manage your own market's requests.
+PASS Cancel request
+
+== Loss & surplus (advanced feature) ==
+PASS Flagged lots query
+PASS Expired lot 3 flagged priority 1
+PASS Surplus box lot 12 flagged
+PASS Bad threshold rejected  ->  Thresholds must be whole numbers of days.
+PASS Donate more than available rejected  ->  Only 40 kg is available in lot #3. Reserved stock cannot be donated or disposed.
+PASS Donate 30 kg
+PASS Dispose 10 kg
+PASS Lot 3 now empty
+PASS Reserved stock cannot be donated  ->  Only 100 kg is available in lot #8. Reserved stock cannot be donated or disposed.
+
+== Admin & errors ==
+PASS Admin cannot allocate (no transaction editing)  ->  Only farmers can do this.
+PASS Duplicate crop rejected  ->  This record already exists (duplicate name or email).
+PASS Duplicate email rejected  ->  This record already exists (duplicate name or email).
+PASS Market buyer needs a market  ->  Market buyers must be linked to a market.
+PASS Deactivate crop
+PASS Inactive crop cannot be requested  ->  This crop is inactive and cannot be used.
+PASS Unknown crop rejected  ->  Unknown crop. Please pick one from the list.
+
+== Concurrency: two farmers race for the same lot ==
+PASS No overselling under concurrent requests (lot 13 had 78 available)
+
+== Bad connection ==
+PASS Wrong DB password -> friendly message  ->  Database login failed. Check DB_USER and DB_PASSWORD in the .env file.
+PASS MySQL down -> friendly message  ->  Cannot reach the MySQL server. Make sure MySQL is running.
+
+== Assistant SQL guard ==
+PASS Blocked: DELETE FROM farms  ->  Something went wrong. Please try again.
+PASS Blocked: SELECT * FROM farms; DROP TABLE farms  ->  Something went wrong. Please try again.
+PASS Blocked: UPDATE units SET unit_code='x'  ->  Something went wrong. Please try again.
+PASS Blocked: SELECT image_data FROM harvest_lot_images  ->  Something went wrong. Please try again.
+PASS Blocked: SELECT * FROM mysql.user  ->  Something went wrong. Please try again.
+PASS Blocked: SELECT * FROM farms -- comment  ->  Something went wrong. Please try again.
+PASS Blocked: SELECT * INTO OUTFILE '/tmp/x' FROM farms  ->  Something went wrong. Please try again.
+PASS Allowed: SELECT on view
+
+65/65 tests passed

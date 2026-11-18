@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-18",
+  "validation": "15 relations, 100 columns, 32 FKs, 13 named CHECKs matched offline SQL/XML checks",
+  "visual_review": "All 13 report pages (including all 8 diagram sheets) and the poster inspected; final pages 1/5 re-inspected after text corrections",
+  "build": "Two consecutive builds byte-identical for all diagram/PDF/SVG outputs",
+  "limitations": [
+    "No local DB/GUI/AI reruns",
+    "Draw.io desktop unavailable; XML well-formedness checked, editor round-trip not tested",
+    "Older candidate ZIP superseded; replacement awaits review"
+  ],
+  "pdf_sha256": {
+    "docs\\diagrams\\conceptual-er.pdf": "193ef9e970454a7c784d90974bbc5b0a795bf4a8249f8521f8b03d2f0c31c392",
+    "docs\\diagrams\\relational-schema.pdf": "e32794123bfda0c3c638856ae6149c8b6eb9cd035a47248a4228cb5fded3825d",
+    "submission\\poster.pdf": "a7ee3c249eee78853db331b11f4b88f0a7b09073ed125acc4b1a6b5172ff7ff3",
+    "submission\\technical-report.pdf": "9f55f85269f5159f099cd4232d560e6e5f2707445c4c4a7e64b3e3647870834e"
+  }
+}

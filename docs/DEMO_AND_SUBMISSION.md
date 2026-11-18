@@ -1,10 +1,10 @@
 # Demo runbook and submission checklist
 
-**Time limit:** fifteen minutes total, approximately three for the poster and twelve for live demonstration/questions. **Submission:** Thursday, November 19, 2026; cutoff time not provided. Confirm booking and all-member registration using the [announcement links](ANNOUNCEMENTS.md). All three members must attend unless officially excused.
+**Time limit:** fifteen minutes total, approximately three for the poster and twelve for live demonstration/questions. **Submission:** Thursday, November 19, 2026; cutoff time not provided. Abd Alrahman reports all three members are registered and the demo is booked for **1:30 PM**. Confirm the sheet entries, venue and attendance using the [announcement links](ANNOUNCEMENTS.md). All three members must attend unless officially excused.
 
 ## Preparation before the booked slot
 
-- Confirm actual slot/location, team registration, projector, power, Python/Tkinter/MySQL, dependency installation, and a working live Gemini key/model.
+- Confirm the booked 1:30 PM slot, venue, that all three names appear in the team sheet, projector/power, Python/Tkinter/MySQL, dependency installation, and a working live Gemini key/model.
 - Rehearse on the Windows demo machine. Have source/SQL and final PDFs locally accessible.
 - Reset **only the intended disposable/demo database** before rehearsal/demo if needed. Setup drops `farm_market_db`; never reset between the image upload and restart demonstration.
 - Confirm fresh-seed lot #2 has 78 kg Tomato available, lot #13 has 120 kg Tomato, and lot #3 has 40 kg expired Cucumber available. This runbook depends on those balances; verify them before starting.
@@ -51,17 +51,18 @@ Do not read scripted answer claims if the observed database differs. If the assi
 
 ## Required diagrams and technical PDF
 
-- [ ] Conceptual ER diagram authored in Draw.io: entities, relationships, cardinalities, justified rules.
-- [ ] Separate relational schema diagram: actual SQL tables, PK/FK, column types, important constraints.
-- [ ] Concise technical PDF: both diagrams, rules, database transactions, expected/actual tests.
-- [ ] Test coverage: all major workflows; valid/invalid/boundary and relevant concurrent/repeated cases; stock/forecast separation; images/GUI; advanced feature; at least ten assistant questions including ambiguity/unanswerability.
-- [ ] Clearly distinguish live Gemini evidence, stand-ins, historical reports, and current observations.
+- [x] Conceptual ER diagram in Draw.io: entities, relationships, cardinalities and rules; ready for review.
+- [x] Separate relational schema diagram: SQL tables, PK/FK, types and constraints; ready for review.
+- [x] Technical PDF includes both diagrams, rules, transactions and expected/actual test evidence; ready for review.
+- [x] Test evidence covers major workflows, boundaries/concurrency, stock/forecast separation, images/GUI, Loss & Surplus and fourteen assistant questions including ambiguous/unanswerable cases.
+- [x] Report distinguishes live Gemini evidence, stand-ins, historical results and follow-up observations.
+- [ ] Review/acceptance, final projector check and final course upload.
 
-Suggested technical PDF order: introduction/team; conceptual and relational designs; rules and transaction explanations; compact completed test evidence; limitations and references. Screenshots are not required by the proposal. No final technical/poster PDF or assessed diagrams have been created in this documentation pass.
+Suggested technical PDF order: introduction/team; conceptual and relational designs; rules and transaction explanations; compact completed test evidence; limitations and references. Screenshots are not required by the proposal. The report and diagrams currently exist as review candidates; the poster/projector test and reviewer acceptance remain.
 
-## Submission ZIP
+## Review candidate ZIP
 
-Build a new final ZIP only after the checklist is satisfied; the preserved original ZIP is an archival input, not the current final submission.
+A review-candidate ZIP and SHA-256 manifest now exist under `submission/`. Rebuild after any approved changes, then submit through the course process only after the team has reviewed and accepted the contents. The preserved original ZIP is archival input, not the current submission.
 
 | Include | Intended source / destination |
 |---|---|

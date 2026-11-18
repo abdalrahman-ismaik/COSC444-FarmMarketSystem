@@ -13,7 +13,7 @@ Preserve the proposal's requirements while applying the later announcements' mor
 | ID | Requirement |
 |---|---|
 | P0-01 | Form a team of 3–4 students from the same lab section; this team has three B1 members. |
-| P0-02 | Register every member in the supplied team spreadsheet and book a demo slot. Status is unconfirmed. |
+| P0-02 | Register every member in the supplied team spreadsheet and book a demo slot. User reports the three-member registration and November 19, 2026 at 1:30 PM slot are complete; venue and attendance still need confirmation. |
 | P0-03 | Document analysis, database, GUI, LangChain, testing, and documentation responsibilities. Every member contributes to database design and implementation. |
 
 ## Phase 1 — Database design and population

@@ -1,0 +1,71 @@
+{
+  "technical-report": {
+    "pages": 12,
+    "sha256": "2b0f31b2ea27c22af2007ca48cb58efa4529cb22df164f7aadb987bca58642c4"
+  },
+  "poster": {
+    "pages": 1,
+    "sha256": "7927f1f35bb029cc84ef2fdefc0f79793dfa3e51f224f339db3c4aa1cd2e8234"
+  },
+  "track_a_commit": "80529fbfddf58b58735963f6a35847e22dedeadc",
+  "fix_commit": "e1ea45b",
+  "inputs": {
+    "docs/diagrams/conceptual-er.pdf": "b5e0af8be1c86279ccc1af29145dfa5d529276363c99b648166e10434a29d4c3",
+    "docs/diagrams/relational-schema.pdf": "f88c0fd972548920c7e291102351c3087e3c0d221b3cc6794344b0d7a0309f26",
+    "docs/diagrams/conceptual-er.drawio": "4ab71b348f82e02ccb58e128e917f79c5789b9983b95a44934011ed50cc6b1e7",
+    "docs/diagrams/relational-schema.drawio": "ca2266b5608f741ba07bdfe62eef9f33d8f17be25f0cf82aa029926f909594c6",
+    "docs/evidence/track-a/remaining-checks.json": "dc7073a6cf24aaf14aa9af3813e19f326e8269de9e6d2c166a5416f48c898a3f",
+    "docs/evidence/track-a/gui-flow.json": "cf37e3b617914cb587f2f6ad2b6430d36778c7d83cd1e6a4d359e0223ef0a6cb",
+    "docs/evidence/fixes-2026-11-17/backend.json": "876a55f175f374c1231a4dc6261628fe522cbbc55f6b393d77de18ed66dee6d8",
+    "docs/evidence/fixes-2026-11-17/gui-flow.json": "b82f543d867911819185afca1fa8b3df02bd98bbb5900b65866e02b24c389d14",
+    "docs/evidence/fixes-2026-11-17/assistant.json": "66a5f5123968d3937a92f0fcb8d1e180280b1c0fb64615781636398e1fc63201",
+    "docs/evidence/fixes-2026-11-17/summary.json": "76df59e17cb35ec56c898b40ea3f895da16de8438a0cf1cd65b7c63b495f2481",
+    "docs/evidence/live-ai-results.json": "5f783b0274da2552ded9928c395b6147ec9e169d80b309b38ddc02bb4fd751a2"
+  },
+  "checks": [
+    "14 historical AI questions retained",
+    "original Track A failures retained and follow-up pass totals verified",
+    "7 poster entities and 6 relationships match Draw.io",
+    "tested application/test source hashes verified",
+    "12 report pages and 1 poster page",
+    "team identities in both PDFs",
+    "overflow guard passed"
+  ],
+  "built_at_local": "2026-11-17",
+  "visual_qa": {
+    "report_pages_rendered": 12,
+    "report_pages_inspected": 12,
+    "poster_rendered_at_px": [
+      1920,
+      1080
+    ],
+    "poster_inspected": true,
+    "observations": "No clipping or overlap observed; review-status caveat visible. Poppler Symbol/ArialUnicode warnings emitted; rendered operators/diagram marks inspected."
+  },
+  "fresh_extraction": {
+    "app_dependencies_installed": true,
+    "document_dependencies_installed": true,
+    "sample_database_loaded": true,
+    "database_target": "isolated MySQL 8.0.46 loopback port 3318 only",
+    "original_suite": {
+      "Pass": 65,
+      "Fail": 0
+    },
+    "gui_phase_one": {
+      "Pass": 21,
+      "Fail": 0
+    },
+    "gui_after_restart": {
+      "Pass": 22,
+      "Fail": 0
+    },
+    "documents_rebuilt_identically": true,
+    "candidate_members": 117,
+    "candidate_member_hashes": "pass",
+    "excluded_secrets_environments_archives": "pass",
+    "markdown_links_checked": 158,
+    "markdown_links_broken": 0,
+    "candidate_documents_rebuilt": true,
+    "original_application_sources_identical_to_clean_install_test": true
+  }
+}
