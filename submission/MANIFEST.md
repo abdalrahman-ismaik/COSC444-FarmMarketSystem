@@ -46,7 +46,7 @@ and the archive hash is recorded only in the external `submission/MANIFEST.md`.
 | `docs/TEAMMATE_HANDOFF.md` | 17504 | `a14f74a1c0b6cc3f1de8c44aef8c32790947e12c1312bb519385177e7f65713c` |
 | `docs/TESTING.md` | 16218 | `03d7767d3458aa243e60f7752606e06ffd93b1191065d2962932b869c912a14f` |
 | `docs/diagrams/.gitattributes` | 55 | `66de57e22244d27929419722a97fab1ee38d27ccd4ab11059a58b4832c6432c3` |
-| `docs/diagrams/DIAGRAMS_EXPLAINED.md` | 10028 | `d0f01173915ccd8f5ecdcab8a83357748fb102e93195081e3e6cb2063f77f5b3` |
+| `docs/diagrams/DIAGRAMS_EXPLAINED.md` | 10026 | `27a2f7a799d8043d7416a61999736a8a20ccaaa8207c4ee2ff36c702426a50d1` |
 | `docs/diagrams/README.md` | 2619 | `1aef1c85e96208c37e5aee87964c6779cf96c46a0a199658c7d29001c90001c1` |
 | `docs/diagrams/conceptual-er-p2.svg` | 12954 | `d3b5bab64585d368a1a6ababcbd068abb8ebf5d3d95c0c9e8860dba42eb21e5c` |
 | `docs/diagrams/conceptual-er-p3.svg` | 13504 | `ab4891a8a3875aa6a57f04103a29e94286beac42ace8d2974920bb2078ea0340` |
@@ -130,10 +130,10 @@ and the archive hash is recorded only in the external `submission/MANIFEST.md`.
 | `submission/poster.pdf` | 5366 | `b0f19a79ca034c29631fd22b0a4f7b45337796a434d0ab6d03ad2eb648a25c10` |
 | `submission/technical-report.pdf` | 164387 | `640fe422078565a69ab6dd88718890eb9fe01090e64b97c86f61997dcb976377` |
 
-| `MANIFEST.md` | 14758 | `6af82f23e9aecafdabd35ca6f0b399565dab1bfd585db4500d48e27f2ddf106d` |
+| `MANIFEST.md` | 14758 | `6d225e2f52490e62e7ebf06ab9bb2cbddb7601516128ab0686b76c84dec29717` |
 
 Excluded: Git metadata, real `.env` files, local virtual environments, `.local`,
 generated output/logs/caches, archived ZIPs, and agent skill folders.
 
-ZIP SHA-256: `bd2d062ec3eff5997676a366ba5eb2b7420e6aba55cea37e3e12356b0dad95a9`
-ZIP bytes: 6779447
+ZIP SHA-256: `48a2d690996c7848fc045e29fecf8de826a363ee83721f53901a6aba7624a92d`
+ZIP bytes: 6779446

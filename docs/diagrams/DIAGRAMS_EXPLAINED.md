@@ -1,6 +1,6 @@
 # How to read the database diagrams
 
-**COSC444 Database Systems · Lab B1 · Farm-to-Market**  
+**COSC444 Database Systems · Lab B1 · Farm-to-Market**
 This guide explains the symbols and lines in the revised Lab 7 diagrams. It accompanies the diagrams and does not change the implemented schema.
 
 ## Open the diagrams
