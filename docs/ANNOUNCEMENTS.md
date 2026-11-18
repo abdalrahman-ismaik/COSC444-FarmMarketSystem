@@ -15,7 +15,7 @@ Source: announcement text supplied by the team in this conversation. Announcemen
 | Attendance | Every member attends; official excuse needed for absence to avoid lost marks | Attendance unconfirmed |
 | Location | To be announced | Not yet provided; confirm before the slot |
 | Late/incomplete demo | May incur a 10% penalty | Keep system ready before slot |
-| Poster | Digital poster permitted; include in submission and project it instead of printing | Poster PDF prepared as a review candidate; team projector check and final submission remain |
+| Poster | Digital poster permitted; include in submission and project it instead of printing | Poster PDF accepted by the project reviewer; team projector check and course upload remain |
 
 Team registration: [Project information spreadsheet](https://docs.google.com/spreadsheets/d/1SXa0kR_Kgh19I0jOCFS4hiCuGGMwqTUkNJGFYdy6zrQ/edit?usp=sharing).
 

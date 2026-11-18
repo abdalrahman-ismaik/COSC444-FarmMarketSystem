@@ -1,6 +1,6 @@
 # Document and package follow-up review
 
-**Owner:** Codex, authorized by Abd Alrahman Ismaik. **Status:** Ready for review, not Accepted. **PR:** [#5](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/5), based on Mohammad’s `report-poster` branch.
+**Owner:** Codex, authorized by Abd Alrahman Ismaik. **Status:** Accepted by Abd Alrahman Ismaik on 18 November 2026; the final report/poster were regenerated and inspected in the integrated review branch. **PR:** [#5](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/5), merged into Mohammad’s branch (not `main`) before final integration.
 
 This follow-up integrates Mohammad's report/poster and Ali's diagrams with the tested integrity fixes. It retains both teammates' contributions and evidence. Historical failures remain visible and are labeled historical; later outcomes have a separate source/date and hash manifest.
 
@@ -17,4 +17,4 @@ The original and follow-up application evidence is linked in `docs/evidence/FIX_
 
 ## Human review remaining
 
-Abd Alrahman should review the code/drawings/report/poster, decide the unresolved exact image-source mapping (or authorize replacement), and personally mark Accepted. The team still needs a projector check and timed demo rehearsal. No PR is merged and no course upload has occurred.
+Abd Alrahman accepted the integrated project artifacts on 18 November 2026. The exact sample-image source mapping remains unresolved and is documented. The team still needs a projector check and timed demo rehearsal. No course upload has occurred.

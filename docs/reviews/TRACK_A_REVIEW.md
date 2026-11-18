@@ -1,7 +1,11 @@
 # Track A review note — database diagrams, design and remaining validation
 
 **Owner:** Ali Alshamsi (100062530), working with a Claude Code agent · **Date:** 2026-11-17 · **Branch:** `ali/database-diagrams-validation` · **PR:** https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/2 · **Reviewer:** Abd Alrahman Ismaik (`abdalrahman-ismaik`)
-**Tasks:** DB-01, DB-02, DB-03, TEST-01 → **Ready for review** (not Accepted; only the reviewer records acceptance)
+**Tasks:** DB-01, DB-02, DB-03, TEST-01 → **Accepted by Abd Alrahman Ismaik on 18 November 2026** in the integrated review.
+
+## Reviewer disposition — 18 November 2026
+
+**Accepted as part of the integrated submission review.** The Lab 7 diagram revision supersedes the earlier one-page/six-page exports. The integrity fixes in the follow-up are accepted based on their dated isolated validation evidence; the earlier F-01/F-05/F-06 failures remain preserved as historical results. The accepted policies and their limits are documented in `docs/DATABASE_DESIGN.md` and the technical report. This decision does not claim instructor approval or a new database/GUI/AI test run on 18 November.
 
 ## What changed and why
 

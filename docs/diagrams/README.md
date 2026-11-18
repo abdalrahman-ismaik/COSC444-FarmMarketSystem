@@ -4,6 +4,8 @@ Revised 18 November 2026 by Mohammad / Codex at Mohammad's request, based on Ali
 
 Reference: supplied `Lab 7 Slides (1).pptx`, slides 2–8. Conceptual entities use rectangles, attributes use ovals, identifiers are underlined, relationships use diamonds, and mandatory participation uses double lines. Maximum cardinalities are shown at the entity end; explicit (min,max) annotations remove optionality ambiguity. Dashed ovals are derived values. Receipt discrepancy is stored and therefore has a solid oval.
 
+For plain-language explanations of the notation and each conceptual relationship line, see [How to read the database diagrams](DIAGRAMS_EXPLAINED.md).
+
 - `conceptual-er.drawio` / `.pdf`: five landscape sheets. Two attribute sheets define the 14 entities; three relationship sheets connect them, including all actor/unit relationships. Repeated names identify the same entity, not separate entities. The 31 conceptual relationships map to 32 FKs because FARM–USER assignment becomes a two-FK junction.
 - `relational-schema.drawio` / `.pdf`: three landscape sheets, all 15 relations as horizontal rows. Underlined PKs, highlighted FKs, explicit FK targets, SQL types, nullability, defaults, unique and named CHECK constraints. Views are explained in DATABASE_DESIGN.md, not presented as stored relations.
 - SVG exports: base filename for page 1; `-p2.svg` etc for following pages.

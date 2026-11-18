@@ -1,68 +1,73 @@
-# Review-candidate ZIP manifest
+# Course package manifest
 
-This archive is for team review; it is not an accepted or submitted course package.
+This archive is the accepted team review candidate; it has not been submitted to the course.
 SHA-256 covers each payload member listed below. The embedded manifest cannot hash itself,
 and the archive hash is recorded only in the external `submission/MANIFEST.md`.
 
 | ZIP member | Bytes | SHA-256 |
 |---|---:|---|
-| `.gitignore` | 428 | `34edcbcb681179f93490be7fa6539062a03877fb2527b54bd6894a862e682ce4` |
-| `DESIGN.md` | 6246 | `aed9a56fff757c8603aba31f76f230a2d6306082f746f6d6c24467dbf177740b` |
-| `PRODUCT.md` | 3162 | `c454e6cbf57585c3c5fa63858a2d780e92c44147297b69227c696cbf62a471a8` |
-| `PROGRESS.md` | 15368 | `55773050102fe0390dd3f9a51588f059c69b1d626da5ab51a4cf9683df03ca9f` |
-| `README.md` | 9639 | `c334a544b3aedeaa542b2a0bb01b18e264cd91c2a76131593d615bdee8287cb8` |
-| `app/.env.example` | 166 | `d7cf495c461d5279ac0a5de6b3d5660f13512616906389ecb7c1daa02c302b03` |
+| `.gitignore` | 462 | `f2360d2307881af222cd9850c54407f1939f091c2a76ddaf2390ca9ce3b1b8ad` |
+| `DESIGN.md` | 6344 | `80e0214fbe4dc6a4493315d77b71b5ffcd24f0f68090679def746f1100c6aed8` |
+| `PRODUCT.md` | 3207 | `f436026e4a0818258bc6bf26a8212355323aae44a28617fe46977efe5e988b1e` |
+| `PROGRESS.md` | 19639 | `b81ddbc0c2a53a7e3c0f9b2d3387b2ddad3e3c785bed08b7cbf3213208f9e8cd` |
+| `README.md` | 9972 | `b6c3c9c6b0bb9b25bbdf98afa06e92b1355ddb45cef148be3649f25b63285451` |
+| `app/.env.example` | 173 | `8a572f75d4d45c11ebd8104537a567f73ac6534c7e8d25b296aa19901e90f29e` |
 | `app/app.py` | 70539 | `21548fdc83d13e5bcd7b62d9875a02ad02353c2346359f0c0c9e8baf72bfc69c` |
-| `app/assistant.py` | 8692 | `ab8bd80889ff4ab3ef54e4299588197ee2054b73d1bec756dc737191c9120d7b` |
+| `app/assistant.py` | 8877 | `02b957a1428f7ab5d1593c4d39f058b5c4a8ff49105583ded1e344c851c75cd1` |
 | `app/db.py` | 48351 | `5480e0a8a7e771f4ba8cac80d4aec5a1784506a832611198e433a7e9fa4ae332` |
-| `app/requirements.txt` | 80 | `386c35d4bd5dc487e08a348f8f45ed252cbf4e799afee33a961103c4e5878c4e` |
+| `app/requirements.txt` | 86 | `2245dcd4c1a0eff8f59519b221b66dd0fbcde52c576b8519f231b14f026a9650` |
 | `app/run.bat` | 465 | `847d7933812acd3d5072c5373baceed695764cae3c2f33ef76f9cebfacaf628a` |
 | `app/sample_images/bell_pepper.jpg` | 13870 | `88a6cfc58176871df8ff1f6661d85dfec60c4aea6a4e5cf8076dd2a6ef1a32c0` |
 | `app/sample_images/cucumber.jpg` | 17467 | `3c74bce72aef8b8f72df4dad099c5e97321166b09f2d3060a15aac0d4dcd594d` |
 | `app/sample_images/eggplant.jpg` | 8868 | `dd3696cf02dd657bfe1979d33c40664980a97bf95ddc0d1deb5565fa4506676a` |
 | `app/sample_images/zucchini.jpg` | 14575 | `89ad8bc9423f74b446c54ccc99d843c70eab81baf53d2218d64a3394c0ec57bb` |
-| `app/schema.sql` | 272605 | `b038c2fb29051f074ce2f48f57f79e1d522bd04cc4cd545e4ad5f0a807aa68c7` |
+| `app/schema.sql` | 273074 | `8db57bdb01d5b1412a2124957e011a0e13e148f58029c0afe53f8cf1d4cda3e7` |
 | `app/setup.bat` | 505 | `035c7072d569478a8b3086ce545d549bc1ac482bfe9c9fb25cf02658d7298c38` |
-| `app/setup_database.py` | 3142 | `58458daaf505ea59f4ea51f19af327fe06cdff1d78c4325bd1aabe61466eadf3` |
+| `app/setup_database.py` | 3218 | `125ec15647ca2868ed591a73c7b664ca6e9132ddbfd0278e9251a04ec887e3b8` |
 | `app/tests/check_assistant_readonly.py` | 3388 | `af9f3d65de50eb34e6ea5a94938e794477cbf546f53958214ed9615b5b400996` |
-| `app/tests/test_business_rules.py` | 9896 | `2d79c9764e8c3674faadd3259e5cd743ff4ccd91e05e3a9de06041010069583e` |
+| `app/tests/test_business_rules.py` | 10050 | `e70f4abdcd4e446e78666ac61aad58ced0f1371f617c14d460ff0b5d45771a95` |
 | `app/tests/test_validation_support.py` | 1206 | `586ee7828fc100d135cd90ea6ed5b2a4ba81140a6a115a69eed7859ffde9e821` |
 | `app/tests/track_a_gui_flow.py` | 24663 | `4b41dc411a9ccb3d99fe14e9b432dc1fdc712733ad0fadc75ec9693af2213e1b` |
 | `app/tests/track_a_remaining_checks.py` | 66030 | `576e6a3d28fb83c5e8c0bc0a2f1d306cdce4d6014edf4ab7ef53dd098e2bfd40` |
 | `app/tests/validation_support.py` | 1679 | `9471304ac65f1118b0f42096257f24ffdd06be88eca291439263752eee499a33` |
-| `docs/ANNOUNCEMENTS.md` | 9614 | `15409f1c993dba3dc787049edcfa50a904b19fb30def51a108c0548b63f9d63e` |
+| `docs/ANNOUNCEMENTS.md` | 9726 | `b65ee84f93c06634b02f3845eac0893aed4de9b90e0ecb3fa00bf49db83ddda4` |
 | `docs/ARCHITECTURE.md` | 13607 | `9e025195cdb642a9f6565582710361c1b58e8624248c712eddc819327c82f3c5` |
-| `docs/BUILD_DOCUMENTS.md` | 4555 | `e0a0088f29e5b086728ebf29cbbe315b0778375e95c7e9e33aecc886c52d9155` |
-| `docs/CLAUDE_TASK_PROMPTS.md` | 14274 | `8242b67dcd467c31219f09867c27457ac3f56d80b83cc608eb9dd29f13116133` |
-| `docs/DATABASE_DESIGN.md` | 20425 | `4ded2ea6909b85e479e850e6b1f69bae2471e114df85cd2fcecc0c19ff9f4e4b` |
-| `docs/DEMO_AND_SUBMISSION.md` | 7905 | `e162b270fc1dfc72d18ae1adf514358548b3ce36e1b42c30e834b11a2618c0bf` |
+| `docs/BUILD_DOCUMENTS.md` | 3719 | `dca8b5d7a42704f6846901ca4249f93fb3fb245b5bc6bf6c8db1eb270118de73` |
+| `docs/CLAUDE_TASK_PROMPTS.md` | 18490 | `b5484a3d3806eab5e4c1ece2dcfe34e7c2025e6f95cc9daeca86ad6c6c403bcb` |
+| `docs/DATABASE_DESIGN.md` | 19936 | `0248e50b31db392712cc1b0f98377f898802b7f4027cb4d8584b2cc0d7c3b2aa` |
+| `docs/DEMO_AND_SUBMISSION.md` | 8034 | `8d44953b467d31ca4fcf430c52cd31351c28dbb3293cbc7f73edc5ec627fc5cd` |
 | `docs/GITHUB_READINESS.md` | 8400 | `0512d368cf6739ecfc90170e5acc82db8708efad2582f790fa83c4cc9340f95a` |
-| `docs/IMAGE_ATTRIBUTION.md` | 6456 | `c5d4fd4bbedfb0b7677fd106e6147cc46fa57c5686eea998ce8788fc31e1fe4c` |
-| `docs/PROJECT_REQUIREMENTS.md` | 10114 | `e8f87a8f605b0a537b24fd056ce2df9ded313b04cd8510de11f87b845c548bf2` |
-| `docs/REPOSITORY_REVIEW.md` | 13771 | `45b655c38981cd54a6063859febf6a14d4e99ca5d089b245addd36c06019eda1` |
-| `docs/RUBRIC_AND_COVERAGE.md` | 7513 | `25a1fd2016883705c905c8db8f1963aff34d5b734c966bea6a1964e4a030b53b` |
-| `docs/SKILLS.md` | 3538 | `0637039a6ea5963f1ee0920bff47dcac08f3fd4ddd51ac77e32f985b2d47e268` |
-| `docs/TEAM.md` | 3153 | `32c4e02d06df73df7ea0c37b9bbaaa2557965f7bfaa66c1fee30858bd59b6a20` |
-| `docs/TEAMMATE_HANDOFF.md` | 16591 | `13ea1ec4ad36f789e36a24043df7890a1f987f629055aaa034eba408d95fb9ec` |
+| `docs/IMAGE_ATTRIBUTION.md` | 6507 | `ea7794c49bdfb94257499cff5d70bebe22fc9d697f20e8d23efd5110a0ef58ff` |
+| `docs/PROJECT_REQUIREMENTS.md` | 10219 | `499f109184422ef6b3c7613f477b7f995c22bae145d953fa52b95345fb68984e` |
+| `docs/REPOSITORY_REVIEW.md` | 13879 | `2836fb7ce9ddf9b1596cb0ec0bd8e3ca7ad54f3fbde63fb54710b1098368e9ea` |
+| `docs/RUBRIC_AND_COVERAGE.md` | 7816 | `103da56f4171162512c533581a8f5e47b779e69990e11e091af18fb5132a5721` |
+| `docs/SKILLS.md` | 3572 | `81f5d6a2579a6f20f7afbb42a3c0c8eb8e500eea80169d55937e22c6a76bf4c2` |
+| `docs/TEAM.md` | 3191 | `30481a9b40b93fef62e405242221535e401e9967c09fa666209b62a0377d2ac7` |
+| `docs/TEAMMATE_HANDOFF.md` | 17504 | `a14f74a1c0b6cc3f1de8c44aef8c32790947e12c1312bb519385177e7f65713c` |
 | `docs/TESTING.md` | 16218 | `03d7767d3458aa243e60f7752606e06ffd93b1191065d2962932b869c912a14f` |
-| `docs/diagrams/README.md` | 4410 | `249007d9bc77a4c8f7e384cb6e22859bf579ab9e429b8d876eae56ce58c16f7d` |
-| `docs/diagrams/conceptual-er.drawio` | 34160 | `4ab71b348f82e02ccb58e128e917f79c5789b9983b95a44934011ed50cc6b1e7` |
-| `docs/diagrams/conceptual-er.pdf` | 82555 | `b5e0af8be1c86279ccc1af29145dfa5d529276363c99b648166e10434a29d4c3` |
-| `docs/diagrams/conceptual-er.svg` | 2318823 | `8f2a31f8bdcef12b90928feb52727c211b39268e50d2ff427eff2fe0fdbb2dde` |
-| `docs/diagrams/relational-schema-p2.svg` | 1611167 | `44635ea0ed97398abcf31fb59e2e3488d9d2b89129e0575a2e85750276be136b` |
-| `docs/diagrams/relational-schema-p3.svg` | 1868618 | `82a0cff93fbefaf60b77caed8a0820fc226bbd0a119f73199117b3231074f475` |
-| `docs/diagrams/relational-schema-p4.svg` | 1794072 | `0b92787462b43d8d1d762606dab0644c52faf412ebcb4b0d464bbdf0588485c4` |
-| `docs/diagrams/relational-schema-p5.svg` | 776366 | `ea9b7f48032f816568c7b6c004bad1b8d24401d338d1870a0f1e70c3f460662c` |
-| `docs/diagrams/relational-schema-p6.svg` | 877626 | `e4732bda20e4fab15e96883103763950cded1a6cfa919f9e7d3b32cc62b82669` |
-| `docs/diagrams/relational-schema.drawio` | 394509 | `ca2266b5608f741ba07bdfe62eef9f33d8f17be25f0cf82aa029926f909594c6` |
-| `docs/diagrams/relational-schema.pdf` | 180923 | `f88c0fd972548920c7e291102351c3087e3c0d221b3cc6794344b0d7a0309f26` |
-| `docs/diagrams/relational-schema.svg` | 1857209 | `44101f4f0ef76c8d540dd37acea89f3d08b37682c6cf718c1fead14027435def` |
+| `docs/diagrams/.gitattributes` | 55 | `66de57e22244d27929419722a97fab1ee38d27ccd4ab11059a58b4832c6432c3` |
+| `docs/diagrams/DIAGRAMS_EXPLAINED.md` | 10028 | `d0f01173915ccd8f5ecdcab8a83357748fb102e93195081e3e6cb2063f77f5b3` |
+| `docs/diagrams/README.md` | 2619 | `1aef1c85e96208c37e5aee87964c6779cf96c46a0a199658c7d29001c90001c1` |
+| `docs/diagrams/conceptual-er-p2.svg` | 12954 | `d3b5bab64585d368a1a6ababcbd068abb8ebf5d3d95c0c9e8860dba42eb21e5c` |
+| `docs/diagrams/conceptual-er-p3.svg` | 13504 | `ab4891a8a3875aa6a57f04103a29e94286beac42ace8d2974920bb2078ea0340` |
+| `docs/diagrams/conceptual-er-p4.svg` | 13495 | `9b7c61e5b2717d128a1890d133ab319f02e8723010b9ecc51cb6ad432948df3b` |
+| `docs/diagrams/conceptual-er-p5.svg` | 11095 | `8b9422edf09aee0b0211cc78d9ab1366bb122fbfe17daddfcaa005467883d668` |
+| `docs/diagrams/conceptual-er.drawio` | 102716 | `39b22d2ee73242e643418ba827f29a6058f08bf98c6a2826cd15c4f8df5f212c` |
+| `docs/diagrams/conceptual-er.pdf` | 18369 | `193ef9e970454a7c784d90974bbc5b0a795bf4a8249f8521f8b03d2f0c31c392` |
+| `docs/diagrams/conceptual-er.svg` | 11366 | `7d66be321b9672db98efbda1f651f7376e25c27550a5ef8b5d06d4d7960d7414` |
+| `docs/diagrams/relational-schema-p2.svg` | 19603 | `b57c7e66a681ddd98a2941bd0613c81d5a6604b48f5f035e0e13e664eaefd1ef` |
+| `docs/diagrams/relational-schema-p3.svg` | 24057 | `d49d2a9c7fec6a848181659c23810087dae9112c9281764fa2bde065b92c808e` |
+| `docs/diagrams/relational-schema.drawio` | 68017 | `bb1c0ae9aa24c4f66c91bad5cfec3ae54b1bba1273b73eb5e383ee89f176ef4f` |
+| `docs/diagrams/relational-schema.pdf` | 11083 | `e32794123bfda0c3c638856ae6149c8b6eb9cd035a47248a4228cb5fded3825d` |
+| `docs/diagrams/relational-schema.svg` | 11247 | `f4bc9b923cf9644dc4d9b6faa50a1232ba18a8c3c4877d574209f5c25f679507` |
+| `docs/diagrams/tools/build_lab7.py` | 9573 | `438f0b4c9ef58c0ca5bdd9f6bc93b42d59a73ea2e43c4a1b0ad1cc3e413d2b93` |
 | `docs/diagrams/tools/check_diagrams_vs_sql.py` | 11005 | `27c64d3ab0fa4d9cc2c402a49bf89d8c515a5297997a0e30d7b49b2791579935` |
+| `docs/diagrams/tools/check_lab7.py` | 2182 | `332e9505f5c06eec644365e67bf98e46740e3167befed1c6054e4d7e9e719db5` |
 | `docs/diagrams/tools/generate_diagrams.py` | 39397 | `9c6414c03abc04ad81fddf8ab58470f0dbcfae6f96f1c67cdc6e40ace13b57b7` |
-| `docs/evidence/AI_VALIDATION.md` | 7438 | `a009d40cae230e50420ec7b060aa8f589066ec8fea3505089cb4f359e365019a` |
+| `docs/evidence/AI_VALIDATION.md` | 7501 | `c195a67934af8a982a6753b6a983b4ca9f56679e40739607cebdd1bcbfe87f83` |
 | `docs/evidence/FIX_VALIDATION.md` | 6700 | `81fdd1b89fc89e6054a7f95156825c57d605ba2f02cc211b47ce240559dd775e` |
 | `docs/evidence/REMAINING_TEST_RESULTS.md` | 41905 | `816ae9c5a1d25a527f4e6a736088a054dd4b378d77066791c916de2ff4f923a9` |
-| `docs/evidence/VALIDATION.md` | 7235 | `740bfa8f4f474054c6f43a0edf9debb6cf0b385a83a475b21c1762c8929fb483` |
+| `docs/evidence/VALIDATION.md` | 7307 | `77a795ed87858266b5c87eead4c48b46ded76079087a0076bee73840e7f29b4b` |
 | `docs/evidence/fixes-2026-11-17/assistant.json` | 2154 | `66a5f5123968d3937a92f0fcb8d1e180280b1c0fb64615781636398e1fc63201` |
 | `docs/evidence/fixes-2026-11-17/backend.json` | 50445 | `876a55f175f374c1231a4dc6261628fe522cbbc55f6b393d77de18ed66dee6d8` |
 | `docs/evidence/fixes-2026-11-17/diagram-check.txt` | 131 | `f53451f748c399ff6bdbad684540e3a7a504c69234e3089867ca81747d3c861f` |
@@ -101,32 +106,34 @@ and the archive hash is recorded only in the external `submission/MANIFEST.md`.
 | `docs/evidence/track-a/gui-restart-photo.png` | 112872 | `7200bd847eb4596fdb18edc702d5f0023d32c808fcd2c54c91c1f6eb1840b9e3` |
 | `docs/evidence/track-a/remaining-checks-run1.json` | 50090 | `38a56c9b83de3d79c0b3318c9e17df13a4b270e3c7180a5055073cbd2bb688e7` |
 | `docs/evidence/track-a/remaining-checks.json` | 50432 | `dc7073a6cf24aaf14aa9af3813e19f326e8269de9e6d2c166a5416f48c898a3f` |
-| `docs/poster/poster.json` | 3838 | `8aed5fd3053fe7d03af68975b31ce81b653c52ecaed75a412d952b62aa321f4a` |
-| `docs/reference/Visual_Guide.pdf` | 3456196 | `1d6db15bf3d8344a909dcecb35213fa0ae80e931bd34fe442efdef70596ccf2d` |
-| `docs/report/build-validation-followup.json` | 3128 | `edd15dce959d2db565018fc339e13f31435a2dd4b102c609d9363d63fc393f6d` |
+| `docs/poster/poster.json` | 4013 | `d0464530f11039d8de2d2beab9f2208df3b9e3e4532d74b3dd2c91ce19c3190a` |
+| `docs/reference/Visual_Guide.pdf` | 3457304 | `1d313ed6756c023d574e7b61515df1e8d25976b947a3f132d78a2a25460f037a` |
+| `docs/report/build-validation-final.json` | 1712 | `e7740cdee83e32eb0cf09d4bb1ac428577858f00a0b04f160ee888ab04157e10` |
+| `docs/report/build-validation-followup.json` | 3199 | `e58d4909c3207a50e8c2d698c2cba13fb8d51cb5b7b225c51fb2df5db525c3c5` |
 | `docs/report/build-validation.json` | 2306 | `b7322e947ff7b651d895fc13f66609850e083fc4cb40c9bf35ba49a502afd1fc` |
-| `docs/report/build_documents.py` | 16497 | `7e13a6ed2ec661347adecb88d6e9dfe0e4a89c1886384f7755413b76f9d08df8` |
-| `docs/report/input-manifest.json` | 2255 | `14685303259a20b777579b4766a170641ec491fa9e50659b30966f9f0c14919f` |
+| `docs/report/build_documents.py` | 16533 | `e28d2786977cd705735b6c1b61e207717258100b7f3d544d528e4aa22435222a` |
+| `docs/report/input-manifest.json` | 2352 | `1536d5973942267e3390161a1f1ee2cb8281baf26313738cd1a8c4bdef3c27f5` |
+| `docs/report/lab7-validation.json` | 1047 | `aacd74518bf68f9885ab0a4db8ae71258a19f112cec4edf3b376aa3855bf0234` |
 | `docs/report/requirements-docs.txt` | 49 | `6de4959290ef3239adc7630e293784734471fdcec68b5b42a0fee99dbb430552` |
-| `docs/report/technical-report.md` | 19241 | `171038b0e6748fbf7b0fcd944511d2e0c8acd6c1b223ea0c5d3908468eba849e` |
-| `docs/reviews/DOCUMENT_FIX_REVIEW.md` | 1907 | `5ec5ecc53636453d3b4a181ee0044260d7bfe0c0da1dc70070f156f1f1314d76` |
-| `docs/reviews/INTEGRITY_FIX_REVIEW.md` | 2630 | `71825031ea8195572b930fd51f86e10bad21242b4675c6f5734e37e4e540c0e2` |
-| `docs/reviews/TRACK_A_REVIEW.md` | 13888 | `2f40be064e165b5ccfc5ca412d9b3e89fdf71e98983a1ba7cb74721f6e904596` |
-| `docs/reviews/TRACK_B_REVIEW.md` | 10173 | `54c8f3a4fc36ae027217a1c79a730175cf40db615976d20177060abe021488f4` |
+| `docs/report/technical-report.md` | 19195 | `e401a3fc25645ddf51d5053957d0c4d6702cfaa10b69ac30e706b7f0c4878edf` |
+| `docs/reviews/DOCUMENT_FIX_REVIEW.md` | 2026 | `16623f3a2670bad7de8d38504d619bacaaedcdf298f87f8908873414f9b57fa2` |
+| `docs/reviews/INTEGRITY_FIX_REVIEW.md` | 2700 | `182c7c444d7355d733b9fb78be3fda249a572a4ab847fca361408e5abb699b70` |
+| `docs/reviews/TRACK_A_REVIEW.md` | 14467 | `9ddaa627a8da84b6442c8decc7668571c7ab696ab28c1c60fa088992af452d6d` |
+| `docs/reviews/TRACK_B_REVIEW.md` | 13501 | `a922e5c934aed019997ae887fa0b575daa09f0e282978bd2fb974f097573490d` |
 | `docs/sources/Local_Farm_Market_Food_Availability_Project_Proposal.pdf` | 200667 | `1857c1da4b0ef1a59e74476c5eade2bfbc126a64c08794dbeb582b9d55b4b417` |
 | `docs/sources/langchain.pptx` | 1296246 | `fed0cd084b0d146e8fa5a5c940bed11cf1d56fec2877f14c77d8ec25a1450d53` |
-| `run.bat` | 58 | `0f848b3a48e9f39989421239727bbf166d972e8093717c9baa24608deeee9efd` |
-| `scripts/build_candidate.py` | 7357 | `879942485eae873918808f631bb2485ef1beb069b4a6f4d6b8e0dc265d4b2a1c` |
-| `setup.bat` | 60 | `a227e8f4c0d1f84b783f0b2fd6f27a082f694fec58c66bf726956855981e5b13` |
+| `run.bat` | 61 | `c2e6ae3943a800a682a6b3e8af30231066234938eb623f5bd3da0bb1de5f8bf2` |
+| `scripts/build_candidate.py` | 7527 | `07fc7da0f87915d3867513f57ff1a113dcefef2ab42d427f53a3d289cae6a88d` |
+| `setup.bat` | 63 | `b3e3fb6b6a5c0afa00344ab7cd4c5a6c97c442a1b7b13319629b5974a1e68df9` |
 | `submission/.gitattributes` | 76 | `fad3d475a40e596ba76ce31e9b7b9fb294aeed9397fc3289ed69399eeccf0af2` |
-| `submission/README.md` | 789 | `ca5ea30e36c5ba5aa21063d3d40e50b5a531141b02b3e78bcedda730cfca0dbc` |
-| `submission/poster.pdf` | 4076 | `7927f1f35bb029cc84ef2fdefc0f79793dfa3e51f224f339db3c4aa1cd2e8234` |
-| `submission/technical-report.pdf` | 832294 | `2b0f31b2ea27c22af2007ca48cb58efa4529cb22df164f7aadb987bca58642c4` |
+| `submission/README.md` | 972 | `ef3a19b2242e57b3b015b4a4c7c07bfc3fd3ec059532c8ca96f845b40acd6dc3` |
+| `submission/poster.pdf` | 5366 | `b0f19a79ca034c29631fd22b0a4f7b45337796a434d0ab6d03ad2eb648a25c10` |
+| `submission/technical-report.pdf` | 164387 | `640fe422078565a69ab6dd88718890eb9fe01090e64b97c86f61997dcb976377` |
 
-| `MANIFEST.md` | 13964 | `b3a0ebad412d42fe98f318745c4c46c37fc8e9f8973825ee9206977b5a7b9e2d` |
+| `MANIFEST.md` | 14758 | `6af82f23e9aecafdabd35ca6f0b399565dab1bfd585db4500d48e27f2ddf106d` |
 
 Excluded: Git metadata, real `.env` files, local virtual environments, `.local`,
 generated output/logs/caches, archived ZIPs, and agent skill folders.
 
-ZIP SHA-256: `ad4af97c1e0470b503ea7a7e0a70c6c7d427768978c9f1d5f8de8526418fdd06`
-ZIP bytes: 14270837
+ZIP SHA-256: `bd2d062ec3eff5997676a366ba5eb2b7420e6aba55cea37e3e12356b0dad95a9`
+ZIP bytes: 6779447

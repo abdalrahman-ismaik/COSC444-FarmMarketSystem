@@ -1,14 +1,14 @@
 # Farm to Market technical report
 COSC444 Database Systems | Khalifa University | Fall 2026-2027 | Lab B1
 
-Review candidate | 18 November 2026 | Mohammad Arwani with Codex
+Prepared 18 November 2026 | Mohammad Arwani with Codex
 
 Abd Alrahman Ismaik - 100064692; Ali Alshamsi - 100062530; Mohammad Arwani - 100064908.
 
 ## Purpose and current result
 Farm-to-Market is a Python desktop prototype for local produce visibility. Farmers record crop cycles and harvest lots, buyers request supply and confirm receipts, and administrators maintain reference data. Operational data is fictional. The system does not represent national reserves or connect to government services. Loss & Surplus is the selected advanced feature. [R1, R2]
 
-The implementation demonstrates these workflows. Track A first reproduced concurrent overselling and a quantity-prefill failure; a later isolated follow-up corrected those issues and added bounded concurrency, receipt-race and image-decode checks. The report separates both evidence snapshots so the original findings remain auditable. Application fixes are proposed for review, not accepted. [R3-R6]
+The implementation demonstrates these workflows. Track A first reproduced concurrent overselling and a quantity-prefill failure; a later isolated follow-up corrected those issues and added bounded concurrency, receipt-race and image-decode checks. The report separates both evidence snapshots so the original findings remain auditable. The follow-up results and limitations are recorded separately from the initial failures. [R3-R6]
 
 ## Application and data design
 The maintained entry point is `python app/app.py`. Tkinter/ttk handles the three role interfaces; `db.py` validates input, ownership and transactional SQL through PyMySQL; MySQL stores records and BLOB photos. `assistant.py` uses LangChain/Gemini for read-only questions. The demo-user selector supplies an identity for workflows; it is not password authentication. Shared search and assistant reads are not restricted to the selected user's own records. [R3]
@@ -58,8 +58,8 @@ Active lots with available stock above zero are candidates. Priority is expired,
 
 Donation and disposal each reduce on-hand and available equally, leave reservations unchanged, and record actor/date/reason. Farmers act only on assigned lots; administrators inspect history without operational controls. The app permits donation of expired lots; no suitability policy is defined. This is a prototype stock action, not a food-safety determination. [R3, R6]
 
-## Current policies for reviewer confirmation
-DELIVERED uses settled allocated totals, not actual received totals: seed request #6 is 60 allocated/52 received. One receipt finalizes an allocation and turns shortfall into loss; there is no later top-up receipt. The GUI's “approved correction” is a farmer action with a required reason and no administrator approval step. Released historical allocations do not disqualify surplus. These policies are described, not endorsed by an instructor or reviewer. [R6]
+## Current application policies
+DELIVERED uses settled allocated totals, not actual received totals: seed request #6 is 60 allocated/52 received. One receipt finalizes an allocation and turns shortfall into loss; there is no later top-up receipt. The GUI's “approved correction” is a farmer action with a required reason and no administrator approval step. Released historical allocations do not disqualify surplus. These are documented project policy choices, not instructor requirements or endorsements. [R6]
 
 <!-- page -->
 # Test evidence and reviewed fixes
@@ -117,7 +117,7 @@ Initial batch: 12/13; the Dates query omitted its crop filter. The prompt was co
 The old model returned 404; other probes saw 503/504 before the recorded model succeeded. Availability is account/time dependent. The 30-second timeout is per call, not per entire question: generation and summary are separate calls. These observations do not guarantee arbitrary-query accuracy. [R3, R5]
 
 <!-- page -->
-# Limitations and review dependencies
+# Limitations and evidence provenance
 ## Read-only assistant boundary
 The GUI uses a background worker. The assistant supplies an allowlisted non-BLOB schema, asks Gemini for SELECT/CTE or clarification/refusal, applies regex checks and a 200-row result cap, then executes `START TRANSACTION READ ONLY` and rolls back. A second chain summarizes only the first 50 rows. SQL and supporting records are visible. Regex checking is not a complete parser, and read-only execution does not prove semantic correctness, function safety or role-scoped confidentiality. The existing direct write attempt was refused by MySQL error 1792. [R3-R5]
 
@@ -126,9 +126,9 @@ The Lab 7-style conceptual ER spans two attribute sheets and three relationship 
 
 Remaining checks include demo-PC live AI, user switch during a pending AI call, full keyboard/accessibility testing, 100/125% scaling, minimum window behavior and a human timed rehearsal. At 150% scaling Track A observed the receipt table needs scrolling. Model paraphrases, injection variants and large-result summaries are not exhaustively tested. [R5, R6]
 
-The previous review-candidate ZIP (superseded by this document revision) was extracted, dependencies installed, and documents rebuilt. On isolated port 3318, seed setup and the 65-check suite passed; the GUI flow passed 21 checks plus 22 after restart. This is not acceptance or a course submission. Image provenance and demo rehearsal remain open. Setup drops and recreates hardcoded `farm_market_db`; DB_NAME does not retarget it. This document build itself did not use app credentials or database state. [R3]
+The current review package was rebuilt from the accepted sources and checked after fresh extraction; the package manifest records its member and archive hashes. On isolated port 3318, seed setup and the 65-check suite passed; the GUI flow passed 21 checks plus 22 after restart. Those application checks are dated evidence, not a new run for this report. Image provenance and the human demo rehearsal remain open. Setup drops and recreates hardcoded `farm_market_db`; DB_NAME does not retarget it. This document build itself did not use app credentials or database state. [R3]
 
-The saved notices specify submission on 19 November 2026 without a cutoff time. The later registration/booking deadline is 16 November, retaining the earlier 12 November notice. Abd reports all three members registered and a 1:30 PM demo booking; venue and attendance still need confirmation. No newer eLearn announcements were checked. Rehearse 3 minutes of poster plus 12 of demo/questions, with request before allocation before delivery. [R2, R7]
+The saved notices specify submission on 19 November 2026 without a cutoff time. The later registration/booking deadline is 16 November, retaining the earlier 12 November notice. The team reports all three members registered and a 1:30 PM demo booking; venue and attendance still need confirmation. No newer eLearn announcements were checked. Rehearse 3 minutes of poster plus 12 of demo/questions, with request before allocation before delivery. [R2, R7]
 
 ## Image attribution
 The imported package claims Fruits-360 / CC BY-SA 4.0. Upstream sources confirm the dataset attribution and license, but none of the 12 SQL BLOBs or four external JPEGs retains exact original identifiers/version. The local hash inventory and research limits are in `docs/IMAGE_ATTRIBUTION.md`. Dataset-level credit does not establish a verified per-file match. No photos were replaced or added to this report/poster, and no blanket license is assigned to code or instructor materials. [R8]

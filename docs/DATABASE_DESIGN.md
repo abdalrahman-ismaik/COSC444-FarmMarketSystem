@@ -1,8 +1,8 @@
 # Database design
 
-**COSC444 Database Systems · Lab B1 · Track A (DB-03).** Prepared 2026-11-17 by Ali Alshamsi with a Claude Code agent. Status: **Ready for review**. Abd Alrahman Ismaik decides acceptance.
+**COSC444 Database Systems · Lab B1 · Track A (DB-03).** Prepared 2026-11-17 by Ali Alshamsi with a Claude Code agent. Status: **Accepted by Abd Alrahman Ismaik on 2026-11-18** as part of the integrated review.
 
-This document explains the design of the existing database: entities, relationships, mapping, units, forecasts, the stock ledger, history, ownership and transactions. It describes what `app/schema.sql` and `app/db.py` actually do. It does not record any instructor approval of the policies described. Where current behaviour is a team choice rather than a proposal requirement, it is labelled **Policy** and listed for a reviewer decision in [Track A review](reviews/TRACK_A_REVIEW.md#decisions-requested).
+This document explains the design of the existing database: entities, relationships, mapping, units, forecasts, the stock ledger, history, ownership and transactions. It describes what `app/schema.sql` and `app/db.py` actually do. Team policy choices are labeled **Policy**; Abd Alrahman accepted them for this project, not as instructor requirements or endorsements.
 
 | Artifact | Path |
 |---|---|
@@ -151,9 +151,9 @@ Each operation in `db.py` runs inside `transaction()`: one connection, commit on
 
 - Injected failures after the first write rolled back every table. CHECKSUM TABLE was identical before and after for harvest + image, allocation, partial delivery, release, cancellation and add farm (TX-01a–f).
 - Duplicate confirmations, release vs confirm, cancel vs allocate and cancel vs confirm were serialized correctly (TX-03a–d).
-- **Baseline finding F-01 (fixed in the follow-up):** two allocations to *different* requests, or an allocation racing a donation, on the same lot can oversell it (TX-02a/b/c). The availability read in `allocate`, `dispose_lot` and `record_adjustment` is a non-locking read of `v_lot_stock`. Under MySQL's default REPEATABLE READ, it uses the snapshot created by the earlier plain SELECT in `_check_lot_owner`, taken *before* the lot lock was granted. It therefore misses the movement that the lock holder committed. The existing suite's race test uses one request, whose row lock serializes the threads first, so it does not exercise this path. The proposed fix and validation are in the [Track A review](reviews/TRACK_A_REVIEW.md#f-01-concurrent-oversell).
+- **Baseline finding F-01 (fixed in the follow-up):** two allocations to *different* requests, or an allocation racing a donation, on the same lot can oversell it (TX-02a/b/c). The availability read in `allocate`, `dispose_lot` and `record_adjustment` is a non-locking read of `v_lot_stock`. Under MySQL's default REPEATABLE READ, it uses the snapshot created by the earlier plain SELECT in `_check_lot_owner`, taken *before* the lot lock was granted. It therefore misses the movement that the lock holder committed. The existing suite's race test uses one request, whose row lock serializes the threads first, so it does not exercise this path. The accepted follow-up and its validation are recorded in [Track A review](reviews/TRACK_A_REVIEW.md#f-01-concurrent-oversell).
 
-The current follow-up explicitly uses READ COMMITTED with request → allocation → lot lock ordering. It passed 173 expanded checks, including the former failing interleaving and additional same-request status/history races. The settlement/shortfall policy is retained by reviewer direction; this is not an instructor endorsement. See [dated expected/actual results](evidence/FIX_VALIDATION.md).
+The accepted follow-up explicitly uses READ COMMITTED with request → allocation → lot lock ordering. It passed 173 expanded checks, including the former failing interleaving and additional same-request status/history races. The settlement/shortfall policy is retained by project reviewer direction; this is not an instructor endorsement. See [dated expected/actual results](evidence/FIX_VALIDATION.md).
 
 ## 9. SQL-enforced vs application-enforced rules
 
@@ -174,7 +174,7 @@ The current follow-up explicitly uses READ COMMITTED with request → allocation
 
 ## 10. Current policies (documented, not endorsed)
 
-These match the code and seed data. None was stated by the proposal, and none has recorded reviewer approval:
+These match the code and seed data. None was stated by the proposal. Abd Alrahman accepted them as project policy choices on 18 November 2026; they are not instructor requirements or endorsements:
 
 1. **DELIVERED uses allocated totals.** When no reservation remains and allocated ≥ requested, the request is DELIVERED even if less was received. Examples: seed request #6 (60 allocated / 52 received), DEL-05a and GUI-DEL-05 (150 / 140).
 2. **One receipt finalises an allocation.** The shortfall is released from the reservation and recorded as LOSS. There is no second, later receipt for the remainder (DEL-04).

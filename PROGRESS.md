@@ -1,6 +1,6 @@
 # Farm-to-Market progress and review ledger
 
-**Current snapshot: November 17, 2026 · Lab B1.** Start with [teammate handoff](docs/TEAMMATE_HANDOFF.md) and [Claude task prompts](docs/CLAUDE_TASK_PROMPTS.md). This file tracks work/review status; the [rubric](docs/RUBRIC_AND_COVERAGE.md) tracks requirements and dated reports track evidence.
+**Current snapshot: November 18, 2026 · Lab B1.** Start with [teammate handoff](docs/TEAMMATE_HANDOFF.md) and [Claude task prompts](docs/CLAUDE_TASK_PROMPTS.md). This file tracks work/review status; the [rubric](docs/RUBRIC_AND_COVERAGE.md) tracks requirements and dated reports track evidence.
 
 ## Status rules
 
@@ -12,20 +12,22 @@ Track A/B agents may commit/push to their assigned feature branches and open/upd
 
 | Track | Branch | PR URL | Status / reviewer |
 |---|---|---|---|
-| A — database/design/validation | `ali/database-diagrams-validation` | Not created | Awaiting task owner; reviewer: abdalrahman-ismaik |
-| B — report/poster/exports | `mohammad/report-poster` | Not created | Awaiting task owner; reviewer: abdalrahman-ismaik |
+| Integrated acceptance | `codex/final-review-acceptance` | [PR #6](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/6) | Accepted integration; reviewer/merger: Abd Alrahman Ismaik |
+| Track A contribution | `ali/database-diagrams-validation` | [PR #2](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/2) | Included in integration; original layout superseded; reviewer: Abd Alrahman Ismaik |
+| Track B contribution | `mohammad/report-poster` | [PR #3](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/3) | Included in integration; final PDFs rebuilt; reviewer: Abd Alrahman Ismaik |
+| PR workflow | `docs/teammate-pr-workflow` | [PR #1](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/1) | Included in integration; reviewer: Abd Alrahman Ismaik |
 
 ## Existing baseline
 
 | Item | Current evidence/status |
 |---|---|
-| Organized app, requirements, announcements/full rubric, README, architecture, test plan, theme and demo runbook | Present; see README links. Formal reviewer acceptance not recorded |
+| Organized app, requirements, announcements/full rubric, README, architecture, test plan, theme and demo runbook | Present and accepted by Abd Alrahman; course upload remains with the team |
 | SQL schema and sample population | Implemented: 15 tables, two views; fresh isolated MySQL load observed |
 | Existing business-rule suite | 65/65 local pass; [runtime evidence](docs/evidence/VALIDATION.md); not exhaustive |
 | Windows GUI/photo persistence | 18 tabs and harvest/image restart checks observed; broader manual flow pending |
 | Live Gemini | 14 questions + two GUI checks observed; [AI evidence](docs/evidence/AI_VALIDATION.md) retains initial failures/fixes/limits |
 | Git sharing | Initial snapshot published to https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem on `main` (initial commit `e67b94a`). Check Git for subsequent synchronization |
-| ER/schema diagrams, technical report, poster and review-candidate ZIP | Present and linked below; awaiting Abd Alrahman’s review |
+| ER/schema diagrams, technical report, poster and ZIP | Accepted by Abd Alrahman and linked below; projector rehearsal and course upload remain |
 
 ## Remaining tasks
 
@@ -34,18 +36,18 @@ Assignments below show their current owner and review status. Unclaimed means no
 | ID | Task / completion evidence | Suggested lead | Owner | Status | Dependency / review note |
 |---|---|---|---|---|---|
 | ADMIN-01 | Confirm three-member registration, booked slot, location and attendance | Abd Alrahman / all | Abd Alrahman / all members | In progress | User confirms all three registered and slot booked for Nov 19, 2026 at 1:30 PM; record venue, confirm sheet entries/attendance, and check whether the Nov 16 deadline affects the group |
-| GIT-01 | Publish initial project snapshot to supplied GitHub remote | Abd Alrahman / Codex | Codex (authorized by Abd Alrahman) | Ready for review | Initial commit e67b94a pushed to origin/main; real credentials/runtime excluded; publication is not acceptance of unfinished course deliverables |
-| DB-01 | Conceptual ER `.drawio` + SVG/PDF with justified cardinalities/rules | Ali / Track A | Ali Alshamsi (Claude Code agent) | Ready for review | Branch `ali/database-diagrams-validation`, PR https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/2 (ready for review, reviewer requested). `docs/diagrams/conceptual-er.{drawio,pdf,svg}`; Chen (min,max) notation; rendered and inspected; reviewer decision on notation requested |
-| DB-02 | Separate relational schema `.drawio` + SVG/PDF with all columns/types/keys/constraints | Ali / Track A | Ali Alshamsi (Claude Code agent) | Ready for review | `docs/diagrams/relational-schema.{drawio,pdf}` + 6 SVGs; machine-checked against information_schema: 851 passed/0 failed, 32/32 FKs drawn |
-| DB-03 | Database-design explanation and policy/findings decision list | Ali / Track A | Ali Alshamsi (Claude Code agent) | Ready for review | `docs/DATABASE_DESIGN.md`; findings F-01…F-08 and decisions in `docs/reviews/TRACK_A_REVIEW.md`; no code/schema/policy changed |
-| TEST-01 | Complete uncovered acceptance cases and expected/actual results | Ali / Track A | Ali Alshamsi (Claude Code agent) | Ready for review | Original results retained in `docs/evidence/REMAINING_TEST_RESULTS.md`; follow-up on tested fix source: 173 backend, 22 GUI, 7 assistant/read-only; see `docs/evidence/FIX_VALIDATION.md` |
-| DOC-01 | Editable concise technical report + rendered PDF | Mohammad / Track B | Mohammad Arwani / Codex follow-up | Ready for review | `submission/technical-report.pdf`; 12 pages, visually rendered and inspected; historical failures and later fixes separated |
-| POSTER-01 | Editable poster + projector-readable PDF, ER included | Mohammad / Track B | Mohammad Arwani / Codex follow-up | Ready for review | `submission/poster.pdf`; 16:9, current tested counts and core ER; room projector rehearsal remains |
-| BUILD-01 | Reproducible exports and per-page PDF visual QA | Mohammad / Track B | Mohammad Arwani / Codex follow-up | Ready for review | Hash-verified inputs; rebuilt in fresh extraction; all 12 report pages and poster rendered and inspected; see `docs/BUILD_DOCUMENTS.md` |
+| GIT-01 | Publish initial project snapshot to supplied GitHub remote | Abd Alrahman / Codex | Codex (authorized by Abd Alrahman) | Accepted | Initial project snapshot is on `origin/main`; this acceptance covers the repository workflow, not course upload |
+| DB-01 | Conceptual ER `.drawio` + SVG/PDF with justified cardinalities/rules | Ali / Track A | Ali Alshamsi (Claude Code agent) | Accepted | Revised Lab 7 conceptual ER: five sheets, 14 entities, 31 relationships; explanations in `docs/diagrams/DIAGRAMS_EXPLAINED.md` |
+| DB-02 | Separate relational schema `.drawio` + SVG/PDF with all columns/types/keys/constraints | Ali / Track A | Ali Alshamsi (Claude Code agent) | Accepted | Three sheets; 15 tables, 100 columns, 32 FKs, 13 named CHECK constraints; offline SQL/XML check passed |
+| DB-03 | Database-design explanation and policy/findings decision list | Ali / Track A | Ali Alshamsi (Claude Code agent) | Accepted | `docs/DATABASE_DESIGN.md` accepted with documented current policies and enforcement boundaries |
+| TEST-01 | Complete uncovered acceptance cases and expected/actual results | Ali / Track A | Ali Alshamsi (Claude Code agent) | Accepted | Dated evidence preserves initial failures and follow-up results: 173 backend, 22 GUI, 7 assistant/read-only; no fresh runtime run in this review |
+| DOC-01 | Editable concise technical report + rendered PDF | Mohammad / Track B | Mohammad Arwani / Codex follow-up | Accepted | `submission/technical-report.pdf`; 13 pages, rebuilt deterministically and visually inspected |
+| POSTER-01 | Editable poster + projector-readable PDF, ER included | Mohammad / Track B | Mohammad Arwani / Codex follow-up | Accepted | `submission/poster.pdf`; 16:9, includes core ER; internal review-status text removed; projector rehearsal remains |
+| BUILD-01 | Reproducible exports and per-page PDF visual QA | Mohammad / Track B | Mohammad Arwani / Codex follow-up | Accepted | Rebuilt twice from hash-pinned inputs; 13 report pages and poster inspected; see `docs/BUILD_DOCUMENTS.md` |
 | ATTR-01 | Verify exact sample-image source/attribution/license mapping | Mohammad / Track B | Mohammad Arwani | Blocked | Dataset-level attribution/license found; exact original file/version/transform mapping remains unknown; see `docs/IMAGE_ATTRIBUTION.md` |
-| REVIEW-01 | Review A/B outputs, resolve reported policy issues, record acceptance/revisions | Abd Alrahman | Abd Alrahman Ismaik | Not started | A/B review notes and actual artifacts |
-| DEMO-01 | Full three-person timed rehearsal and cross-topic Q&A | All three | All three members | Not started | Final diagrams/poster, configured demo PC, actual booked slot |
-| PACKAGE-01 | Candidate ZIP + manifest, fresh-extraction install/run/document checks | Mohammad / Track B | Codex follow-up (authorized) | Ready for review | `submission/FarmMarketSystem_B1_review_candidate.zip` + `submission/MANIFEST.md`; extracted, dependencies installed, documents rebuilt, 65/65 app suite and 21+22 GUI checks passed on isolated port 3318; not accepted/submitted |
+| REVIEW-01 | Review A/B outputs, resolve reported policy issues, record acceptance/revisions | Abd Alrahman | Abd Alrahman Ismaik | Accepted | Accepted the integrated artifacts and tested integrity fixes; remaining image-source limitation is explicitly documented |
+| DEMO-01 | Full three-person timed rehearsal and cross-topic Q&A | All three | All three members | In progress | Run the 3-minute poster + 12-minute demo rehearsal; confirm venue and attendance |
+| PACKAGE-01 | Candidate ZIP + manifest, fresh-extraction install/run/document checks | Mohammad / Track B | Codex follow-up (authorized) | Accepted | Current `submission/FarmMarketSystem_B1_review_candidate.zip` and `submission/MANIFEST.md` rebuilt and extracted; path/hash/exclusion checks passed; no new app runtime run |
 
 ## Contribution and activity log
 
@@ -78,13 +80,15 @@ Branch: `mohammad/report-poster`. PR: https://github.com/abdalrahman-ismaik/COSC
 
 2026-11-17 publication evidence: scoped commit `686b297` pushed to `origin/mohammad/report-poster`; draft PR #3 opened with TRACK_B_REVIEW as its body, and reviewer request succeeded. First connector attempt returned 403 (integration access); existing Git authentication completed the authorized API operation. Staged checks passed after a scoped PDF binary attribute prevented text/CRLF handling; both staged PDF byte sequences equal the visually checked exports. No main push, force-push, merge, acceptance or course submission.
 
-## Reviewer decisions
-
-No acceptance decisions recorded yet. Reviewer-only approval remains Abd Alrahman’s responsibility.
+## Reviewer decisions — 18 November 2026
 
 | Date | Reviewer | Task / artifact version | Decision and reason |
 |---|---|---|---|
-| — | — | — | Pending |
+| 2026-11-18 | Abd Alrahman Ismaik | DB-01/02/03, TEST-01, DOC-01, POSTER-01, BUILD-01, PACKAGE-01 and integrity fixes | **Accepted** after review of the Lab 7 diagrams, report/poster, dated integrity evidence, deterministic PDF rebuild, fresh ZIP extraction/hash checks, and visual inspection. Exact image-source mapping remains unresolved and documented. This is not instructor approval or course submission. |
+
+## Final integration verification — 18 November 2026
+
+The integration branch includes the PR workflow, Track A design/test evidence, accepted integrity fixes, and Track B report/poster work. The revised diagrams were rebuilt and checked against SQL (15 tables / 100 columns / 32 FKs / 13 CHECK constraints). The 13-page report and poster rebuilt byte-identically twice, were rendered and inspected, and no internal review-status labels remain. The accepted 124-member package passed fresh extraction, required-path/member-hash/exclusion checks, and a document rebuild with matching PDF hashes. No database, GUI, or Gemini tests were rerun in this final document pass; refer to the dated follow-up evidence. Exact image-file provenance, venue confirmation, team rehearsal, and course upload remain.
 
 ## Session handoff template
 

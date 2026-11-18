@@ -4,7 +4,7 @@
 
 ## Preparation before the booked slot
 
-- Confirm the booked 1:30 PM slot, venue, that all three names appear in the team sheet, projector/power, Python/Tkinter/MySQL, dependency installation, and a working live Gemini key/model.
+- Confirm the booked 1:30 PM slot and venue, verify projector/power, Python/Tkinter/MySQL, dependencies, and a working live Gemini key/model. The team reports all three members registered.
 - Rehearse on the Windows demo machine. Have source/SQL and final PDFs locally accessible.
 - Reset **only the intended disposable/demo database** before rehearsal/demo if needed. Setup drops `farm_market_db`; never reset between the image upload and restart demonstration.
 - Confirm fresh-seed lot #2 has 78 kg Tomato available, lot #13 has 120 kg Tomato, and lot #3 has 40 kg expired Cucumber available. This runbook depends on those balances; verify them before starting.
@@ -51,18 +51,19 @@ Do not read scripted answer claims if the observed database differs. If the assi
 
 ## Required diagrams and technical PDF
 
-- [x] Conceptual ER diagram in Draw.io: entities, relationships, cardinalities and rules; ready for review.
-- [x] Separate relational schema diagram: SQL tables, PK/FK, types and constraints; ready for review.
-- [x] Technical PDF includes both diagrams, rules, transactions and expected/actual test evidence; ready for review.
+- [x] Conceptual ER diagram in Draw.io: entities, relationships, cardinalities and rules; accepted by Abd Alrahman.
+- [x] Separate relational schema diagram: SQL tables, PK/FK, types and constraints; accepted by Abd Alrahman.
+- [x] Technical PDF includes both diagrams, rules, transactions and expected/actual test evidence; accepted by Abd Alrahman.
 - [x] Test evidence covers major workflows, boundaries/concurrency, stock/forecast separation, images/GUI, Loss & Surplus and fourteen assistant questions including ambiguous/unanswerable cases.
 - [x] Report distinguishes live Gemini evidence, stand-ins, historical results and follow-up observations.
-- [ ] Review/acceptance, final projector check and final course upload.
+- [x] Reviewer acceptance recorded for diagrams, report, poster, and package.
+- [ ] Final projector check, timed three-person rehearsal, and course upload.
 
-Suggested technical PDF order: introduction/team; conceptual and relational designs; rules and transaction explanations; compact completed test evidence; limitations and references. Screenshots are not required by the proposal. The report and diagrams currently exist as review candidates; the poster/projector test and reviewer acceptance remain.
+Suggested technical PDF order: introduction/team; conceptual and relational designs; rules and transaction explanations; compact completed test evidence; limitations and references. Screenshots are not required by the proposal. The project reviewer accepted the report, poster, and diagrams; the projector check, rehearsal, and course upload remain.
 
-## Review candidate ZIP
+## Accepted ZIP package
 
-A review-candidate ZIP and SHA-256 manifest now exist under `submission/`. Rebuild after any approved changes, then submit through the course process only after the team has reviewed and accepted the contents. The preserved original ZIP is archival input, not the current submission.
+The accepted ZIP and SHA-256 manifest are under `submission/`. The team must complete projector/rehearsal checks and upload through the course process. The preserved original ZIP is archival input, not the current submission.
 
 | Include | Intended source / destination |
 |---|---|

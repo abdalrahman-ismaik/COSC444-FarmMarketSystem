@@ -25,8 +25,8 @@
     "Loss & Surplus",
     "Prioritize expired, near-expiry or currently unallocated lots (defaults: 3 / 7 days). Donate or dispose; record actor, date and reason."
   ],
-  "evidence": "Observed: 65/65 original suite; follow-up 173 backend, 22 GUI and 7 assistant/read-only checks; 851 diagram checks. Evidence is dated; review pending.",
-  "caveat": "REVIEW CANDIDATE  |  Fixes and documents await Abd Alrahman’s review; demo rehearsal and image-source decision remain.",
+  "evidence": "Observed in dated runs: 65/65 original suite; follow-up 173 backend, 22 GUI and 7 assistant/read-only checks; 851 diagram checks. See the technical report for environments and limitations.",
+  "caveat": "Educational prototype using fictional operational data. See the technical report for test scope and documented limitations.",
   "diagram_note": "Core ER view derived from Ali’s Track A diagram; supporting reference, ownership and history links omitted. Full ER + schema sheets are in the report.",
   "nodes": [
     {

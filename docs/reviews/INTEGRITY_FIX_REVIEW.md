@@ -2,7 +2,7 @@
 
 PR: https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/4
 
-Prepared by Codex under Abd Alrahman Ismaik's approved implementation plan. Status: **Ready for review**, not Accepted. Base: Ali's Track A commit `80529fb` / PR #2. No schema or seed change; original Track A drawings/results remain preserved.
+Prepared by Codex under Abd Alrahman Ismaik's approved implementation plan. Status: **Accepted by Abd Alrahman Ismaik on 18 November 2026** and included in the integrated review branch. Base: Ali's Track A commit `80529fb` / PR #2. No schema or seed change; original Track A drawings/results remain preserved.
 
 ## Resulting behavior
 
@@ -31,4 +31,4 @@ Actual reproduction commands, source hashes, historical limitations and evidence
 
 ## Review and integration
 
-Review this PR together with PR #2. The original application failures described in Ali's baseline are fixed here, not relabeled as previously passing. Abd Alrahman chose the settlement policy; no instructor endorsement is inferred. Original PRs and this follow-up remain unmerged. A separate document follow-up will use this fixed source/evidence snapshot and preserve Mohammad's report/poster contributions.
+The fixes were reviewed with Ali's PR #2. The original application failures remain preserved as historical findings; follow-up results are not relabeled as earlier passes. Abd Alrahman chose the settlement policy; no instructor endorsement is inferred. These changes are accepted in the integrated review branch. The dated tests do not prove every possible concurrency schedule or arbitrary assistant query safe.

@@ -1,41 +1,50 @@
-# Reproducible report and poster exports
+# Build and verify the report, poster, and review package
 
-**BUILD-01 | Review candidate, 17 November 2026.** Builds are source-only: no application imports, database setup or mutation. The review PDFs incorporate the Track A diagrams and both historical and follow-up test records. Hashes in `docs/report/input-manifest.json` prevent stale or substituted inputs.
+**BUILD-01 · COSC444 Database Systems · Lab B1**
+
+These commands rebuild the diagrams, technical report, poster, and ZIP from checked-in sources. Document builds do not import the application or connect to a database. Application test results below are dated evidence; rebuilding documents does not rerun them.
 
 ## Sources and outputs
 
-| Source | Purpose | Output |
-|---|---|---|
-| `docs/report/technical-report.md` | Five narrative sections with explicit page breaks | `submission/technical-report.pdf` (12 pages: five A4 narrative/evidence pages and seven native-size vector diagram sheets) |
-| `docs/poster/poster.json` | Poster wording, layout, ER node positions and relationships | `submission/poster.pdf` (one 1920 x 1080 pt landscape page) |
-| `docs/report/build_documents.py` | Layout, input-hash checks, evidence assertions and image inventory | Both PDFs and ignored build metadata under `output/documents/` |
-| `docs/report/input-manifest.json` | Provenance and SHA-256 of every builder input and tested source file | Validates checked-in inputs; no Git object fetch needed |
+| Source | Output |
+|---|---|
+| `docs/diagrams/tools/build_lab7.py` | Five-sheet conceptual ER and three-sheet relational schema, each as Draw.io, PDF, and SVG. |
+| `docs/report/technical-report.md` | Five narrative pages in the 13-page report. |
+| `docs/poster/poster.json` | One-page 1920 × 1080 poster with an ER presentation view. |
+| `docs/report/build_documents.py` | `submission/technical-report.pdf`, `submission/poster.pdf`, and ignored build checks under `output/documents/`. |
+| `scripts/build_candidate.py` | `submission/FarmMarketSystem_B1_review_candidate.zip` and its external SHA-256 manifest. |
 
-The poster is a compact presentation view of seven conceptual ER entities and six relationships. The builder checks their IDs and cardinalities against the Draw.io diagram. Supporting reference, ownership and history links are omitted from this view; the report includes the complete conceptual diagram and six schema sheets. The appendix preserves the diagram page sizes so column labels remain legible.
+The poster shows seven central entities and six relationships. The report appendix carries the full conceptual model and all 15 relational tables. The diagrams preserve their native landscape page size so labels remain readable when zoomed; printing them on A4/Letter requires scaling.
 
-## Build
+## Build on Windows
 
-Prerequisites: Python 3.12 and the pinned document libraries in `docs/report/requirements-docs.txt`. For PDF previews, use Poppler or another renderer. Application requirements remain separate.
+Use Python 3.12 and the pinned document-only dependencies. Keep these separate from the application's requirements.
 
 ```powershell
 py -3.12 -m venv .local/docs-venv
 .\.local\docs-venv\Scripts\python.exe -m pip install -r docs/report/requirements-docs.txt
+.\.local\docs-venv\Scripts\python.exe docs/diagrams/tools/build_lab7.py
+.\.local\docs-venv\Scripts\python.exe docs/diagrams/tools/check_lab7.py
 .\.local\docs-venv\Scripts\python.exe docs/report/build_documents.py
+python scripts/build_candidate.py --verify-dir .local/candidate-extraction-YYYYMMDD
 ```
 
-The default input directory is the repository root. To validate another checkout or freshly extracted tree, pass `--input-dir <path-to-tree>`. Output PDFs are written to `submission/`; build checks and the photo inventory go to ignored `output/documents/`. The builder checks 14 historical AI questions, preserves earlier Track A failure totals, verifies the later 173 backend / 22 GUI results and seven assistant/read-only checks, validates source hashes, verifies poster ER relationships and guards report page overflow.
+Use a new verification directory inside `.local` each time. The package builder refuses an existing path, extracts the ZIP, and verifies required paths, member hashes, manifest, and excluded-path rules. It does not install or run the application.
 
-## Recorded build and visual check
+To render the PDFs for visual review, install Poppler and run:
 
-Built with Python 3.12.12, ReportLab 4.4.9, pypdf 6.21.4 and Pillow 13.0.0 on Windows 11. The PDFs passed structural/page-count/name checks: report 12 pages, poster 1 page. I rendered all 12 report pages and the poster at 1920 × 1080 and visually inspected them after the final wording/build change. Tables, current-vs-historical labels, diagram appendix, poster relationships and review-status caveat are visible without clipping or overlap. Latest report SHA-256 is recorded in `docs/report/build-validation-followup.json`; the poster hash and manifest are in that same record. Poppler noted missing Symbol/ArialUnicode display fonts but exited successfully; the operators/diagram marks rendered in the inspected pages. `docs/report/input-manifest.json` records source hashes; `docs/report/build-validation-followup.json` records the final PDF hashes and QA result.
+```powershell
+pdftoppm -scale-to 1500 -png submission/technical-report.pdf output/report
+pdftoppm -scale-to 1920 -png -singlefile submission/poster.pdf output/poster
+```
 
-The report retains original Track A results (backend 163 Pass / 4 Fail / 1 Info; GUI 21 Pass / 1 Fail) as historical. It separately documents the later follow-up (65 original checks, 173 backend, 22 GUI including restart, 7 assistant/read-only, 3 helper checks and 851 diagram checks). These evidence sets refer to distinct source versions and disposable database instances. See `docs/evidence/FIX_VALIDATION.md`.
+## Recorded verification (18 November 2026)
 
-The mixed page sizes are intentional: shrinking the detailed relational schema to A4 would reduce label readability. A real projector test, screen-reader/accessibility check and team timed rehearsal remain for the team. The PDF build alone does not establish reviewer acceptance.
+- Independent Lab 7 SQL/XML check: **15 tables, 100 columns, 32 foreign keys, 13 named CHECK constraints; pass**.
+- Rebuilt diagrams, report, and poster twice; outputs were byte-identical. The report has 13 pages (five narrative and eight diagram sheets); the poster has one page.
+- Every report page and the poster were rendered and visually inspected. No clipping, overlap, or missing diagram labels were observed. Poppler emitted Symbol/ArialUnicode font warnings, but the rendered marks were visible.
+- Current PDF hashes and input/source hashes are recorded in `docs/report/build-validation-final.json`; the report builder's structural and evidence assertions are in ignored `output/documents/build-checks.json`.
+- Fresh package extraction checked required paths, member hashes, and exclusions. No `.env`, credentials, local environments, or agent skills were included.
+- No new database, GUI, or Gemini run was made for this document pass. Dated application evidence is in `docs/evidence/FIX_VALIDATION.md` and `docs/evidence/fixes-2026-11-17/`.
 
-## Candidate package
-
-The review-candidate ZIP and its member manifest are created by `scripts/build_candidate.py`. That script uses an explicit include list and excludes local credentials, Git metadata, virtual environments, caches, ignored output, archives and agent skill folders. The ZIP is extracted to an ignored clean directory and then checked for member hashes and required paths. A package check is a review artifact; it is not instructor acceptance or course submission.
-
-## Lab 7 revision — 18 November 2026
-Current diagram build and checks: `python docs/diagrams/tools/build_lab7.py`, then `python docs/diagrams/tools/check_lab7.py`, followed by `python docs/report/build_documents.py`. These supersede the earlier diagram layout and 12-page report instructions. Current report: 13 pages (five narrative, five conceptual sheets, three relational sheets); poster: one page. Rendering: `pdftoppm -scale-to 1500 -png submission/technical-report.pdf output/report` and likewise for the poster. No runtime database is used.
+The remaining human tasks are a projector check, confirmation of the demo venue, the three-member timed rehearsal, and the course upload. The exact upstream mapping for the 16 sample images also remains unresolved; see [image attribution](IMAGE_ATTRIBUTION.md).

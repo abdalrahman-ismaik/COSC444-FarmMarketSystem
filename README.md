@@ -74,6 +74,7 @@ setup.bat / run.bat      Root launchers that delegate to app/
 - [100-point rubric and coverage matrix](docs/RUBRIC_AND_COVERAGE.md)
 - [Course announcements and deadlines](docs/ANNOUNCEMENTS.md)
 - [Architecture, database, and transactions](docs/ARCHITECTURE.md)
+- [How to read the ER and relational schema diagrams](docs/diagrams/DIAGRAMS_EXPLAINED.md)
 - [Test plan and evidence](docs/TESTING.md)
 - [Demo runbook and submission checklist](docs/DEMO_AND_SUBMISSION.md)
 - [Team responsibilities](docs/TEAM.md)
@@ -84,7 +85,7 @@ setup.bat / run.bat      Root launchers that delegate to app/
 
 ## Verification status
 
-Baseline validation recorded 65/65 business-rule checks, GUI role/photo workflows, and fourteen live Gemini questions. A dated integrity follow-up on 17 November then recorded 173 backend checks, 22 GUI checks (including restart), 7 assistant/read-only checks, 3 concurrency-helper checks, and 851 diagram checks, with the original 65-check suite passing. These were run against an isolated MySQL 8.0.46 instance; see [follow-up evidence](docs/evidence/FIX_VALIDATION.md) and the [raw dated evidence](docs/evidence/fixes-2026-11-17/). Earlier failures remain in the historical Track A evidence. These results do not replace a team demo rehearsal or Abd Alrahman’s review.
+Baseline validation recorded 65/65 business-rule checks, GUI role/photo workflows, and fourteen live Gemini questions. A dated integrity follow-up on 17 November then recorded 173 backend checks, 22 GUI checks (including restart), 7 assistant/read-only checks, 3 concurrency-helper checks, and 851 checks against the earlier diagram layout, with the original 65-check suite passing. The accepted Lab 7 layout separately passed an offline check for 15 tables, 100 columns, 32 foreign keys, and 13 named CHECK constraints. Application checks ran against an isolated MySQL 8.0.46 instance; see [follow-up evidence](docs/evidence/FIX_VALIDATION.md) and the [raw dated evidence](docs/evidence/fixes-2026-11-17/). Earlier failures remain in historical evidence. Human demo rehearsal and course upload remain.
 
 On this PC, the isolated demo database is running on port 3307 and the app is configured locally. Double-click root **run.bat** to explore. After reboot, follow the local-server restart instructions in the validation report. The batch launchers prefer the project `.venv` when present. A fresh GitHub clone still needs the setup instructions above and its own database credentials.
 
@@ -112,6 +113,6 @@ Run it only against a disposable `farm_market_db` configured in `app/.env`. Rest
 
 Sample produce photos are attributed by the supplied package to Fruits-360 under CC BY-SA 4.0. See [sources and attribution](docs/SKILLS.md#sample-image-attribution); exact upstream image provenance remains to be verified.
 
-## Review candidate
+## Course submission preparation
 
-The [technical report](submission/technical-report.pdf), [poster](submission/poster.pdf), and [ER/schema diagrams](docs/diagrams/) are review candidates. The report retains the earlier Track A failures and separately records the later integrity fixes and their passing checks. Rebuild the PDFs using the hash-verified [document instructions](docs/BUILD_DOCUMENTS.md). A fresh-extraction candidate ZIP and SHA-256 manifest are in `submission/`; they are not accepted or submitted. Review notes: [Track A](docs/reviews/TRACK_A_REVIEW.md), [Track B](docs/reviews/TRACK_B_REVIEW.md), and [integrity/document follow-up](docs/reviews/DOCUMENT_FIX_REVIEW.md). Exact per-image source mapping is still unresolved; see [image attribution](docs/IMAGE_ATTRIBUTION.md).
+The accepted [technical report](submission/technical-report.pdf), [poster](submission/poster.pdf), and [ER/schema diagrams](docs/diagrams/) are ready for the team's demo and final course submission review. The report preserves Track A's original failures and separately records the later integrity fixes and their passing checks. Rebuild the PDFs using the hash-verified [document instructions](docs/BUILD_DOCUMENTS.md). The [ZIP and SHA-256 manifest](submission/) were rebuilt and checked from a fresh extraction; the course upload has not been performed. Exact per-image source mapping remains unresolved and is documented in [image attribution](docs/IMAGE_ATTRIBUTION.md). Venue confirmation and the team's timed demo rehearsal remain.

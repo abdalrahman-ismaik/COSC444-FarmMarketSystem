@@ -1,4 +1,4 @@
-"""Build and self-check a clean, review-only course project ZIP."""
+"""Build and self-check a clean course submission-preparation ZIP."""
 from __future__ import annotations
 import argparse
 import hashlib
@@ -21,7 +21,7 @@ ALLOW_DIRS = ('app', 'docs')
 EXCLUDED_PARTS = {'.git', '.local', '.venv', 'venv', '__pycache__', '.pytest_cache',
                   '.mypy_cache', '.ruff_cache', 'archive', '.agents', 'skills', 'output'}
 EXCLUDED_SUFFIXES = {'.pyc', '.pyo', '.log', '.zip'}
-STAMP = (2026, 11, 17, 0, 0, 0)
+STAMP = (2026, 11, 18, 0, 0, 0)
 
 
 def sha(data: bytes) -> str:
@@ -51,8 +51,8 @@ def files_to_package() -> list[Path]:
 
 
 def member_manifest(payloads: dict[str, bytes]) -> str:
-    rows = ['# Review-candidate ZIP manifest', '',
-            'This archive is for team review; it is not an accepted or submitted course package.',
+    rows = ['# Course package manifest', '',
+            'This archive is the accepted team review candidate; it has not been submitted to the course.',
             'SHA-256 covers each payload member listed below. The embedded manifest cannot hash itself,',
             'and the archive hash is recorded only in the external `submission/MANIFEST.md`.', '',
             '| ZIP member | Bytes | SHA-256 |', '|---|---:|---|']
@@ -127,8 +127,8 @@ def main() -> None:
     inner = inner_bytes.decode('utf-8')
     if sha(inner_bytes) != sha(embedded):
         raise RuntimeError('Embedded manifest hash mismatch')
-    if 'not an accepted or submitted' not in inner:
-        raise RuntimeError('Review-only notice missing from embedded manifest')
+    if 'has not been submitted to the course' not in inner:
+        raise RuntimeError('Course non-submission notice missing from embedded manifest')
     for required in ('README.md', 'setup.bat', 'run.bat', 'app/.env.example',
                      'app/schema.sql', 'app/app.py', 'docs/report/technical-report.md',
                      'docs/report/build_documents.py', 'docs/poster/poster.json',

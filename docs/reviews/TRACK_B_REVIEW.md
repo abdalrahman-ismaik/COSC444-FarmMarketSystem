@@ -1,7 +1,11 @@
 # Track B — Lab 7 diagram revision, 18 November 2026
 
 PR: https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/3
-Branch: `mohammad/report-poster`. Draft pending reviewer/package dependencies. Reviewer: `abdalrahman-ismaik`.
+Branch: `mohammad/report-poster`. PR #3 was a draft; its artifacts and the finalized outputs are accepted by Abd Alrahman Ismaik on 18 November 2026 in the integrated review.
+
+## Reviewer disposition — 18 November 2026
+
+**Accepted by Abd Alrahman Ismaik** after offline SQL/XML validation, deterministic rebuild, visual inspection of all report pages and the poster, and fresh package extraction/hash checks. The PDF output was regenerated to remove internal “review candidate” labels. The exact source/version mapping for the sixteen sample images remains unresolved and is explicitly disclosed; no course upload, projector test, or team rehearsal is claimed.
 
 The previous ER/table layouts did not follow the supplied Lab 7 examples. This revision uses Chen entity rectangles, attribute ovals, underlined identifiers, relationship diamonds, cardinality and mandatory participation lines. Relational schemas now use horizontal relation rows with underlined PKs and highlighted FKs, retaining types, nullability, defaults and CHECK constraints. Normalization discussion was removed from the deliverable narrative at Mohammad's request; no database redesign was performed.
 
@@ -99,4 +103,4 @@ PR delivery: draft PR #3 is open against main; GitHub confirmed `abdalrahman-ism
 
 ## Later integrity/document/package follow-up
 
-A separate follow-up now preserves the original reports and failure evidence while documenting the tested fixes. See `docs/reviews/DOCUMENT_FIX_REVIEW.md`, `docs/evidence/FIX_VALIDATION.md`, and the 17 November entries in `PROGRESS.md`. The candidate PDF sources rebuild from checked-in hash-verified inputs. `submission/FarmMarketSystem_B1_review_candidate.zip` and `submission/MANIFEST.md` have been created and checked from a clean extraction; the package is still awaiting Abd Alrahman’s review and is not submitted. Exact image-to-source mapping remains unresolved.
+A separate follow-up preserves the original reports and failure evidence while documenting the tested fixes. See `docs/reviews/DOCUMENT_FIX_REVIEW.md`, `docs/evidence/FIX_VALIDATION.md`, and the 17 November entries in `PROGRESS.md`. The final PDFs rebuild from checked-in hash-verified inputs. The 124-member `submission/FarmMarketSystem_B1_review_candidate.zip` and `submission/MANIFEST.md` were checked from a clean extraction, including a matching document rebuild. Abd Alrahman accepted the artifacts on 18 November; the package has not been uploaded to the course. Exact image-to-source mapping remains unresolved.

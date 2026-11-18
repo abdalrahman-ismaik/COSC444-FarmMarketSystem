@@ -1,4 +1,4 @@
-"""Build the review PDFs without importing the app or connecting to a database."""
+"""Build the project PDFs without importing the app or connecting to a database."""
 import argparse
 from collections import Counter
 import hashlib
@@ -98,7 +98,7 @@ def flows(markdown, width):
     return out
 
 
-def footer(c, w, page, total, label='Review candidate | 18 November 2026'):
+def footer(c, w, page, total, label='COSC444 Database Systems | Lab B1 | 18 November 2026'):
     c.setFillColor(colors.HexColor('#56645B'))
     c.setFont('Helvetica',8)
     c.drawString(38,21,label)
@@ -110,7 +110,7 @@ def report(input_dir, out_dir):
     assert len(sections)==5
     buf=io.BytesIO()
     c=canvas.Canvas(buf,pagesize=A4,invariant=1)
-    c.setTitle('Farm to Market technical report - review candidate')
+    c.setTitle('Farm to Market technical report')
     w,h=A4
     for number,section in enumerate(sections,1):
         y=h-38
@@ -135,16 +135,16 @@ def report(input_dir, out_dir):
         cc.setFont('Helvetica-Bold',18);cc.setFillColor(colors.HexColor(DARK))
         cc.drawString(20,sh+63,titles[idx])
         cc.setFont('Helvetica',10)
-        cc.drawString(20,sh+46,'Source hashes are recorded in docs/report/input-manifest.json | Review pending')
+        cc.drawString(20,sh+46,'Source hashes are recorded in docs/report/input-manifest.json')
         footer(cc,sw+40,idx+6,13)
         cc.save()
         page=PdfReader(b).pages[0]
         page.merge_transformed_page(source,Transformation().translate(20,36))
         writer.add_page(page)
     manifest=json.loads((ROOT/MANIFEST).read_text(encoding='utf-8'))
-    writer.add_metadata({'/Title':'Farm to Market technical report - review candidate',
+    writer.add_metadata({'/Title':'Farm to Market technical report',
                          '/Author':'Mohammad Arwani with Codex; diagrams by Ali Alshamsi with Claude',
-                         '/Subject':'COSC444 B1 | review candidate | Track A '+manifest['track_a_commit']+' | fixes '+manifest['fix_commit']})
+                         '/Subject':'COSC444 B1 | Track A '+manifest['track_a_commit']+' | fixes '+manifest['fix_commit']})
     for page,title in enumerate(['Overview','Transactions','Test evidence','Live assistant','Limitations and references']+titles):
         writer.add_outline_item(title,page)
     with (out_dir/'technical-report.pdf').open('wb') as f:writer.write(f)
@@ -161,7 +161,7 @@ def poster(config,input_dir,out_dir):
     poster_check(config,input_dir)
     w,h=1920,1080
     c=canvas.Canvas(str(out_dir/'poster.pdf'),pagesize=(w,h),invariant=1)
-    c.setTitle('Farm-to-Market poster - review candidate')
+    c.setTitle('Farm-to-Market poster')
     c.setAuthor('Mohammad Arwani with Codex; ER derived from Track A')
     def rect(x,top,ww,hh,color):
         c.setFillColor(colors.HexColor(color));c.rect(x,h-top-hh,ww,hh,fill=1,stroke=0)
@@ -174,7 +174,7 @@ def poster(config,input_dir,out_dir):
     text(config['title'],48,24,1500,57,'#FFFFFF',True)
     text(config['subtitle'],50,93,1750,27,'#FFFFFF')
     text(config['course'],50,143,1750,20,'#E8F5E9')
-    text('REVIEW CANDIDATE',1510,40,365,23,'#FFFFFF',True)
+    text('PROJECT DEMO',1510,40,365,23,'#FFFFFF',True)
     for i,member in enumerate(config['team']):text(member,50+i*625,211,610,23,INK,True)
     text(config['context'],50,257,1810,22)
     for i,item in enumerate(config['workflow']):
