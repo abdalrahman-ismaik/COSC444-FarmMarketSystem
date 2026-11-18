@@ -1,0 +1,2 @@
+# Preserve verified PDF bytes and disable text diffs/merges.
+*.pdf binary

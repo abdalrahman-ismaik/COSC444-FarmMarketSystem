@@ -56,13 +56,14 @@ Demo users are fictional application accounts, distinct from the student team. U
 app/                     Maintained application, SQL, configuration template, tests, photos
 docs/                    Requirements, rubric, architecture, tests, demo and team documents
   sources/               Original project proposal and Lab 6 slides
-  reference/             Historical visual guide
-archive/                 Original ZIP/README and school-database lab example
-.agents/skills/          Reusable project-local skills copied from KU Planner
-README.md                Setup, run, status, and documentation entry point
+  report/                Editable technical report, builder, pinned input hashes
+  poster/                Editable poster layout
+  diagrams/              Editable ER/schema diagrams and PDF exports
+  evidence/              Dated app, AI, GUI, and database verification
+README.md                Setup, run, project status, and documentation entry point
 PRODUCT.md               Product purpose, users, constraints, and evidence
-DESIGN.md                Existing desktop theme and future refinement criteria
-AGENTS.md                Instructions for future repository work
+DESIGN.md                Desktop theme and design criteria
+PROGRESS.md              Teammate tasks and review ledger
 setup.bat / run.bat      Root launchers that delegate to app/
 ```
 
@@ -73,6 +74,7 @@ setup.bat / run.bat      Root launchers that delegate to app/
 - [100-point rubric and coverage matrix](docs/RUBRIC_AND_COVERAGE.md)
 - [Course announcements and deadlines](docs/ANNOUNCEMENTS.md)
 - [Architecture, database, and transactions](docs/ARCHITECTURE.md)
+- [How to read the ER and relational schema diagrams](docs/diagrams/DIAGRAMS_EXPLAINED.md)
 - [Test plan and evidence](docs/TESTING.md)
 - [Demo runbook and submission checklist](docs/DEMO_AND_SUBMISSION.md)
 - [Team responsibilities](docs/TEAM.md)
@@ -83,7 +85,7 @@ setup.bat / run.bat      Root launchers that delegate to app/
 
 ## Verification status
 
-**Current local result: 65/65 business-rule checks passed on isolated MySQL 8.0.46**, plus 18 Windows role-tab checks, GUI valid/invalid harvest submission, and photo retrieval after a full GUI process restart. The actual [validation report and screenshots](docs/evidence/VALIDATION.md) distinguish these results from historical guide claims. On November 17, **fourteen live Gemini questions and two GUI AI checks were verified**, after correcting an observed crop-filter omission and the obsolete model configuration. See the [live AI report](docs/evidence/AI_VALIDATION.md) for initial failures, retests, reference SQL, and remaining limits.
+Baseline validation recorded 65/65 business-rule checks, GUI role/photo workflows, and fourteen live Gemini questions. A dated integrity follow-up on 17 November then recorded 173 backend checks, 22 GUI checks (including restart), 7 assistant/read-only checks, 3 concurrency-helper checks, and 851 checks against the earlier diagram layout, with the original 65-check suite passing. The accepted Lab 7 layout separately passed an offline check for 15 tables, 100 columns, 32 foreign keys, and 13 named CHECK constraints. Application checks ran against an isolated MySQL 8.0.46 instance; see [follow-up evidence](docs/evidence/FIX_VALIDATION.md) and the [raw dated evidence](docs/evidence/fixes-2026-11-17/). Earlier failures remain in historical evidence. Human demo rehearsal and course upload remain.
 
 On this PC, the isolated demo database is running on port 3307 and the app is configured locally. Double-click root **run.bat** to explore. After reboot, follow the local-server restart instructions in the validation report. The batch launchers prefer the project `.venv` when present. A fresh GitHub clone still needs the setup instructions above and its own database credentials.
 
@@ -95,7 +97,7 @@ python app/tests/test_business_rules.py
 
 Run it only against a disposable `farm_market_db` configured in `app/.env`. Restore sample data afterward only if a reset is intended. The script is not a complete replacement for GUI, restart, assistant-answer, or rubric acceptance testing.
 
-**Still required for final submission:** conceptual Draw.io ER diagram, separate relational schema diagram, poster PDF, concise technical PDF with expected/actual test evidence, and verification of team registration/demo booking. Markdown documentation and the historical guide do not substitute for those assessed artifacts.
+**Project artifacts now present for review:** conceptual and relational Draw.io diagrams, technical report PDF, poster PDF, rubric coverage, and expected/actual test evidence. Team registration and the demo slot (November 19 at 1:30 PM) are confirmed by the user. Human review, exact per-file photo provenance decision, projector check, timed three-person rehearsal, venue confirmation, and the actual course upload remain outstanding. See [review ledger](PROGRESS.md) and [submission runbook](docs/DEMO_AND_SUBMISSION.md). Markdown documentation and the historical guide do not substitute for those assessed artifacts.
 
 ## Troubleshooting
 
@@ -110,3 +112,7 @@ Run it only against a disposable `farm_market_db` configured in `app/.env`. Rest
 | No records / missing photo | Check filters and selected lot; the application provides empty and unavailable-image states |
 
 Sample produce photos are attributed by the supplied package to Fruits-360 under CC BY-SA 4.0. See [sources and attribution](docs/SKILLS.md#sample-image-attribution); exact upstream image provenance remains to be verified.
+
+## Course submission preparation
+
+The accepted [technical report](submission/technical-report.pdf), [poster](submission/poster.pdf), and [ER/schema diagrams](docs/diagrams/) are ready for the team's demo and final course submission review. The report preserves Track A's original failures and separately records the later integrity fixes and their passing checks. Rebuild the PDFs using the hash-verified [document instructions](docs/BUILD_DOCUMENTS.md). The [ZIP and SHA-256 manifest](submission/) were rebuilt and checked from a fresh extraction; the course upload has not been performed. Exact per-image source mapping remains unresolved and is documented in [image attribution](docs/IMAGE_ATTRIBUTION.md). Venue confirmation and the team's timed demo rehearsal remain.

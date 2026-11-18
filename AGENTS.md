@@ -4,6 +4,8 @@ This is a COSC444 Database Systems project for three students in lab B1. Read RE
 
 For teammate/Claude sessions, also read docs/TEAMMATE_HANDOFF.md, docs/CLAUDE_TASK_PROMPTS.md, CLAUDE.md and PROGRESS.md. Claim work before editing shared artifacts and preserve the other track's files. Agents deliver Ready for review; Abd Alrahman Ismaik alone records Accepted. Do not infer completed contributions from proposed assignments.
 
+Teammate agents are authorized to commit scoped work to their assigned feature branch, push that branch, and open/update a PR targeting `main` with reviewer `abdalrahman-ismaik`. Do not push directly to `main`, force-push, merge, or self-approve. Record branch/PR URL and evidence in PROGRESS.md. Use a draft PR when dependencies remain; the optional read-only reviewer agent has no write authority.
+
 ## Maintained application
 
 - `app/` is the only maintained application. Entry point: `python app/app.py`.

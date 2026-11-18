@@ -66,7 +66,7 @@ Example: harvest 100 kg → reserve 30 kg → receive 25 kg with a 5 kg discrepa
 
 ## Transactions and ownership
 
-The `transaction()` context manager commits on success, rolls back on exceptions, and closes the connection. User-entered SQL values use `%s` parameters. Dynamic identifier fragments are supplied by internal code/allowlists; SQL identifiers cannot be parameterized like values. There is no stored-procedure or trigger layer in the supplied schema.
+The `transaction()` context manager commits on success, rolls back on exceptions, and closes the connection. Connections explicitly use READ COMMITTED; availability-changing operations retain lot locks, while request-changing operations acquire the parent request lock before allocation/lot locks. The [correctness follow-up](evidence/FIX_VALIDATION.md) records the stale-snapshot fix and regression results. User-entered SQL values use `%s` parameters. Dynamic identifier fragments are supplied by internal code/allowlists; SQL identifiers cannot be parameterized like values. There is no stored-procedure or trigger layer in the supplied schema.
 
 | Operation | Atomic writes and checks |
 |---|---|
@@ -76,9 +76,9 @@ The `transaction()` context manager commits on success, rolls back on exceptions
 | Loss/correction | Check role/ownership; lock lot; validate quantity/reason; prevent removal of reserved/unavailable stock; insert movement |
 | Create/update request | Require buyer role; validate active references and future/current needed-by date; insert history on creation; updates lock/check own request and cannot reduce quantity below allocations |
 | Allocate | Lock request then lot; require farmer ownership, open request, matching crop/unit, enough lot availability and request remainder; insert allocation + reservation + status/history update |
-| Release allocation | Lock allocation and lot; require owning farmer, RESERVED status and reason; insert release movement, mark RELEASED, refresh request/history |
+| Release allocation | Lock request, allocation and lot in that order; require owning farmer, RESERVED status and reason; insert release movement, mark RELEASED, refresh request/history |
 | Cancel request | Lock own request; reject if delivered/cancelled or if any allocation has deliveries; release reservations, mark allocations RELEASED, record cancellation/history |
-| Confirm delivery | Lock allocation/request join and lot; require own market and RESERVED status; validate actual quantity/reason; insert unique receipt, delivery and discrepancy movements; mark allocation DELIVERED; refresh request/history |
+| Confirm delivery | Lock parent request, allocation and lot in that order; require own market and RESERVED status; validate actual quantity/reason; insert unique receipt, delivery and discrepancy movements; mark allocation DELIVERED; refresh request/history |
 | Donate/dispose | Require farmer/lot ownership; lock lot; positive quantity ≤ available and recipient/reason; insert DONATED or DISPOSED movement |
 
 Lot-row locks coordinate availability-changing operations. Locks alone are not fresh proof that every isolation/concurrency case is correct. The existing suite exercises one racing-allocation scenario; repeated delivery, release/cancel interactions, and rollback need broader verification.
@@ -89,7 +89,7 @@ Reference data and users are deactivated rather than deleted. Admin checks guard
 
 A partial delivery means recording less received than allocated in the allocation's single receipt. The application closes that allocation, releases the unreceived reservation, and treats its entire discrepancy as stock loss. It does not leave that same allocation open for a second receipt; a repeated confirmation is rejected.
 
-`_refresh_request_status` derives OPEN/PARTIALLY_ALLOCATED/FULLY_ALLOCATED from non-released allocations. Once any allocation is delivered, it uses **DELIVERED** when no reserved allocations remain and allocated total reaches the requested total; otherwise it uses **PARTIALLY_DELIVERED**. It does **not** require actual received total to equal requested total. Seed request #6 illustrates this: 60 allocated, 52 received, status DELIVERED. This is an implementation policy needing explicit team justification/review, not a requirement stated by the proposal.
+`_refresh_request_status` derives OPEN/PARTIALLY_ALLOCATED/FULLY_ALLOCATED from non-released allocations. Once any allocation is delivered, it uses **DELIVERED** when no reserved allocations remain and allocated total reaches the requested total; otherwise it uses **PARTIALLY_DELIVERED**. It does **not** require actual received total to equal requested total. Seed request #6 illustrates this: 60 allocated, 52 received, status DELIVERED. The reviewer chose to retain this settlement policy: DELIVERED means allocations have been settled, while received quantities and discrepancies show shortages. The GUI now explains that distinction. This is a team policy, not a status definition stated by the instructor.
 
 “Approved correction” is currently a farmer action with a required reason and label. There is no separate administrator approval workflow. Document that honestly if retained.
 

@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-18",
+  "environment": {
+    "os": "Windows",
+    "python": "3.13.14",
+    "reportlab": "4.4.9",
+    "pypdf": "6.21.4",
+    "pillow": "13.0.0",
+    "renderer": "Poppler pdftoppm"
+  },
+  "diagrams": {
+    "result": "pass",
+    "tables": 15,
+    "columns": 100,
+    "foreign_keys": 32,
+    "named_checks": 13,
+    "conceptual_sheets": 5,
+    "conceptual_entities": 14,
+    "conceptual_relationships": 31,
+    "relational_sheets": 3
+  },
+  "documents": {
+    "technical_report_pages": 13,
+    "technical_report_sha256": "640fe422078565a69ab6dd88718890eb9fe01090e64b97c86f61997dcb976377",
+    "poster_pages": 1,
+    "poster_sha256": "b0f19a79ca034c29631fd22b0a4f7b45337796a434d0ab6d03ad2eb648a25c10",
+    "rebuilds_byte_identical": true,
+    "pdf_pages_rendered_and_inspected": 14,
+    "internal_review_status_removed_from_pdfs": true,
+    "poppler_font_warnings": "Symbol and ArialUnicode display-font warnings; rendered content inspected with no missing labels"
+  },
+  "package": {
+    "members": 124,
+    "fresh_extraction": true,
+    "document_rebuild_hashes_match": true,
+    "required_paths": "pass",
+    "member_hashes": "pass",
+    "excluded_paths_and_secrets": "pass",
+    "course_upload_performed": false
+  },
+  "application_validation": {
+    "rerun": false,
+    "note": "Application, database, GUI, and Gemini checks remain dated evidence in docs/evidence/FIX_VALIDATION.md; this documentation pass did not rerun them."
+  },
+  "remaining_human_work": [
+    "Confirm demo venue and attendance",
+    "Rehearse the three-minute poster overview and twelve-minute demo",
+    "Perform the course upload",
+    "Exact source/version/transform mapping for sample images remains unknown"
+  ]
+}

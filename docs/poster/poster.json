@@ -1,0 +1,134 @@
+{
+  "title": "Farm-to-Market",
+  "subtitle": "Local produce visibility with an explainable stock history",
+  "course": "COSC444 Database Systems  |  Khalifa University  |  Lab B1  |  Fall 2026-2027",
+  "team": [
+    "Abd Alrahman Ismaik  100064692",
+    "Ali Alshamsi  100062530",
+    "Mohammad Arwani  100064908"
+  ],
+  "context": "An educational UAE local-food prototype using fictional data. Farmers record harvests; markets request produce and confirm what arrives. Administrators maintain reference data.",
+  "workflow": [
+    "Record harvest + photo",
+    "Search and request",
+    "Allocate available lots",
+    "Confirm receipt + shortfall"
+  ],
+  "rules": [
+    "Forecast is separate from saleable stock.",
+    "Every quantity has a unit; no implicit conversion.",
+    "Farmers change assigned farms; buyers their own requests.",
+    "Available = on hand - reserved; allocation must fit it."
+  ],
+  "features": "Python + Tkinter GUI / MySQL source of truth / BLOB photos survive restart / Read-only LangChain + Gemini answers with SQL and records",
+  "advanced": [
+    "Loss & Surplus",
+    "Prioritize expired, near-expiry or currently unallocated lots (defaults: 3 / 7 days). Donate or dispose; record actor, date and reason."
+  ],
+  "evidence": "Observed in dated runs: 65/65 original suite; follow-up 173 backend, 22 GUI and 7 assistant/read-only checks; 851 diagram checks. See the technical report for environments and limitations.",
+  "caveat": "Educational prototype using fictional operational data. See the technical report for test scope and documented limitations.",
+  "diagram_note": "Core ER view derived from Ali’s Track A diagram; supporting reference, ownership and history links omitted. Full ER + schema sheets are in the report.",
+  "nodes": [
+    {
+      "id": "er1-v3",
+      "name": "FARM",
+      "label": "Farm",
+      "detail": "Assigned farmer records",
+      "x": 740,
+      "y": 335
+    },
+    {
+      "id": "er1-v9",
+      "name": "CROP_CYCLE",
+      "label": "Crop cycle",
+      "detail": "Forecast quantity + date",
+      "x": 1130,
+      "y": 335
+    },
+    {
+      "id": "er1-v19",
+      "name": "HARVEST_LOT",
+      "label": "Harvest lot",
+      "detail": "Harvested quantity + unit",
+      "x": 1520,
+      "y": 335
+    },
+    {
+      "id": "er1-v5",
+      "name": "MARKET",
+      "label": "Market",
+      "detail": "Buyer owns requests",
+      "x": 740,
+      "y": 545
+    },
+    {
+      "id": "er1-v13",
+      "name": "MARKET_REQUEST",
+      "label": "Market request",
+      "detail": "Demand + needed-by date",
+      "x": 1130,
+      "y": 545
+    },
+    {
+      "id": "er1-v25",
+      "name": "ALLOCATION",
+      "label": "Allocation",
+      "detail": "One request and one lot",
+      "x": 1520,
+      "y": 545
+    },
+    {
+      "id": "er1-v27",
+      "name": "DELIVERY_RECEIPT",
+      "label": "Delivery receipt",
+      "detail": "Received + discrepancy",
+      "x": 1520,
+      "y": 755
+    }
+  ],
+  "relationships": [
+    {
+      "a": "er1-v3",
+      "b": "er1-v9",
+      "a_card": "1",
+      "b_card": "0..N",
+      "label": "runs"
+    },
+    {
+      "a": "er1-v9",
+      "b": "er1-v19",
+      "a_card": "1",
+      "b_card": "0..N",
+      "label": "yields"
+    },
+    {
+      "a": "er1-v5",
+      "b": "er1-v13",
+      "a_card": "1",
+      "b_card": "0..N",
+      "label": "places"
+    },
+    {
+      "a": "er1-v13",
+      "b": "er1-v25",
+      "a_card": "1",
+      "b_card": "0..N",
+      "label": "fulfilled by"
+    },
+    {
+      "a": "er1-v19",
+      "b": "er1-v25",
+      "a_card": "1",
+      "b_card": "0..N",
+      "label": "supplies"
+    },
+    {
+      "a": "er1-v25",
+      "b": "er1-v27",
+      "a_card": "1",
+      "b_card": "0..1",
+      "label": "confirmed by"
+    }
+  ],
+  "support_note": "Each harvest lot also has images and a dated stock ledger. Forecasts belong to cycles; allocations reserve real lots."
+}
