@@ -6,6 +6,40 @@ Track A is suggested for Ali Alshamsi; Track B for Mohammad Arwani. Confirm actu
 
 **Sharing prerequisite:** obtain the snapshot from https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem.git and verify `git log -1` and `git status`. Use separate clones/branches for the tracks. The project originally had no commit/remote; that older state is historical. Never share `.env`, `.venv/` or `.local/` as repository assets.
 
+## Authorized branch and PR workflow
+
+The user explicitly requires pull requests for review. Track A/B agents **may create a feature branch, commit, push that branch and open/update a PR**. They must not push directly to `main`, force-push, merge, self-approve, or submit the course project. These permissions apply to Track A/B, not the optional read-only reviewer prompt.
+
+| Track | Branch | PR title |
+|---|---|---|
+| A — Ali | `ali/database-diagrams-validation` | `Complete database diagrams and validation evidence` |
+| B — Mohammad | `mohammad/report-poster` | `Prepare technical report and poster for review` |
+
+From a clean, current checkout, create the assigned branch from `origin/main`. If that branch already exists locally/remotely, inspect and continue its existing work instead of recreating/resetting it. Do not discard an operator's uncommitted changes. Each teammate uses their own authenticated GitHub account. If branch push access is unavailable, use a fork PR or ask Abd Alrahman for collaborator access; report an authentication/access blocker without exposing tokens and continue independent local work.
+
+Example for **Ali** (Mohammad substitutes his branch/title):
+
+```powershell
+git fetch origin
+git switch -c ali/database-diagrams-validation origin/main
+# Complete the assigned work, inspect changes, and run relevant checks first.
+git status --short
+git diff --check
+# After completing these artifacts, stage this track's files explicitly.
+git add -- docs/diagrams docs/DATABASE_DESIGN.md docs/evidence/REMAINING_TEST_RESULTS.md docs/reviews/TRACK_A_REVIEW.md PROGRESS.md
+git diff --cached --stat
+git diff --cached --check
+git commit -m "Complete database diagrams and validation evidence"
+git push -u origin ali/database-diagrams-validation
+gh pr create --base main --head ali/database-diagrams-validation --title "Complete database diagrams and validation evidence" --body-file docs/reviews/TRACK_A_REVIEW.md --reviewer abdalrahman-ismaik
+```
+
+The example assumes the completed Track A paths exist. For a partial/draft PR, stage only existing scoped paths; add any new reproduction script explicitly. Mohammad stages his report/poster/build/attribution/review files instead. No blanket staging of another track's changes. Check staged filenames/content for `.env`, credentials, runtime data and unrelated files. Use the corresponding Track B review note for its `--body-file`; preserve real Markdown/newlines. A PR body must state the problem/result, task/requirement IDs, artifacts/build commands, actual validation, dependencies and limitations, plus any reviewer decisions needed.
+
+If unfinished or blocked by Track A assets, open a **draft** PR (`gh pr create --draft ...`, omitting reviewer request until ready). Keep incomplete artifacts clearly labeled. Track B can draft independently, then integrate reviewed/merged Track A assets into its own branch and finish exports. Mark ready and request review when dependencies/checks are satisfied. Packaging after document acceptance may use a follow-up branch/PR. Never merge another PR yourself to unblock work.
+
+Record the PR URL, branch, date and review status in PROGRESS.md and the track review note. Use `gh pr edit` to update the existing PR instead of creating duplicates. Address review comments with additional commits on the same branch; no force-push. Resolve conflicts only on the assigned branch, preserve both tracks' work, rerun affected checks and explain any unresolved conflict. If GitHub CLI is unavailable, push the branch, prepare the PR body and provide the compare link for a human to open it; label that final PR-creation step blocked rather than claiming a PR exists.
+
 ## Track A — Database diagrams and remaining validation
 
 Copy this whole block:
@@ -32,7 +66,7 @@ BOUNDARIES:
 Do not alter core behavior/schema/status policy/seed data without reviewer authorization. For conflicts or failures, document reproduction, impact, smallest proposed patch and required retest; do not hide them by changing expected results. Any legitimate oracle correction must preserve the original expectation and explain why it was wrong. Do not modify instructor source material or overwrite historical failure evidence.
 
 COORDINATION AND FINISH:
-Own diagrams/design/new test evidence and your review note. Do not overwrite Track B report/poster/build sources. Make narrow coordinated shared-document edits. Update only your task rows and append factual contribution/activity entries in PROGRESS.md. Finish real artifacts when source/dependencies suffice, not just a plan/placeholders. Mark outputs Ready for review, never Accepted. No commits, push/merge, publishing, registration/booking or submission without separate authorization. End with artifact links, actual checks, exact blockers and reviewer decisions needed.
+Own diagrams/design/new test evidence and your review note. Do not overwrite Track B report/poster/build sources. Make narrow coordinated shared-document edits. Update only your task rows and append factual contribution/activity entries in PROGRESS.md. Finish real artifacts when source/dependencies suffice, not just a plan/placeholders. Follow this file's authorized branch/PR workflow: use ali/database-diagrams-validation, commit scoped changes, push the branch, open/update a PR into main and request abdalrahman-ismaik. Record PR URL and evidence; deliver Ready for review, never Accepted. Do not push to main, force-push, merge, publish/submit the course project or register/book externally. End with PR/artifact links, actual checks, exact blockers and reviewer decisions needed.
 ```
 
 ## Track B — Report, poster, export workflow and candidate package
@@ -64,7 +98,7 @@ SAFETY AND ADMINISTRATION:
 Setup drops hardcoded farm_market_db; the business script mutates on import. Do not run them as document checks, reset a shared instance or expose keys in documents/ZIPs. November 19 is due date; November 16 was the later registration/booking penalty deadline and has passed. Actual registration/slot/location/attendance are unconfirmed here. Human members confirm these; agents must not book/register or invent status/cutoff hours.
 
 FINISH:
-Own report/poster/build/attribution/package and your review note; preserve Track A artifacts. Coordinate narrow shared README/rubric/progress edits. Append factual work/evidence to PROGRESS.md, with exact blockers/next steps. Deliver Ready for review; only Abd Alrahman marks Accepted. No commit/push/merge/publish/submission without separate instruction. Finish actual artifacts when dependencies permit; end with review links, actual build/visual/test outcomes and remaining decisions.
+Own report/poster/build/attribution/package and your review note; preserve Track A artifacts. Coordinate narrow shared README/rubric/progress edits. Append factual work/evidence to PROGRESS.md, with exact blockers/next steps. Follow this file's authorized branch/PR workflow: use mohammad/report-poster, commit scoped changes, push the branch, open/update a PR into main and request abdalrahman-ismaik. Use a draft PR while diagram/test/review dependencies remain; record the URL and limitations. Deliver Ready for review; only Abd Alrahman marks Accepted. No direct main push, force-push, merge or course-project publication/submission. Finish actual artifacts when dependencies permit; end with PR/artifact links, actual build/visual/test outcomes and remaining decisions.
 ```
 
 ## Optional reviewer — Read-only acceptance audit
