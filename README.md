@@ -96,7 +96,7 @@ python app/tests/test_business_rules.py
 
 Run it only against a disposable `farm_market_db` configured in `app/.env`. Restore sample data afterward only if a reset is intended. The script is not a complete replacement for GUI, restart, assistant-answer, or rubric acceptance testing.
 
-**Project artifacts now present for review:** conceptual and relational Draw.io diagrams, technical report PDF, poster PDF, rubric coverage, and expected/actual test evidence. Human review, exact per-file photo provenance decision, a projector check, timed three-person demo rehearsal, and confirmation of registration/demo booking remain outstanding. See [review ledger](PROGRESS.md) and [submission runbook](docs/DEMO_AND_SUBMISSION.md). Markdown documentation and the historical guide do not substitute for those assessed artifacts.
+**Project artifacts now present for review:** conceptual and relational Draw.io diagrams, technical report PDF, poster PDF, rubric coverage, and expected/actual test evidence. Team registration and the demo slot (November 19 at 1:30 PM) are confirmed by the user. Human review, exact per-file photo provenance decision, projector check, timed three-person rehearsal, venue confirmation, and the actual course upload remain outstanding. See [review ledger](PROGRESS.md) and [submission runbook](docs/DEMO_AND_SUBMISSION.md). Markdown documentation and the historical guide do not substitute for those assessed artifacts.
 
 ## Troubleshooting
 
