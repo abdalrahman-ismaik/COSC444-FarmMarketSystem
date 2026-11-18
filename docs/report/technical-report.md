@@ -1,7 +1,7 @@
 # Farm to Market technical report
 COSC444 Database Systems | Khalifa University | Fall 2026-2027 | Lab B1
 
-Review candidate | 17 November 2026 | Mohammad Arwani with Codex
+Review candidate | 18 November 2026 | Mohammad Arwani with Codex
 
 Abd Alrahman Ismaik - 100064692; Ali Alshamsi - 100062530; Mohammad Arwani - 100064908.
 
@@ -15,7 +15,7 @@ The maintained entry point is `python app/app.py`. Tkinter/ttk handles the three
 
 The schema has 15 tables, 32 foreign keys, 13 named CHECK constraints and two derived views. An allocation links one lot to one request, allowing a request to draw on several lots and a lot to supply several requests. A receipt's UNIQUE allocation FK permits at most one receipt per allocation. `farm_users` resolves the many-to-many farmer assignment. Separate image and history tables retain multiple photos and dated changes. The lot's farm and crop are derived through its cycle. [R3, R6]
 
-Reference tables reduce duplicate names and codes. The design deliberately repeats units and snapshots the promised quantity in receipts; application checks maintain cross-record consistency. SQL alone does not enforce equality of all related units, ownership, aggregate availability or all status-history values. We do not claim every table is formally in BCNF: the stored receipt discrepancy is also functionally dependent on allocated and received quantities. [R3, R6]
+Reference tables reduce duplicate names and codes. The design deliberately repeats units and snapshots the promised quantity in receipts; application checks maintain cross-record consistency. SQL alone does not enforce equality of all related units, ownership, aggregate availability or all status-history values. [R3, R6]
 
 ## Stock and forecasts
 `v_lot_stock` derives stock from dated movements. All movement quantities are positive except signed CORRECTION. Each quantity has an explicit unit; kg, boxes and crates are never silently added or converted. [BR-02, BR-03, BR-06 in R2]
@@ -122,13 +122,13 @@ The old model returned 404; other probes saw 503/504 before the recorded model s
 The GUI uses a background worker. The assistant supplies an allowlisted non-BLOB schema, asks Gemini for SELECT/CTE or clarification/refusal, applies regex checks and a 200-row result cap, then executes `START TRANSACTION READ ONLY` and rolls back. A second chain summarizes only the first 50 rows. SQL and supporting records are visible. Regex checking is not a complete parser, and read-only execution does not prove semantic correctness, function safety or role-scoped confidentiality. The existing direct write attempt was refused by MySQL error 1792. [R3-R5]
 
 ## Delivery and remaining work
-The full conceptual ER and six separate schema sheets follow as seven vector appendix pages. The 12-page document uses five narrative/evidence pages plus seven large diagram sheets so labels remain readable; the assignment's 6-10-page working target is not an instructor limit. Editable Draw.io sources and original Track A evidence are retained with their commit provenance; the later integrity follow-up is linked in `docs/evidence/FIX_VALIDATION.md` and PR #4. The conceptual diagram states intended availability rules; the follow-up tests observed no oversell in the documented trials. Track A’s normalization note is qualified on page 1. [R6]
+The Lab 7-style conceptual ER spans two attribute sheets and three relationship sheets. Three separate relational sheets show all 15 horizontal relations, keys, types and constraints. The appendix uses consistent landscape sheets. Mohammad / Codex revised the presentation on 18 November from Track A’s model; dated validation remains credited to its original authors. No normalization exercise is included. [R6]
 
 Remaining checks include demo-PC live AI, user switch during a pending AI call, full keyboard/accessibility testing, 100/125% scaling, minimum window behavior and a human timed rehearsal. At 150% scaling Track A observed the receipt table needs scrolling. Model paraphrases, injection variants and large-result summaries are not exhaustively tested. [R5, R6]
 
-The review-candidate ZIP was extracted, dependencies installed, and documents rebuilt. On isolated port 3318, seed setup and the 65-check suite passed; the GUI flow passed 21 checks plus 22 after restart. This is not acceptance or a course submission. Image provenance and demo rehearsal remain open. Setup drops and recreates hardcoded `farm_market_db`; DB_NAME does not retarget it. This document build itself did not use app credentials or database state. [R3]
+The previous review-candidate ZIP (superseded by this document revision) was extracted, dependencies installed, and documents rebuilt. On isolated port 3318, seed setup and the 65-check suite passed; the GUI flow passed 21 checks plus 22 after restart. This is not acceptance or a course submission. Image provenance and demo rehearsal remain open. Setup drops and recreates hardcoded `farm_market_db`; DB_NAME does not retarget it. This document build itself did not use app credentials or database state. [R3]
 
-The saved notices specify submission on 19 November 2026 without a cutoff time. The later registration/booking deadline is 16 November, retaining the earlier 12 November notice. Actual registration, slot, location and attendance remain unconfirmed; no newer eLearn announcements were checked. Rehearse 3 minutes of poster plus 12 of demo/questions, with request before allocation before delivery. [R2, R7]
+The saved notices specify submission on 19 November 2026 without a cutoff time. The later registration/booking deadline is 16 November, retaining the earlier 12 November notice. Abd reports all three members registered and a 1:30 PM demo booking; venue and attendance still need confirmation. No newer eLearn announcements were checked. Rehearse 3 minutes of poster plus 12 of demo/questions, with request before allocation before delivery. [R2, R7]
 
 ## Image attribution
 The imported package claims Fruits-360 / CC BY-SA 4.0. Upstream sources confirm the dataset attribution and license, but none of the 12 SQL BLOBs or four external JPEGs retains exact original identifiers/version. The local hash inventory and research limits are in `docs/IMAGE_ATTRIBUTION.md`. Dataset-level credit does not establish a verified per-file match. No photos were replaced or added to this report/poster, and no blanket license is assigned to code or instructor materials. [R8]

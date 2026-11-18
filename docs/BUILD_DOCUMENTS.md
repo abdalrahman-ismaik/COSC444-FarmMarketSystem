@@ -36,3 +36,6 @@ The mixed page sizes are intentional: shrinking the detailed relational schema t
 ## Candidate package
 
 The review-candidate ZIP and its member manifest are created by `scripts/build_candidate.py`. That script uses an explicit include list and excludes local credentials, Git metadata, virtual environments, caches, ignored output, archives and agent skill folders. The ZIP is extracted to an ignored clean directory and then checked for member hashes and required paths. A package check is a review artifact; it is not instructor acceptance or course submission.
+
+## Lab 7 revision — 18 November 2026
+Current diagram build and checks: `python docs/diagrams/tools/build_lab7.py`, then `python docs/diagrams/tools/check_lab7.py`, followed by `python docs/report/build_documents.py`. These supersede the earlier diagram layout and 12-page report instructions. Current report: 13 pages (five narrative, five conceptual sheets, three relational sheets); poster: one page. Rendering: `pdftoppm -scale-to 1500 -png submission/technical-report.pdf output/report` and likewise for the poster. No runtime database is used.

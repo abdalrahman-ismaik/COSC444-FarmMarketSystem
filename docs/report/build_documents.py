@@ -98,7 +98,7 @@ def flows(markdown, width):
     return out
 
 
-def footer(c, w, page, total, label='Review candidate | 17 November 2026'):
+def footer(c, w, page, total, label='Review candidate | 18 November 2026'):
     c.setFillColor(colors.HexColor('#56645B'))
     c.setFont('Helvetica',8)
     c.drawString(38,21,label)
@@ -121,17 +121,14 @@ def report(input_dir, out_dir):
                 raise ValueError(f'Report page {number} overflows by {43-y+fh:.1f} pt')
             f.drawOn(c,38,y-fh)
             y-=fh+getattr(f,'spaceAfter',0)
-        footer(c,w,number,12)
+        footer(c,w,number,13)
         c.showPage()
     c.save()
     writer=PdfWriter()
     writer.append(PdfReader(buf))
-    titles=['Conceptual ER - Track A', 'Relational schema 1 - overview',
-            'Relational schema 2 - reference data and users','Relational schema 3 - production and stock',
-            'Relational schema 4 - requests and delivery','Relational schema 5 - unit and actor keys',
-            'Relational schema 6 - derived views']
+    titles=['ER attributes 1','ER attributes 2','ER relationships 1','ER relationships 2','ER relationships 3','Relations 1','Relations 2','Relations 3']
     source_pages=list(PdfReader(input_dir/INPUTS[0]).pages)+list(PdfReader(input_dir/INPUTS[1]).pages)
-    assert len(source_pages)==7
+    assert len(source_pages)==8
     for idx,source in enumerate(source_pages):
         sw,sh=float(source.mediabox.width),float(source.mediabox.height)
         b=io.BytesIO(); cc=canvas.Canvas(b,pagesize=(sw+40,sh+92),invariant=1)
@@ -139,7 +136,7 @@ def report(input_dir, out_dir):
         cc.drawString(20,sh+63,titles[idx])
         cc.setFont('Helvetica',10)
         cc.drawString(20,sh+46,'Source hashes are recorded in docs/report/input-manifest.json | Review pending')
-        footer(cc,sw+40,idx+6,12)
+        footer(cc,sw+40,idx+6,13)
         cc.save()
         page=PdfReader(b).pages[0]
         page.merge_transformed_page(source,Transformation().translate(20,36))
@@ -154,25 +151,10 @@ def report(input_dir, out_dir):
 
 
 def poster_check(config, input_dir):
-    cells={c.get('id'):c for c in ET.parse(input_dir/'docs/diagrams/conceptual-er.drawio').iter('mxCell')}
-    plain=lambda s:html.unescape(re.sub('<[^>]+>','',s))
-    for node in config['nodes']:
-        assert plain(cells[node['id']].get('value','')).strip()==node['name']
-    adjacency={}
-    for e in cells.values():
-        if e.get('edge')=='1':
-            a,b=e.get('source'),e.get('target')
-            adjacency.setdefault(a,{})[b]=plain(e.get('value',''))
-            adjacency.setdefault(b,{})[a]=plain(e.get('value',''))
-    convert={'1':'(1,1)','0..N':'(0,N)','0..1':'(0,1)'}
-    for rel in config['relationships']:
-        common=set(adjacency[rel['a']]) & set(adjacency[rel['b']])
-        matching=[r for r in common if plain(cells[r].get('value','')).strip().lower()==rel['label']]
-        assert len(matching)==1,rel
-        diamond=matching[0]
-        # Track A uses participation at an entity; poster uses multiplicity at the opposite end.
-        assert adjacency[rel['a']][diamond]==convert[rel['b_card']],rel
-        assert adjacency[rel['b']][diamond]==convert[rel['a_card']],rel
+    cells=list(ET.parse(input_dir/'docs/diagrams/conceptual-er.drawio').iter('mxCell'))
+    labels={html.unescape(re.sub('<[^>]+>','',c.get('value',''))) for c in cells}
+    for node in config['nodes']: assert node['name'] in labels,node['name']
+    for rel in config['relationships']: assert rel['label'].upper() in labels,rel['label']
 
 
 def poster(config,input_dir,out_dir):
@@ -205,35 +187,41 @@ def poster(config,input_dir,out_dir):
     text(config['features'],50,769,610,22)
     # Separate ER area; coordinates in source are offset down to sit below workflow.
     text('Database design',740,420,1100,30,DARK,True)
-    nodes={n['id']:dict(n,x=n['x'],y=n['y']+158) for n in config['nodes']}
-    nw,nh=250,80
-    for rel in config['relationships']:
-        a,b=nodes[rel['a']],nodes[rel['b']]
-        c.setStrokeColor(colors.HexColor(DARK));c.setLineWidth(2.4)
-        if a['y']==b['y']:
-            x1,x2,y=a['x']+nw,b['x'],a['y']+nh/2
-            c.line(x1,h-y,x2,h-y)
-            text(rel['a_card'],x1+4,y-30,50,20,DARK)
-            text(rel['b_card'],x2-63,y-30,60,20,DARK)
-            text(rel['label'],x1+6,y+7,x2-x1-12,18,INK)
-        else:
-            x,y1,y2=a['x']+nw/2,a['y']+nh,b['y']
-            c.line(x,h-y1,x,h-y2)
-            text(rel['a_card'],x+10,y1+4,75,20,DARK)
-            text(rel['b_card'],x+10,y2-33,75,20,DARK)
-            text(rel['label'],x-126,(y1+y2)/2-8,116,18,INK)
-    for node in nodes.values():
-        x,y=node['x'],node['y'];rect(x,y,nw,nh,'#E8F5E9')
-        text(node['label'],x+12,y+10,nw-20,25,DARK,True)
-        text(node['detail'],x+12,y+48,nw-20,16)
-    text('1 = one; 0..N = zero or many; 0..1 = optional single receipt.',740,805,675,20)
-    text(config['support_note'],740,844,650,21)
+    nodes={n['id']:n for n in config['nodes']}
+    keys=['farm_id','cycle_id','lot_id','market_id','request_id','allocation_id','receipt_id']
+    keymap={n['id']:k for n,k in zip(config['nodes'],keys)}
+    def erbox(label,x,y,ww,hh,oval=False,diamond=False,underline=False):
+        c.setFillColor(colors.white);c.setStrokeColor(colors.HexColor(DARK));c.setLineWidth(1.3)
+        if oval:c.ellipse(x,h-y-hh,x+ww,h-y,fill=1)
+        elif diamond:
+            p=c.beginPath();p.moveTo(x,h-y-hh/2);p.lineTo(x+ww/2,h-y);p.lineTo(x+ww,h-y-hh/2);p.lineTo(x+ww/2,h-y-hh);p.close();c.drawPath(p,fill=1)
+        else:c.rect(x,h-y-hh,ww,hh,fill=1)
+        size=15 if diamond else 17
+        c.setFont('Helvetica',size);c.setFillColor(colors.HexColor(INK))
+        c.drawCentredString(x+ww/2,h-y-hh/2-5,label)
+        if underline:
+            tw=c.stringWidth(label,'Helvetica',size);c.line(x+(ww-tw)/2,h-y-hh/2-7,x+(ww+tw)/2,h-y-hh/2-7)
+    for i,rel in enumerate(config['relationships']):
+        x=740+(i%2)*565;y=480+(i//2)*160
+        for ident,xx in [(rel['a'],x),(rel['b'],x+370)]:
+            erbox(keymap[ident],xx+10,y,145,36,oval=True,underline=True)
+            c.line(xx+82,h-y-36,xx+82,h-y-62)
+            erbox(nodes[ident]['label'],xx,y+62,165,42)
+        erbox(rel['label'],x+209,y+57,115,52,diamond=True)
+        c.line(x+165,h-y-83,x+209,h-y-83);c.line(x+324,h-y-83,x+370,h-y-83)
+        # Right-side record must belong to exactly one left-side record.
+        c.line(x+324,h-y-86,x+370,h-y-86)
+        # Lab 7 maximum cardinalities, with optionality retained explicitly below.
+        text('N' if 'N' in rel['a_card'] else '1',x+175,y+53,32,17)
+        text('N' if 'N' in rel['b_card'] else '1',x+337,y+53,32,17)
+        text(rel['a_card']+' : '+rel['b_card'],x+210,y+118,150,16)
+    text('Core relationships; double line = mandatory. Repeated names = same entity. Full model: report.',740,967,1100,17)
     # Advanced feature on a second band, left bottom; keeps prose large.
     rect(50,904,625,130,'#E8F5E9')
     text(config['advanced'][0],65,915,590,27,DARK,True)
     text(config['advanced'][1],65,954,590,20)
-    text(config['evidence'],740,915,665,18)
-    text(config['diagram_note'],740,1001,1100,14)
+    text(config['evidence'],740,1010,1100,15)
+
     text(config['caveat'],50,1049,1810,18,'#9A3412',True)
     c.showPage();c.save()
 
@@ -283,7 +271,7 @@ def main():
     config=json.loads((ROOT/'docs/poster/poster.json').read_text(encoding='utf-8'))
     report(args.input_dir,out);poster(config,args.input_dir,out)
     checks={}
-    for name,count in [('technical-report',12),('poster',1)]:
+    for name,count in [('technical-report',13),('poster',1)]:
         path=out/(name+'.pdf');r=PdfReader(path)
         assert len(r.pages)==count
         assert all(len(p.extract_text() or '')>50 for p in r.pages)
@@ -293,7 +281,7 @@ def main():
     checks['track_a_commit']=manifest['track_a_commit']
     checks['fix_commit']=manifest['fix_commit']
     checks['inputs']={path:hashlib.sha256((args.input_dir/path).read_bytes()).hexdigest() for path in INPUTS}
-    checks['checks']=['14 historical AI questions retained','original Track A failures retained and follow-up pass totals verified','7 poster entities and 6 relationships match Draw.io','tested application/test source hashes verified','12 report pages and 1 poster page','team identities in both PDFs','overflow guard passed']
+    checks['checks']=['14 historical AI questions retained','original Track A failures retained and follow-up pass totals verified','7 poster entity names and 6 relationship names verified against Draw.io','tested application/test source hashes verified','13 report pages and 1 poster page','team identities in both PDFs','overflow guard passed']
     (preview/'build-checks.json').write_text(json.dumps(checks,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(checks,indent=2))
 

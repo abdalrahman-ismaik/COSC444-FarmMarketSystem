@@ -2,19 +2,19 @@
 
 **COSC444 Database Systems · Lab B1 · Track A (DB-03).** Prepared 2026-11-17 by Ali Alshamsi with a Claude Code agent. Status: **Ready for review**. Abd Alrahman Ismaik decides acceptance.
 
-This document explains the design of the existing database: entities, relationships, mapping, normalization, units, forecasts, the stock ledger, history, ownership and transactions. It describes what `app/schema.sql` and `app/db.py` actually do. It does not record any instructor approval of the policies described. Where current behaviour is a team choice rather than a proposal requirement, it is labelled **Policy** and listed for a reviewer decision in [Track A review](reviews/TRACK_A_REVIEW.md#decisions-requested).
+This document explains the design of the existing database: entities, relationships, mapping, units, forecasts, the stock ledger, history, ownership and transactions. It describes what `app/schema.sql` and `app/db.py` actually do. It does not record any instructor approval of the policies described. Where current behaviour is a team choice rather than a proposal requirement, it is labelled **Policy** and listed for a reviewer decision in [Track A review](reviews/TRACK_A_REVIEW.md#decisions-requested).
 
 | Artifact | Path |
 |---|---|
 | Conceptual ER (editable / exports) | [conceptual-er.drawio](diagrams/conceptual-er.drawio) · [PDF](diagrams/conceptual-er.pdf) · [SVG](diagrams/conceptual-er.svg) |
-| Relational schema, 6 pages (editable / exports) | [relational-schema.drawio](diagrams/relational-schema.drawio) · [PDF](diagrams/relational-schema.pdf) · SVG per page: [p1](diagrams/relational-schema.svg) [p2](diagrams/relational-schema-p2.svg) [p3](diagrams/relational-schema-p3.svg) [p4](diagrams/relational-schema-p4.svg) [p5](diagrams/relational-schema-p5.svg) [p6](diagrams/relational-schema-p6.svg) |
+| Relational schema, 3 pages (editable / exports) | [relational-schema.drawio](diagrams/relational-schema.drawio) · [PDF](diagrams/relational-schema.pdf) · SVG per page: [p1](diagrams/relational-schema.svg) [p2](diagrams/relational-schema-p2.svg) [p3](diagrams/relational-schema-p3.svg) |
 | Build/verify instructions | [docs/diagrams/README.md](diagrams/README.md) |
 | Source of truth | [app/schema.sql](../app/schema.sql) (15 tables, 2 views, 32 FKs, 13 named CHECKs) |
 | Test evidence | [REMAINING_TEST_RESULTS.md](evidence/REMAINING_TEST_RESULTS.md) |
 
 **Follow-up update (Codex, November 17):** normalization wording and transaction details were corrected after reviewer instructions. The original Track A failure records remain intact; [follow-up validation](evidence/FIX_VALIDATION.md) records the implemented fixes and new outcomes.
 
-The schema diagram was checked mechanically against the live MySQL `information_schema` with `docs/diagrams/tools/check_diagrams_vs_sql.py`. That run passed 851 checks with 0 failures, and all 32 FKs are drawn. The checker parses the `.drawio` XML itself, and a mutation test confirmed that it detects injected errors.
+The schema diagram was checked mechanically against the live MySQL `information_schema` with `docs/diagrams/tools/check_diagrams_vs_sql.py`. That historical run passed 851 checks with 0 failures on the previous layout. It does not validate the revised Lab 7 layout; see the dated revision review for new checks. The checker parses the `.drawio` XML itself, and a mutation test confirmed that it detects injected errors.
 
 ## 1. Conceptual model
 
@@ -80,9 +80,9 @@ Not modelled as entities: the views `v_lot_stock` and `v_request_status` (derive
 
 No `ON DELETE`/`ON UPDATE` actions are declared, so MySQL's default (RESTRICT) blocks deleting a referenced row. The application never deletes reference data; it deactivates rows with `is_active` (§7).
 
-## 3. Normalization and deliberate redundancy
+## 3. Stored snapshots and consistency
 
-Reference entities and the farmer-assignment junction use simple keys, atomic values and separate relationships rather than repeating groups. The crop and farm of a lot are derived through `crop_cycles`. This is not a claim that every operational table is in 3NF or BCNF: `(allocated_quantity, received_quantity)` determines the stored `delivery_receipts.discrepancy_quantity`, but that pair is not a candidate key. Units copied across quantity records and promised-quantity snapshots are also deliberate redundancies. These choices make records explicit/auditable and are controlled as described below; primary keys alone do not prove normalization.
+The crop and farm of a lot are derived through crop_cycles. Units and promised-quantity snapshots are deliberately repeated to keep operational records explicit. Their consistency checks are documented below.
 
 The following redundancies are intentional. Each is controlled as stated:
 

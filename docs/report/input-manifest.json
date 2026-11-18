@@ -2,16 +2,16 @@
   "track_a_commit": "80529fbfddf58b58735963f6a35847e22dedeadc",
   "fix_commit": "e1ea45b",
   "input_provenance": {
-    "diagram_source": "Ali Track A PR #2",
+    "diagram_source": "Lab 7 notation revision by Mohammad / Codex, 2026-11-18, based on Ali Track A model",
     "track_a_evidence": "Ali Track A PR #2",
     "followup_evidence": "Codex integrity follow-up PR #4",
     "historical_ai": "team evidence dated 2026-11-17"
   },
   "inputs_sha256": {
-    "docs/diagrams/conceptual-er.pdf": "b5e0af8be1c86279ccc1af29145dfa5d529276363c99b648166e10434a29d4c3",
-    "docs/diagrams/relational-schema.pdf": "f88c0fd972548920c7e291102351c3087e3c0d221b3cc6794344b0d7a0309f26",
-    "docs/diagrams/conceptual-er.drawio": "4ab71b348f82e02ccb58e128e917f79c5789b9983b95a44934011ed50cc6b1e7",
-    "docs/diagrams/relational-schema.drawio": "ca2266b5608f741ba07bdfe62eef9f33d8f17be25f0cf82aa029926f909594c6",
+    "docs/diagrams/conceptual-er.pdf": "193ef9e970454a7c784d90974bbc5b0a795bf4a8249f8521f8b03d2f0c31c392",
+    "docs/diagrams/relational-schema.pdf": "e32794123bfda0c3c638856ae6149c8b6eb9cd035a47248a4228cb5fded3825d",
+    "docs/diagrams/conceptual-er.drawio": "39b22d2ee73242e643418ba827f29a6058f08bf98c6a2826cd15c4f8df5f212c",
+    "docs/diagrams/relational-schema.drawio": "bb1c0ae9aa24c4f66c91bad5cfec3ae54b1bba1273b73eb5e383ee89f176ef4f",
     "docs/evidence/track-a/remaining-checks.json": "dc7073a6cf24aaf14aa9af3813e19f326e8269de9e6d2c166a5416f48c898a3f",
     "docs/evidence/track-a/gui-flow.json": "cf37e3b617914cb587f2f6ad2b6430d36778c7d83cd1e6a4d359e0223ef0a6cb",
     "docs/evidence/fixes-2026-11-17/backend.json": "876a55f175f374c1231a4dc6261628fe522cbbc55f6b393d77de18ed66dee6d8",

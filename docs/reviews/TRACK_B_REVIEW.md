@@ -1,3 +1,28 @@
+# Track B — Lab 7 diagram revision, 18 November 2026
+
+PR: https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/pull/3
+Branch: `mohammad/report-poster`. Draft pending reviewer/package dependencies. Reviewer: `abdalrahman-ismaik`.
+
+The previous ER/table layouts did not follow the supplied Lab 7 examples. This revision uses Chen entity rectangles, attribute ovals, underlined identifiers, relationship diamonds, cardinality and mandatory participation lines. Relational schemas now use horizontal relation rows with underlined PKs and highlighted FKs, retaining types, nullability, defaults and CHECK constraints. Normalization discussion was removed from the deliverable narrative at Mohammad's request; no database redesign was performed.
+
+Tasks: DB-01/DB-02 presentation correction authorized by Mohammad; DOC-01, POSTER-01, BUILD-01. Rubric: ER/schema (10), technical documentation/evidence (15), group poster/demo (5); no predicted marks.
+
+Artifacts: `docs/diagrams/conceptual-er.drawio` / `.pdf` (5 sheets), `relational-schema.drawio` / `.pdf` (3 sheets), per-page SVGs; `submission/technical-report.pdf` (13 pages); `submission/poster.pdf` (1 page). Sources: report Markdown, poster JSON and document builder. Track A model attribution and historical failed tests retained. The branch incorporates the existing reviewed-submission base 0dafb91; this revision makes no new application/schema changes.
+
+Build from repository root:
+```powershell
+python docs/diagrams/tools/build_lab7.py
+python docs/diagrams/tools/check_lab7.py
+python docs/report/build_documents.py
+```
+
+Validation on this PC: 15 relations / 100 columns / 32 FKs / 13 named CHECKs passed offline DDL/XML comparison; evidence/source hashes verified; all 13 report pages and poster rendered and visually inspected; two consecutive builds byte-identical; Draw.io/SVG XML parsed. See `docs/report/lab7-validation.json`. Initial checker failed on multiline ENUM parsing; parser fixed without changing expected schema. No DB/GUI/AI runs performed. The earlier 851-check result is historical, not a validation of this layout. Draw.io editor round-trip remains untested because desktop export tool is unavailable.
+
+Decisions for Abd: review the five-sheet conceptual model and three-sheet relational layout against Lab 7; review inherited integration fixes; resolve exact image-source attribution and rehearsal readiness before authorizing replacement candidate packaging. Existing candidate ZIP is superseded and must not be submitted. No acceptance, merge or course submission is recorded.
+
+---
+## Previous Track B review record (historical)
+
 # Track B review - report, poster and reproducible exports
 
 **Owner:** Mohammad Arwani (100064908), with Codex. **Date:** 17 November 2026. **Branch:** `mohammad/report-poster`. **Reviewer:** @abdalrahman-ismaik.
