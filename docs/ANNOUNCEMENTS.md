@@ -15,7 +15,7 @@ Source: announcement text supplied by the team in this conversation. Announcemen
 | Attendance | Every member attends; official excuse needed for absence to avoid lost marks | Attendance unconfirmed |
 | Location | To be announced | Not yet provided; confirm before the slot |
 | Late/incomplete demo | May incur a 10% penalty | Keep system ready before slot |
-| Poster | Digital poster permitted; include in submission and project it instead of printing | Poster PDF accepted by the project reviewer; team projector check and course upload remain |
+| Poster | Digital poster permitted; include in submission and project it instead of printing | `submission/COSC444_Farm-to-market_Poster.pdf` approved by Abd Alrahman Ismaik on 2026-11-19; team projector check and course upload remain |
 
 Team registration: [Project information spreadsheet](https://docs.google.com/spreadsheets/d/1SXa0kR_Kgh19I0jOCFS4hiCuGGMwqTUkNJGFYdy6zrQ/edit?usp=sharing).
 

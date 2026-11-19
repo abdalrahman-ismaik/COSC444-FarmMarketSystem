@@ -861,7 +861,7 @@ def flagged_lots(near_days, surplus_days, farm_ids=None):
 
 
 def dispose_lot(user, lot_id, action, qty, note):
-    """action = 'DONATED' or 'DISPOSED'. Only from available (unreserved) stock."""
+    """Record a disposition from available stock; past-sell-by lots cannot be donated."""
     _require_role(user, "farmer")
     if action not in ("DONATED", "DISPOSED"):
         raise BusinessError("Choose Donate or Dispose.")
@@ -870,6 +870,11 @@ def dispose_lot(user, lot_id, action, qty, note):
     with transaction() as cur:
         _check_lot_owner(cur, user, lot_id)
         lot, stock = lot_available(cur, lot_id)
+        if action == "DONATED" and lot["sell_by_date"] is not None:
+            cur.execute("SELECT CURDATE() AS today")
+            if lot["sell_by_date"] < cur.fetchone()["today"]:
+                raise BusinessError(
+                    "Donation is blocked by project policy: this lot is past its sell-by date.")
         if qty > stock["available"]:
             raise BusinessError(f"Only {fmt_qty(stock['available'])} {stock['unit_code']} is available in lot "
                                 f"#{lot_id}. Reserved stock cannot be donated or disposed.")

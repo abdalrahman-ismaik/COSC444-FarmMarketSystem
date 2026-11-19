@@ -1,6 +1,7 @@
 {
   "track_a_commit": "80529fbfddf58b58735963f6a35847e22dedeadc",
   "fix_commit": "e1ea45b",
+  "historical_source_snapshot_commit": "9cd3895eb4e015ebe9079a99d58a39f5a0f7223a",
   "input_provenance": {
     "diagram_source": "Lab 7 notation revision by Mohammad / Codex, 2026-11-18, based on Ali Track A model",
     "track_a_evidence": "Ali Track A PR #2",

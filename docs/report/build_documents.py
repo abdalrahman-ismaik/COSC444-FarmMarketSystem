@@ -98,7 +98,7 @@ def flows(markdown, width):
     return out
 
 
-def footer(c, w, page, total, label='COSC444 Database Systems | Lab B1 | 18 November 2026'):
+def footer(c, w, page, total, label='COSC444 Database Systems | Lab B1 | 19 November 2026'):
     c.setFillColor(colors.HexColor('#56645B'))
     c.setFont('Helvetica',8)
     c.drawString(38,21,label)
@@ -269,10 +269,14 @@ def main():
         inventory.append({'asset':name,'bytes':len(data),'size':list(im.size),'sha256':hashlib.sha256(data).hexdigest(),'exif_keys':list(im.getexif())})
     (preview/'image-inventory.json').write_text(json.dumps(inventory,indent=2)+'\n',encoding='utf-8')
     config=json.loads((ROOT/'docs/poster/poster.json').read_text(encoding='utf-8'))
-    report(args.input_dir,out);poster(config,args.input_dir,out)
+    report(args.input_dir,out)
+    # Keep the legacy, source-generated poster as a preview. The reviewer-approved
+    # final poster is a separate supplied PDF and must never be overwritten here.
+    poster(config,args.input_dir,preview)
     checks={}
-    for name,count in [('technical-report',13),('poster',1)]:
-        path=out/(name+'.pdf');r=PdfReader(path)
+    for name,count,path in [('technical-report',13,out/'technical-report.pdf'),
+                            ('poster',1,preview/'poster.pdf')]:
+        r=PdfReader(path)
         assert len(r.pages)==count
         assert all(len(p.extract_text() or '')>50 for p in r.pages)
         text='\n'.join(p.extract_text() or '' for p in r.pages)

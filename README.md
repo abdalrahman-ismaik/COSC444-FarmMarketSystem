@@ -1,118 +1,87 @@
 # Farm-to-Market
 
-**COSC444 Database Systems · Fall 2026–2027 · Khalifa University · Lab B1**
+**COSC444 Database Systems | Khalifa University | Lab B1 | Fall 2026–2027**
 
-A Python desktop prototype that connects local farms and markets through harvest inventory, supply requests, allocations, and delivery receipts. MySQL is the source of truth; the GUI includes product photos and a read-only LangChain assistant powered by Gemini. The selected advanced feature is **Loss & Surplus management**.
+A Python desktop application for local produce availability. Farmers record crop cycles, harvests and photos; market buyers request supply and confirm deliveries; administrators maintain reference data and assignments. MySQL stores movement-based inventory, reservations and receipts. **Loss & Surplus** supports donation and disposal, and a read-only LangChain/Gemini assistant answers database questions.
 
-All operational sample data is fictional. This educational system does not represent government systems, national reserves, or complete UAE production.
+[![Farm-to-Market project poster](https://raw.githubusercontent.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/release/final-submission-report/docs/poster/poster-preview.png)](submission/COSC444_Farm-to-market_Poster.pdf)
 
-| Team member | Student ID |
+## Downloads
+
+| Deliverable | File |
 |---|---|
-| Abd Alrahman Ismaik | 100064692 |
-| Ali Alshamsi | 100062530 |
-| Mohammad Arwani | 100064908 |
+| Application, populated SQL, images, poster and setup instructions | [FarmMarketSystem_B1_Submission.zip](submission/FarmMarketSystem_B1_Submission.zip) |
+| Final technical report | [FarmMarketSystem_B1_Technical_Report.pdf](submission/FarmMarketSystem_B1_Technical_Report.pdf) |
+| Poster | [COSC444_Farm-to-market_Poster.pdf](submission/COSC444_Farm-to-market_Poster.pdf) |
+| Editable LaTeX report with figures and PDF | [FarmMarketSystem_B1_Technical_Report_Source.zip](submission/FarmMarketSystem_B1_Technical_Report_Source.zip) |
 
-Repository: [abdalrahman-ismaik/COSC444-FarmMarketSystem](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem).
+The GitHub application files match the application ZIP. The technical report and its editable bundle are supplied alongside it. When reading this README from the extracted application ZIP, download the report separately from the [GitHub submission folder](https://github.com/abdalrahman-ismaik/COSC444-FarmMarketSystem/tree/release/final-submission-report/submission). Supporting diagrams, document sources and verification records are under `docs/` in GitHub.
 
 ## Setup and run on Windows
 
-Prerequisites: Windows 10/11, Python with Tkinter, a running MySQL 8 server, and its database credentials. The supplied application states Python 3.10+ support; dependency installation on that minimum version has not been revalidated. A Gemini API key and internet access are required for live assistant answers, but not for the other workflows.
+Requirements: Windows 10/11, Python 3.12 with Tkinter, a running MySQL 8 server and its credentials. Live assistant answers additionally require internet access and a Gemini API key. Python packages are installed during setup; Python and MySQL are installed separately.
 
-1. Open a terminal in this project folder. Confirm `python --version` and `python -m tkinter` work.
-2. Double-click **setup.bat**, or run `.\setup.bat` in PowerShell. Setup installs `app/requirements.txt`, creates `app/.env` if missing, and loads sample data. Enter your MySQL settings; the Gemini key can be added later.
-3. Double-click **run.bat**, or run `.\run.bat`. Choose a specific demo user to open their role's screens.
+1. Extract the application ZIP, or clone this repository. Confirm `python --version` and `python -m tkinter` work.
+2. Run **setup.bat** from the project root. It installs `app/requirements.txt`, creates `app/.env` if needed, and loads the SQL sample database. Enter your own MySQL connection settings.
+3. Run **run.bat** and select a demo user. The launcher checks the database connection first. If MySQL is unavailable, start the configured server, check `DB_HOST` and `DB_PORT`, and press **R** to retry.
 
-**Database reset:** setup runs SQL that drops and recreates `farm_market_db`. Use it only when you intend to discard that database's current records. Restarting the app with `run.bat` does not reset data. Do not rerun setup between uploading a photo and demonstrating persistence after restart.
+**Setup recreates `farm_market_db`, replacing its existing data.** Run setup only for initial installation or an intentional reset. Normal launches preserve records and BLOB photos. The SQL targets `farm_market_db`; changing `DB_NAME` alone does not retarget setup.
 
-Manual alternative from the repository root:
+Manual alternative from the project root:
 
 ```powershell
 python -m pip install -r app/requirements.txt
-Copy-Item app/.env.example app/.env
+Copy-Item app/.env.example app/.env  # First setup only
 notepad app/.env
 python app/setup_database.py
 python app/app.py
 ```
 
-Copy the configuration template only on first setup. Configure `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `GEMINI_API_KEY`, and `GEMINI_MODEL` in `app/.env`. Keep real credentials out of version control. The supplied SQL and setup script target `farm_market_db`; changing `DB_NAME` alone does not retarget setup. The default is `gemini-3.1-flash-lite`, verified with this project's key on November 17, 2026. The previous `gemini-2.5-flash` returned a model-access 404; availability/quota can vary by account and date.
+Configure `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `GEMINI_API_KEY` and `GEMINI_MODEL` in `app/.env`. Never commit real credentials. Each device needs its own database installation and configuration. An existing project `.venv` is preferred by the batch launchers; the original PC's ignored database-start helper is optional and is not distributed.
 
-For MySQL Workbench setup, execute **app/schema.sql**, not the archived school-database scripts. Dependencies are PyMySQL, cryptography, python-dotenv, Pillow, langchain-core, and langchain-google-genai. No additional GUI framework is needed.
+## Code and required libraries
 
-## Workflows and demo users
-
-| Role | Demo user | Main capabilities |
-|---|---|---|
-| Farmer | Omar Saeed | Green Oasis and Desert Bloom farms; cycles, harvests, photos, stock movements, allocations, donations/disposals |
-| Farmer | Fatima Rashid | Al Dhaid Fresh Farm; same farmer workflows |
-| Farmer | Khalid Nasser | Hatta Valley Farm; same farmer workflows |
-| Market buyer | Aisha Salem / Yousef Ali / Noura Ahmed / Hamad Obaid | One market each; search, requests, delivery confirmation and discrepancies |
-| Administrator | Layla Hassan | Users, farm assignments, reference data, and operational review |
-
-Demo users are fictional application accounts, distinct from the student team. User selection is a demonstration mechanism, not password authentication. Shared search and assistant screens expose operational records; ownership checks restrict changes. Administrators do not directly edit operational transactions.
-
-## Repository map
-
-```text
-app/                     Maintained application, SQL, configuration template, tests, photos
-docs/                    Requirements, rubric, architecture, tests, demo and team documents
-  sources/               Original project proposal and Lab 6 slides
-  report/                Editable technical report, builder, pinned input hashes
-  poster/                Editable poster layout
-  diagrams/              Editable ER/schema diagrams and PDF exports
-  evidence/              Dated app, AI, GUI, and database verification
-README.md                Setup, run, project status, and documentation entry point
-PRODUCT.md               Product purpose, users, constraints, and evidence
-DESIGN.md                Desktop theme and design criteria
-PROGRESS.md              Teammate tasks and review ledger
-setup.bat / run.bat      Root launchers that delegate to app/
-```
-
-## Documentation
-
-- **Teammates start here:** [handoff and remaining work](docs/TEAMMATE_HANDOFF.md), [copy-paste Claude assignments](docs/CLAUDE_TASK_PROMPTS.md), and [progress/review ledger](PROGRESS.md).
-- [Requirements and business rules](docs/PROJECT_REQUIREMENTS.md)
-- [100-point rubric and coverage matrix](docs/RUBRIC_AND_COVERAGE.md)
-- [Course announcements and deadlines](docs/ANNOUNCEMENTS.md)
-- [Architecture, database, and transactions](docs/ARCHITECTURE.md)
-- [How to read the ER and relational schema diagrams](docs/diagrams/DIAGRAMS_EXPLAINED.md)
-- [Test plan and evidence](docs/TESTING.md)
-- [Demo runbook and submission checklist](docs/DEMO_AND_SUBMISSION.md)
-- [Team responsibilities](docs/TEAM.md)
-- [Repository review and original-file inventory](docs/REPOSITORY_REVIEW.md)
-- [Skills and provenance](docs/SKILLS.md)
-- [GitHub upload readiness and remaining tasks](docs/GITHUB_READINESS.md)
-- [Original proposal](docs/sources/Local_Farm_Market_Food_Availability_Project_Proposal.pdf), [Lab 6 slides](docs/sources/langchain.pptx), and [historical visual guide](docs/reference/Visual_Guide.pdf)
-
-## Verification status
-
-Baseline validation recorded 65/65 business-rule checks, GUI role/photo workflows, and fourteen live Gemini questions. A dated integrity follow-up on 17 November then recorded 173 backend checks, 22 GUI checks (including restart), 7 assistant/read-only checks, 3 concurrency-helper checks, and 851 checks against the earlier diagram layout, with the original 65-check suite passing. The accepted Lab 7 layout separately passed an offline check for 15 tables, 100 columns, 32 foreign keys, and 13 named CHECK constraints. Application checks ran against an isolated MySQL 8.0.46 instance; see [follow-up evidence](docs/evidence/FIX_VALIDATION.md) and the [raw dated evidence](docs/evidence/fixes-2026-11-17/). Earlier failures remain in historical evidence. Human demo rehearsal and course upload remain.
-
-On this PC, the isolated demo database is running on port 3307 and the app is configured locally. Double-click root **run.bat** to explore. After reboot, follow the local-server restart instructions in the validation report. The batch launchers prefer the project `.venv` when present. A fresh GitHub clone still needs the setup instructions above and its own database credentials.
-
-The existing business-rule script changes database records and assumes fresh seed data:
-
-```powershell
-python app/tests/test_business_rules.py
-```
-
-Run it only against a disposable `farm_market_db` configured in `app/.env`. Restore sample data afterward only if a reset is intended. The script is not a complete replacement for GUI, restart, assistant-answer, or rubric acceptance testing.
-
-**Project artifacts now present for review:** conceptual and relational Draw.io diagrams, technical report PDF, poster PDF, rubric coverage, and expected/actual test evidence. Team registration and the demo slot (November 19 at 1:30 PM) are confirmed by the user. Human review, exact per-file photo provenance decision, projector check, timed three-person rehearsal, venue confirmation, and the actual course upload remain outstanding. See [review ledger](PROGRESS.md) and [submission runbook](docs/DEMO_AND_SUBMISSION.md). Markdown documentation and the historical guide do not substitute for those assessed artifacts.
-
-## Troubleshooting
-
-| Symptom | Action |
+| File | Role |
 |---|---|
-| Python/packages unavailable | Check Python is on PATH; run `python -m pip install -r app/requirements.txt` |
-| Tkinter unavailable | Install a Python distribution with Tcl/Tk support |
-| Database login failed | Correct `DB_USER` and `DB_PASSWORD` in `app/.env` |
-| Cannot reach MySQL | Start the configured MySQL service and check host/port; its service name can vary |
-| Database not found | Initialize with setup only after confirming the reset target |
-| Assistant has no key / service unavailable | Set a valid key and accessible model in `app/.env`, check connectivity, then restart |
-| No records / missing photo | Check filters and selected lot; the application provides empty and unavailable-image states |
+| `app/app.py` | Tkinter/ttk role interfaces, forms, tables and background assistant work |
+| `app/db.py` | PyMySQL access, validation, ownership, transactions and stock operations |
+| `app/assistant.py` | LangChain/Gemini question processing and read-only SQL execution |
+| `app/schema.sql` | Complete MySQL schema, views, constraints and populated fictional sample data |
+| `app/setup_database.py` | Database initialization from the SQL script |
+| `app/check_database.py` | Launcher connection preflight and readable failure messages |
+| `app/requirements.txt` | Required third-party Python packages |
+| `app/.env.example` | Configuration template without credentials |
+| `app/sample_images/` | Four example JPEGs for upload; seeded photos also reside in SQL BLOBs |
+| `app/tests/` | Business-rule, validation, GUI-flow and read-only assistant checks |
+| `setup.bat`, `run.bat` | Root entry points delegating to the application launchers |
 
-Sample produce photos are attributed by the supplied package to Fruits-360 under CC BY-SA 4.0. See [sources and attribution](docs/SKILLS.md#sample-image-attribution); exact upstream image provenance remains to be verified.
+Required pip packages: **PyMySQL**, **cryptography**, **python-dotenv**, **Pillow**, **langchain-core** and **langchain-google-genai**. Tkinter comes with the Python installation and MySQL runs as a separate service. Install packages using `app/requirements.txt`.
 
-## Course submission preparation
+## Demo roles
 
-The accepted [technical report](submission/technical-report.pdf), [poster](submission/poster.pdf), and [ER/schema diagrams](docs/diagrams/) are ready for the team's demo and final course submission review. The report preserves Track A's original failures and separately records the later integrity fixes and their passing checks. Rebuild the PDFs using the hash-verified [document instructions](docs/BUILD_DOCUMENTS.md). The [ZIP and SHA-256 manifest](submission/) were rebuilt and checked from a fresh extraction; the course upload has not been performed. Exact per-image source mapping remains unresolved and is documented in [image attribution](docs/IMAGE_ATTRIBUTION.md). Venue confirmation and the team's timed demo rehearsal remain.
+| Role | Sample identity | Main workflow |
+|---|---|---|
+| Farmer | Omar Saeed, Fatima Rashid or Khalid Nasser | Crop cycles, harvests/photos, allocations, stock and surplus disposition |
+| Market buyer | Aisha Salem, Yousef Ali, Noura Ahmed or Hamad Obaid | Search supply, submit requests and confirm delivery discrepancies |
+| Administrator | Layla Hassan | Users, farm assignments, reference data and operational review |
+
+All operational data is fictional. The identity selector supports the course demonstration; it is not password authentication. Operational writes check ownership; shared search and assistant reads cover shared operational records. The assistant uses a read-only transaction; its validation boundaries and dated tests are documented below.
+
+## Supporting documentation
+
+- [Requirements and business rules](docs/PROJECT_REQUIREMENTS.md) and [rubric coverage](docs/RUBRIC_AND_COVERAGE.md)
+- [Architecture](docs/ARCHITECTURE.md), [database design](docs/DATABASE_DESIGN.md) and [editable ER/schema diagrams](docs/diagrams/)
+- [Report source and build instructions](docs/BUILD_DOCUMENTS.md)
+- [Testing and dated evidence](docs/TESTING.md), [assistant validation](docs/evidence/AI_VALIDATION.md)
+- [Demo and submission guide](docs/DEMO_AND_SUBMISSION.md), [demo script](docs/DEMO_SCRIPT.md)
+- [Package inventory and hashes](submission/MANIFEST.md), [image attribution](docs/IMAGE_ATTRIBUTION.md)
+
+The database tests mutate data and assume a disposable seeded database. Do not run setup or mutating tests against records you need to retain. Document/package verification does not rerun application or model tests.
+
+## Team
+
+| Member | Student ID |
+|---|---|
+| Abd Alrahman Ismaik | 100064692 |
+| Ali Alshamsi | 100062530 |
+| Mohammad Arwani | 100064908 |

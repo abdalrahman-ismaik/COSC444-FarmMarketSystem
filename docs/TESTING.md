@@ -85,6 +85,7 @@ The matrices below retain the original **Pending** entries as an unexecuted full
 | LS-04 | Donate/dispose 0.01 and exactly available; then available+0.01, zero/negative, missing reason | Valid actions commit with actor/time/reason; invalid actions unchanged; reserved stock protected | Pending |
 | LS-05 | Another farmer attempts disposition; admin reviews | Farmer denied outside assignment; admin has read-only operational view | Pending |
 | LS-06 | Lot whose earlier allocations were all released | Can qualify as unallocated because no non-released allocation remains; document distinction from “never allocated” | Pending |
+| LS-07 | Attempt donation when recorded sell-by is yesterday; attempt donation when sell-by is today/future or blank; dispose past-sell-by lot | Past-date donation rejected with no movement/balance change; in-date/undated donation and disposal remain available subject to ownership and quantity | **Pending — added November 19, 2026; not run** |
 
 ## Assistant questions and expected evidence
 

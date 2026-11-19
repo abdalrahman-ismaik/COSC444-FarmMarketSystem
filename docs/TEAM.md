@@ -28,8 +28,8 @@ For the finalization pass, the [teammate handoff](TEAMMATE_HANDOFF.md) suggests 
 
 ## Participation and readiness
 
-- Team-sheet registration: **unconfirmed** for all members.
-- Demo booking and assigned time: **unconfirmed**.
+- Team-sheet registration: **reported complete by the team**; the sheet itself has not been independently checked.
+- Demo booking: **reported booked for November 19, 2026 at 1:30 PM**; the booking record has not been independently checked.
 - Attendance: **unconfirmed**; all members must attend unless officially excused.
 - Proposed poster split: each member speaks for approximately one minute.
 - Keep a factual contribution record: date, member, change/artifact, database contribution, review evidence. No contribution history has been fabricated from the imported package.

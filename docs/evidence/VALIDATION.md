@@ -57,7 +57,7 @@ The isolated demo server is left running. Double-click the root **run.bat**. The
 4. Use the [corrected demo runbook](../DEMO_AND_SUBMISSION.md) for allocation and partial-delivery steps. This database is fresh seed plus the GUI-created lot; lot #2 remains 78 kg available and request #7 remains OPEN.
 5. For live AI, edit ignored `app/.env`, set your own `GEMINI_API_KEY`, then restart the app. Do not post the key in GitHub or evidence.
 
-After a reboot, this temporary MySQL process will need restarting. Run the ignored local helper below, wait a few seconds, then open `run.bat`:
+After a reboot, root `run.bat` detects that this temporary MySQL process is stopped, runs the ignored local helper, waits five seconds, and checks the connection again. To start it manually instead:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .local/start-demo.ps1

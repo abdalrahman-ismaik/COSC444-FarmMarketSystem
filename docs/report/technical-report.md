@@ -1,7 +1,7 @@
 # Farm to Market technical report
 COSC444 Database Systems | Khalifa University | Fall 2026-2027 | Lab B1
 
-Prepared 18 November 2026 | Mohammad Arwani with Codex
+Prepared 19 November 2026 | Mohammad Arwani with Codex
 
 Abd Alrahman Ismaik - 100064692; Ali Alshamsi - 100062530; Mohammad Arwani - 100064908.
 
@@ -45,7 +45,7 @@ Values use parameterized SQL. A transaction commits on success, rolls back on ex
 | Allocate | Lock request, then lot; check farmer ownership, crop/unit equality, request remainder and available stock. Insert allocation and RESERVED movement; update status/history. |
 | Release or cancel | Check owner and current status. Release reservations and update allocation/request status and history together. Cancellation after a receipt is refused. |
 | Confirm delivery | Check buyer's market and reserved allocation. Insert unique receipt, delivered quantity, release/loss for shortfall; settle allocation and update request/history. |
-| Loss or disposition | Farmer must own the lot; require reason and quantity within availability. Record actor, date and LOSS, DONATED or DISPOSED movement. |
+| Loss or disposition | Farmer must own the lot; require reason and quantity within availability. Donation is rejected if recorded sell-by is before database `CURDATE()`; disposal remains available. Record actor, date and movement. |
 
 ## Database constraints and application checks
 SQL enforces PK/FK/UNIQUE constraints, enumerated domains, positive lot/request/allocation quantities, nonnegative forecasts/receipts, receipt bounds and discrepancy arithmetic. CHECK constraints require sensible cycle and sell-by dates and a market link only for buyers. Application logic adds active-reference checks, role/record ownership, matching units, finite quantities with at most two decimal places, current-date rules and stock/remainder checks. Reference data is deactivated to preserve history. [R3, R6]
@@ -56,10 +56,10 @@ Farmers upload JPEG/PNG files of up to 5 MiB. Bytes, filename, MIME type, upload
 ## Loss and Surplus
 Active lots with available stock above zero are candidates. Priority is expired, then near expiry, then currently unallocated ageing stock. Defaults are 3 expiry days and 7 surplus days; inclusive whole-number ranges are 0-60 and 0-365. Expired means sell-by before today; near expiry includes sell-by today through the selected threshold; surplus requires age at least the threshold and no non-RELEASED allocation. Query thresholds are not persisted settings. [R3, R6]
 
-Donation and disposal each reduce on-hand and available equally, leave reservations unchanged, and record actor/date/reason. Farmers act only on assigned lots; administrators inspect history without operational controls. The app permits donation of expired lots; no suitability policy is defined. This is a prototype stock action, not a food-safety determination. [R3, R6]
+Donation and disposal each reduce on-hand and available equally, leave reservations unchanged, and record actor/date/reason. Farmers act only on assigned lots; administrators inspect history without operational controls. Project policy added November 19 rejects donation after the recorded sell-by date but permits disposal. In-date and undated lots may be donated subject to stock and ownership checks. The original proposal requires two disposition actions but does not set donation eligibility; it defines sell-by as the recommended last date for sale. This conservative application policy is not a food-safety determination. [R2]
 
 ## Current application policies
-DELIVERED uses settled allocated totals, not actual received totals: seed request #6 is 60 allocated/52 received. One receipt finalizes an allocation and turns shortfall into loss; there is no later top-up receipt. The GUI's “approved correction” is a farmer action with a required reason and no administrator approval step. Released historical allocations do not disqualify surplus. These are documented project policy choices, not instructor requirements or endorsements. [R6]
+DELIVERED uses settled allocated totals, not actual received totals: seed request #6 is 60 allocated/52 received. One receipt finalizes an allocation and turns shortfall into loss; there is no later top-up receipt. The GUI's “approved correction” is a farmer action with a required reason and no administrator approval step. Released historical allocations do not disqualify surplus. These are documented project policy choices, not instructor requirements or endorsements. Donation eligibility, added November 19, blocks past-sell-by lots; in-date or undated lots may be donated. The new regression check is pending. [R6]
 
 <!-- page -->
 # Test evidence and reviewed fixes
@@ -77,7 +77,7 @@ The original team validation used Windows, Python 3.12.12 and isolated MySQL 8.0
 | TX-02a two requests each reserve 80 of one 100 kg lot | At most 100 reserved | Oversold in 19/20 trials; 100/160/-60. Fail F-01. |
 | TX-02c allocate versus donate 80 each | No negative availability | Oversold in 10/10 trials. Fail F-01. |
 | LS-02/03 threshold and exact-date boundaries | Valid inclusive bounds; invalid values rejected | 0/60, 0/365 and date/age boundaries behaved as expected. Pass. |
-| LS-04/05 donation/disposal | 0.01/exact available succeed; excess/unauthorized fail | Both actions and rejection cases recorded. Pass; concurrency caveat F-01. |
+| LS-04/05 historical donation/disposal | 0.01/exact available succeed; excess/unauthorized fail | Historical checks passed before the sell-by restriction; not evidence for the new rule. |
 | GUI request, two allocations, partial receipts | 150 allocated, 140 received; discrepancy 10 | Persisted; DELIVERED under current policy. Pass as behavior observation. |
 | GUI-ALC-03 unchanged 1,500 pre-fill | Numeric quantity accepted | “Must be a number.” Fail F-05. |
 | GUI-IMG-02 new-process photo retrieval | Same bytes and rendered photo | SHA-256 equal; photo rendered. Pass. |
@@ -85,6 +85,8 @@ The original team validation used Windows, Python 3.12.12 and isolated MySQL 8.0
 ### Follow-up after the fixes
 
 On 17 November, an authorized follow-up used a fresh MySQL 8.0.46 instance on loopback port 3318 with READ COMMITTED. It recorded 173 backend checks, 22 GUI checks including restart, 7 assistant/read-only checks, 3 validation-helper checks, the original suite at 65/65, and the diagram checker at 851/851. Concurrent allocation/loss/correction and same-request release/receipt races passed their bounded trials. The assistant database fingerprint was unchanged; its three live model questions used the configured Gemini model. Full dated JSON, screenshots and source hashes are in `docs/evidence/fixes-2026-11-17/`. These are observed checks, not a guarantee of arbitrary concurrency or model behavior. The isolated database was separate from ports 3307 and 3306. [R4, R6]
+
+**Post-evidence change (November 19):** donation of a lot whose sell-by date is before database `CURDATE()` is now rejected. The earlier suite accepted a donation from past-sell-by lot #3; its test expectation was updated. LS-07 remains pending; no post-change pass is claimed.
 
 The earlier Track A run remains recorded as 163 Pass / 4 Fail / 1 Info and GUI 21 Pass / 1 Fail. The follow-up supersedes those defect outcomes for the tested source; it does not rewrite or erase the earlier observations. The first backend run (162 Pass / 5 Fail / 1 Info) and its corrected comparator oracle remain preserved. [R6]
 

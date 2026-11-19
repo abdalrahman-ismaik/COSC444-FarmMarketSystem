@@ -1,0 +1,8 @@
+# Preserve document and archive bytes, including text-encoded PDF streams.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pptx binary
+*.docx binary
+*.zip binary

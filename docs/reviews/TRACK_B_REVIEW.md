@@ -90,6 +90,8 @@ Earlier results cited: original 65/65, 18 tabs and photo restart; fourteen live 
 
 1. Review Track A PR #2 and authorize resolution of **F-01 concurrent overselling**; decide on the small F-05 quantity-prefill and F-06 JPEG-decode fixes and require their stated retests. Track B did not change implementation.
 2. Decide whether to retain allocation-based DELIVERED, one-receipt/shortfall-as-loss, reason-based farmer correction and currently-unallocated surplus wording. Donation of expired lots is also current behavior without a defined suitability policy.
+
+**Resolution — November 19, 2026:** at Abd Alrahman's direction, the backend now rejects donation when the recorded sell-by date is before database `CURDATE()`; disposal remains available. This project rule was not specified in the proposal and is not a food-safety determination. The regression scenario remains pending execution.
 3. Review the report's normalization qualification: storing discrepancy = allocated - received means the blanket “all tables BCNF” claim in Track A needs qualification. This is a documentation finding, not a schema-change request.
 4. Confirm the **12-page mixed-size report** (five narrative pages plus seven unshrunk diagram sheets) and the poster's checked **core ER presentation view**. The 6-10-page target was guidance, not an instructor limit. Actual projector readability and timed rehearsal remain untested.
 5. Supply/recover exact upstream image mappings and transformations, or authorize a documented replacement plan. Do not treat dataset-level license verification as a per-file provenance match.

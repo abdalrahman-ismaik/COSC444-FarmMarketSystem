@@ -1,0 +1,35 @@
+{
+  "selector.png": {
+    "source": "docs/evidence/gui-user-selector.png",
+    "capture_date": "Baseline validation capture, November 16-17, 2026"
+  },
+  "harvest.png": {
+    "source": "docs/evidence/fixes-2026-11-17/gui-farmer-harvest.png",
+    "capture_date": "November 17, 2026"
+  },
+  "allocation.png": {
+    "source": "docs/evidence/fixes-2026-11-17/gui-allocate-done.png",
+    "capture_date": "November 17, 2026"
+  },
+  "search.png": {
+    "source": "docs/evidence/fixes-2026-11-17/gui-buyer-search-photo.png",
+    "capture_date": "November 17, 2026"
+  },
+  "delivery.png": {
+    "source": "docs/evidence/fixes-2026-11-17/gui-deliveries-partial.png",
+    "capture_date": "November 17, 2026"
+  },
+  "surplus.png": {
+    "source": "docs/evidence/fixes-2026-11-17/gui-loss-surplus.png",
+    "capture_date": "November 17, 2026"
+  },
+  "assistant.png": {
+    "source": "docs/evidence/gui-live-gemini.png",
+    "capture_date": "November 17, 2026"
+  },
+  "admin-users-2026-11-19.png": {
+    "source": "read-only administrator screen capture",
+    "capture_date": "November 19, 2026",
+    "scope": "view only; no data-entry actions"
+  }
+}

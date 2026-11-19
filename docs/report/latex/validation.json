@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-20",
+  "status": "Ready for review",
+  "pages": 32,
+  "environment": "Windows / MiKTeX 26.2 pdfLaTeX",
+  "changes": "Sections 1.4-1.7: all 25 application ZIP entries and roles, six dependency roles plus Tkinter/MySQL, code-layer integration and setup/run steps.",
+  "checks": "25 ZIP members exactly represented; all six declared pip packages documented; A4 throughout; 8 GUI and 8 original diagram figures retained; inline poster; no em dashes or tool-authorship references; source ZIP CRC/payload bytes pass.",
+  "application_zip_source_comparison": {
+    "compared_paths": 15,
+    "different_paths": [],
+    "archive_sha256": "9e2f41e4ccb43e31705cde007f619ad42f7f3394cb607c4cc17c21fc25e49cf0"
+  },
+  "visual_review": "All 32 compiled pages rendered and inspected in contact sheets; new source tables, package table, code explanations and setup steps checked for layout.",
+  "warnings": "No LaTeX overflow/reference/package warnings. Original assets retain Poppler font and pypdf duplicate Group notices; renders inspected. MiKTeX administrator-update notice remains.",
+  "runtime_tests": "Not run in this revision. Administrator screenshot uses prior read-only capture; test results remain dated evidence.",
+  "files": {
+    "submission/FarmMarketSystem_B1_Technical_Report.pdf": "1f9757da89b6128a0d6af27e3cb9f777b86307d557c9e6a76728974e4a2e53ab",
+    "submission/FarmMarketSystem_B1_Technical_Report_Source.zip": "b484f6a695a18a5d1db9485d14ce2ca9d50c73138b88c57a01ce4e8e8641dd60",
+    "docs/report/latex/farm-to-market-report.tex": "394c3b4a9139c4313974dc187b3d84a6a03c5bd939f82488ebbe78cbbbc46bf0",
+    "docs/report/latex/README.md": "8dc7195a33427ab3fbb6b90486e4375efe534f047545df05bce7ba8a6aaf11de",
+    "docs/report/latex/figures/gui/sources.json": "d482321a39a1b65237cb9d5988d829dbf4e474108ab9e50692a5ce8067c14ec9",
+    "docs/report/latex/figures/conceptual-er.pdf": "193ef9e970454a7c784d90974bbc5b0a795bf4a8249f8521f8b03d2f0c31c392",
+    "docs/report/latex/figures/gui/admin-users-2026-11-19.png": "09487b9c41a22757460f3187c234cabda6081a71b99d947970c960abd1491b38",
+    "docs/report/latex/figures/gui/allocation.png": "37370308e4ccf9961c7cee9a48c07e6eedd3a1992a5edc26d6a8973178319865",
+    "docs/report/latex/figures/gui/assistant.png": "ff64798e515683cc50a2ec0f444266b9ac45fdea41be4315ee58208a5f255835",
+    "docs/report/latex/figures/gui/delivery.png": "0c421bb6f387c48448ca9e453d556dfbe1651752a5f44ff37a0b15c27f94678c",
+    "docs/report/latex/figures/gui/harvest.png": "92edaebec32843e7bf81b173b16490cbfdd29774e45f37d76df403c5c19df6bd",
+    "docs/report/latex/figures/gui/search.png": "965daac7192e86a91855d7af471eeab2489be80bbfeb30ef0f29ed4ab14d3f45",
+    "docs/report/latex/figures/gui/selector.png": "fc9063f4029ab23a5f49ba3718656ce4da8e00f4664431bd7dfa01c0eeac6fd0",
+    "docs/report/latex/figures/gui/surplus.png": "ddddbcd14c87fd1ab984944463ab1a977d3076024dd1644d81bc9f2a010095d3",
+    "docs/report/latex/figures/operational-overview.png": "ce922be4a5aabaf3e17ff9f6c47aa1f8c9e203792154a825f6f9807dca493889",
+    "docs/report/latex/figures/poster.pdf": "91b39b76ab3b9afd2039a1792ab839778a455d5ccc7ead3e05704dc6173504a9",
+    "docs/report/latex/figures/relational-schema.pdf": "e32794123bfda0c3c638856ae6149c8b6eb9cd035a47248a4228cb5fded3825d"
+  },
+  "publication_update": "Final artifact names applied; README/download/build guides refreshed; poster preview visually checked; application archive rebuilt and fresh-extraction hashes/exclusions passed on 20 November 2026. No runtime suites run."
+}

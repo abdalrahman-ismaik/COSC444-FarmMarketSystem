@@ -145,7 +145,7 @@ Each operation in `db.py` runs inside `transaction()`: one connection, commit on
 | Release | request row, allocation row, lot row | RESERVATION_RELEASED, allocation → RELEASED, request status + history |
 | Cancel request | request row, ordered allocation rows, sorted affected lot rows | releases, allocations → RELEASED, request → CANCELLED + history |
 | Confirm delivery | request row, allocation row, lot row | receipt, DELIVERED, (release + LOSS if short), allocation → DELIVERED, request status + history |
-| Loss / correction / donate / dispose | lot row | one movement |
+| Loss / correction / donate / dispose | lot row | one movement; donation also rejects a recorded sell-by date before database `CURDATE()` |
 
 **Track A baseline observations (before follow-up fixes):**
 
@@ -167,6 +167,7 @@ The accepted follow-up explicitly uses READ COMMITTED with request → allocatio
 | Image type JPEG/PNG | CHECK on MIME | extension, ≤ 5 MiB, non-empty, Pillow verify |
 | Referential integrity | 32 FKs | — |
 | Allocation ≤ lot available; allocation ≤ request remainder; removals ≤ available | — | row locks + checks (see F-01) |
+| Donation requires sell-by date today or later (or no date) | — | `dispose_lot` checks database `CURDATE()` while holding the lot lock; disposal is not date-blocked |
 | Lot unit = request unit = allocation/receipt/movement unit | — | checks and copying |
 | Only farmers assigned to farms; ownership of every change | — | role and ownership checks |
 | Status derivation and history rows | — | `_refresh_request_status` |
@@ -174,11 +175,11 @@ The accepted follow-up explicitly uses READ COMMITTED with request → allocatio
 
 ## 10. Current policies (documented, not endorsed)
 
-These match the code and seed data. None was stated by the proposal. Abd Alrahman accepted them as project policy choices on 18 November 2026; they are not instructor requirements or endorsements:
+These are application policies, not proposal requirements or instructor endorsements. Items 1–4 and 6 were accepted as project policy choices on November 18; donation eligibility (item 5) was added at Abd Alrahman's direction on November 19:
 
 1. **DELIVERED uses allocated totals.** When no reservation remains and allocated ≥ requested, the request is DELIVERED even if less was received. Examples: seed request #6 (60 allocated / 52 received), DEL-05a and GUI-DEL-05 (150 / 140).
 2. **One receipt finalises an allocation.** The shortfall is released from the reservation and recorded as LOSS. There is no second, later receipt for the remainder (DEL-04).
 3. **“Approved correction”** is a farmer action with a required reason, stored with the prefix “Approved correction:”. There is no separate administrator approval step.
 4. **Unallocated surplus** means “no non-RELEASED allocation”. A lot whose earlier allocations were all released qualifies (LS-06). This is not the same as “never allocated”.
-5. **Donation of expired lots** is allowed; no food-safety rule is defined.
+5. **Donation eligibility (added November 19, 2026):** reject donation when a recorded sell-by date is before database `CURDATE()`; allow disposal and retain ownership/availability checks. Undated and in-date lots may be donated. This is an application policy absent from the proposal, whose sell-by definition is a recommended last date for sale; it is not a food-safety assessment. The regression check is pending and has not been run after this change.
 6. Loss & Surplus thresholds are adjustable per query (0–60 and 0–365, inclusive whole days) and not persisted.
