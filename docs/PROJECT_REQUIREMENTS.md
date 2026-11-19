@@ -81,6 +81,10 @@ Every team must implement, expose in the GUI, test, and demonstrate at least one
 
 Selected defaults are three days for near expiry and seven days for unallocated ageing. Their exact implementation and limitations are documented in [architecture](ARCHITECTURE.md#loss--surplus).
 
+### Additional project policy: donation eligibility
+
+The proposal requires at least two recorded disposition actions, giving donation and disposal as examples, but does not define donation eligibility. For this implementation, a farmer may donate only a lot whose recorded sell-by date is today or later, or whose sell-by date is blank. The backend rejects donation when `sell_by_date < CURDATE()`; disposal remains available. This is a conservative project rule based on the recorded sale date, not a food-safety determination. The proposal describes sell-by as the recommended last date for sale; it does not define an expiration or food-suitability standard.
+
 ## Phase 4 — Error handling
 
 | ID | Required behavior |

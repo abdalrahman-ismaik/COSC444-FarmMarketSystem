@@ -8,16 +8,13 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'submission'
-ZIP_PATH = OUT / 'FarmMarketSystem_B1_review_candidate.zip'
+ZIP_PATH = OUT / 'FarmMarketSystem_B1_Submission.zip'
 MANIFEST_PATH = OUT / 'MANIFEST.md'
 ALLOW_FILES = {
-    'README.md', 'PRODUCT.md', 'DESIGN.md', 'PROGRESS.md',
-    'setup.bat', 'run.bat', '.gitignore',
-    'submission/README.md', 'submission/technical-report.pdf', 'submission/poster.pdf',
-    'submission/.gitattributes',
-    'scripts/build_candidate.py',
+    'README.md', 'setup.bat', 'run.bat', 'app/requirements.txt',
+    'app/.env.example', 'app/schema.sql', 'submission/COSC444_Farm-to-market_Poster.pdf',
 }
-ALLOW_DIRS = ('app', 'docs')
+ALLOW_DIRS = ('app',)
 EXCLUDED_PARTS = {'.git', '.local', '.venv', 'venv', '__pycache__', '.pytest_cache',
                   '.mypy_cache', '.ruff_cache', 'archive', '.agents', 'skills', 'output'}
 EXCLUDED_SUFFIXES = {'.pyc', '.pyo', '.log', '.zip'}
@@ -52,7 +49,7 @@ def files_to_package() -> list[Path]:
 
 def member_manifest(payloads: dict[str, bytes]) -> str:
     rows = ['# Course package manifest', '',
-            'This archive is the accepted team review candidate; it has not been submitted to the course.',
+            'This archive contains the requested course submission files; it has not been submitted to the course.',
             'SHA-256 covers each payload member listed below. The embedded manifest cannot hash itself,',
             'and the archive hash is recorded only in the external `submission/MANIFEST.md`.', '',
             '| ZIP member | Bytes | SHA-256 |', '|---|---:|---|']
@@ -73,8 +70,8 @@ def main() -> None:
     if any(name.endswith('/.env') or name == '.env' for name in payloads):
         raise RuntimeError('Real .env file entered package')
     readme = payloads.get('README.md', b'').decode('utf-8')
-    for needed in ('setup.bat', 'run.bat', 'docs/PROJECT_REQUIREMENTS.md',
-                   'docs/RUBRIC_AND_COVERAGE.md', 'docs/BUILD_DOCUMENTS.md'):
+    for needed in ('setup.bat', 'run.bat', 'app/requirements.txt', 'app/schema.sql',
+                   'submission/COSC444_Farm-to-market_Poster.pdf'):
         if needed not in payloads and needed not in readme:
             raise RuntimeError(f'Required setup/document reference missing: {needed}')
     embedded = member_manifest(payloads).encode('utf-8')
@@ -129,12 +126,15 @@ def main() -> None:
         raise RuntimeError('Embedded manifest hash mismatch')
     if 'has not been submitted to the course' not in inner:
         raise RuntimeError('Course non-submission notice missing from embedded manifest')
-    for required in ('README.md', 'setup.bat', 'run.bat', 'app/.env.example',
-                     'app/schema.sql', 'app/app.py', 'docs/report/technical-report.md',
-                     'docs/report/build_documents.py', 'docs/poster/poster.json',
-                     'docs/diagrams/conceptual-er.drawio', 'docs/diagrams/relational-schema.drawio'):
+    for required in ('README.md', 'setup.bat', 'run.bat', 'app/requirements.txt', 'app/.env.example',
+                     'app/schema.sql', 'app/app.py', 'submission/COSC444_Farm-to-market_Poster.pdf'):
         if not (extract / Path(*PurePosixPath(required).parts)).is_file():
             raise RuntimeError(f'Fresh extraction missing required path: {required}')
+    for source in (ROOT / 'app').rglob('*.py'):
+        if included(source) and source.relative_to(ROOT).as_posix() not in names:
+            raise RuntimeError(f'Python source omitted: {source.relative_to(ROOT)}')
+    if any(name.endswith('technical-report.pdf') for name in names):
+        raise RuntimeError('Unrequested technical report included')
     if ZIP_PATH.name in names or any('original-package' in name.lower() for name in names):
         raise RuntimeError('Archive contains itself or an original package archive')
     print(json.dumps({'zip': str(ZIP_PATH), 'bytes': len(archive_bytes),

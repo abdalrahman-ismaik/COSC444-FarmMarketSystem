@@ -134,7 +134,7 @@ These output paths are reserved for the remaining work; their existence is not i
 | Owner | Deliverables for review |
 |---|---|
 | Track A | `docs/diagrams/conceptual-er.drawio`, `conceptual-er.svg`, `conceptual-er.pdf`; `relational-schema.drawio`, `relational-schema.svg`, `relational-schema.pdf`; `docs/DATABASE_DESIGN.md`; `docs/evidence/REMAINING_TEST_RESULTS.md`; `docs/reviews/TRACK_A_REVIEW.md` |
-| Track B | `docs/report/technical-report.md`; editable poster source under `docs/poster/`; `submission/technical-report.pdf`, `submission/poster.pdf`; `docs/BUILD_DOCUMENTS.md`; `docs/reviews/TRACK_B_REVIEW.md` |
+| Track B | `docs/report/technical-report.md`; editable poster source under `docs/poster/`; `submission/FarmMarketSystem_B1_Technical_Report.pdf`, `submission/COSC444_Farm-to-market_Poster.pdf`; `docs/BUILD_DOCUMENTS.md`; `docs/reviews/TRACK_B_REVIEW.md` |
 | Track B after artifact review | New `submission/FarmMarketSystem_B1_candidate.zip` and `submission/MANIFEST.md`; label as candidate, never submitted/accepted |
 | Everyone | Own task rows/evidence/contribution entries in [PROGRESS.md](../PROGRESS.md); factual gaps and review requests |
 

@@ -107,9 +107,9 @@ check("Expired lot 3 flagged priority 1",
 check("Surplus box lot 12 flagged",
       lambda: any(f["lot_id"] == 12 and f["flag"] == "UNALLOCATED SURPLUS" for f in flags) or (_ for _ in ()).throw(AssertionError()))
 check("Bad threshold rejected", lambda: db.flagged_lots("abc", 7), "whole numbers")
-check("Donate more than available rejected", lambda: db.dispose_lot(omar, 3, "DONATED", "999", "Food bank"), "only 40")
-check("Donate 30 kg", lambda: db.dispose_lot(omar, 3, "DONATED", "30", "UAE Food Bank"))
-check("Dispose 10 kg", lambda: db.dispose_lot(omar, 3, "DISPOSED", "10", "Spoiled"))
+check("Donation from past-sell-by lot rejected", lambda: db.dispose_lot(omar, 3, "DONATED", "1", "Food bank"), "past its sell-by")
+check("Donate 30 kg from in-date lot", lambda: db.dispose_lot(omar, 6, "DONATED", "30", "UAE Food Bank"))
+check("Dispose past-sell-by lot", lambda: db.dispose_lot(omar, 3, "DISPOSED", "40", "Past sell-by date"))
 check("Lot 3 now empty", lambda: stock(3)["on_hand"] == 0 or (_ for _ in ()).throw(AssertionError()))
 check("Reserved stock cannot be donated", lambda: db.dispose_lot(fatima, 8, "DONATED", "120", "x"), "only 100")
 

@@ -55,3 +55,7 @@ Use the project virtual environment's Python. The original suite still mutates o
 [Machine-readable summary and normalized source hashes](fixes-2026-11-17/summary.json) identify the tested files. Raw GUI JSON retains its original ignored output-directory screenshot paths; copies are linked above. API/database credentials were checked for exclusion before copying evidence. No new claim is made about all possible races, arbitrary model queries, all display scales, or manual usability. The original fourteen-question evidence remains separately available in [AI validation](AI_VALIDATION.md); only representative AI cases were repeated here.
 
 The schema and editable diagram sources are unchanged, so diagram cardinalities/types remain applicable. Final reports/poster must cite this follow-up alongside original failures, then be regenerated and visually inspected. No reviewer acceptance, GitHub merge, booking, attendance or course submission is claimed.
+
+## Later policy update — November 19, 2026
+
+After the dated validation above, `app/db.py::dispose_lot` was changed to reject `DONATED` movements when a lot's recorded sell-by date is before database `CURDATE()`. `DISPOSED` movements remain allowed; in-date or undated lots remain eligible for donation subject to owner/availability checks. The proposal does not define donation eligibility; this is a conservative project policy, not a food-safety determination. The November 17 results above do not test this later code. Regression case LS-07 is documented in `docs/TESTING.md` and is **pending; not run**.
